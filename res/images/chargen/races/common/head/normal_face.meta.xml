@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>150</priority>
+    <fallback>1</fallback>
+    <conditions>
+        <condition>
+            <feminity>androgynous</feminity>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <point>167;475</point>
+        </connection>
+    </connections_parent>
+    <positions>
+        <position id="hair">
+            <type>hair</type>
+            <point>166;3</point>
+        </position>
+        <position id="snout">
+            <type>snout</type>
+            <point_1>40;371</point_1>
+            <point_2>293;371</point_2>
+        </position>
+        <position id="blusher_left">
+            <type>blusher</type>
+            <draw_mode>use_parent_alpha</draw_mode>
+            <point_1>70;371</point_1>
+        </position>
+        <position id="blusher_right">
+            <type>blusher</type>
+            <draw_mode>use_parent_alpha</draw_mode>
+            <point_1>263;371</point_1>
+        </position>
+        <position id="brow_left">
+            <type>hair</type>
+            <point>66;203</point>
+        </position>
+        <position id="brow_right">
+            <type>hair</type>
+            <modifiers>
+                <inverse_x>1</inverse_x>
+            </modifiers>
+            <point>269;203</point>
+        </position>
+        <position id="top_ears">
+            <type>ear</type>
+            <point>165;29</point>
+        </position>
+        <position id="top_ear_left">
+            <type>ear</type>
+            <point>80;75</point>
+        </position>
+        <position id="top_ear_right">
+            <type>ear</type>
+            <modifiers>
+                <inverse_x>1</inverse_x>
+            </modifiers>
+            <point>252;75</point>
+        </position>
+        <position id="horns">
+            <type>horn</type>
+            <multiple>
+                <rows_count_param>horn_rows</rows_count_param>
+                <cols_count_param>horns_count_per_row</cols_count_param>
+                <output_mode>rows_and_cols</output_mode>
+                <max_distance>120;90</max_distance>
+                <inverse_by_cols>1</inverse_by_cols>
+            </multiple>
+            <point>165;100</point>
+        </position>
+        <position id="antenna">
+            <type>antenna</type>
+            <point>165;150</point>
+        </position>
+        <position id="side_ear_left">
+            <type>ear</type>
+            <point>18;285</point>
+        </position>
+        <position id="side_ear_right">
+            <type>ear</type>
+            <modifiers>
+                <inverse_x>1</inverse_x>
+            </modifiers>
+            <point>316;285</point>
+        </position>
+        <position id="eye_left">
+            <type>eye</type>
+            <multiple>
+                <rows_count_param>eye_pairs</rows_count_param>
+                <output_mode>line</output_mode>
+                <max_distance>50;85</max_distance>
+                <secondary_priority_inc>0.1</secondary_priority_inc>
+                <offset>30;-10</offset>
+            </multiple>
+            <point>32;301</point>
+        </position>
+        <position id="eye_right">
+            <type>eye</type>
+            <multiple>
+                <rows_count_param>eye_pairs</rows_count_param>
+                <output_mode>line</output_mode>
+                <max_distance>50;-85</max_distance>
+                <secondary_priority_inc>0.1</secondary_priority_inc>
+                <offset>-30;-10</offset>
+            </multiple>
+            <modifiers>
+                <inverse_x>1</inverse_x>
+            </modifiers>
+            <point>303;301</point>
+        </position>
+    </positions>
+</bodypart>

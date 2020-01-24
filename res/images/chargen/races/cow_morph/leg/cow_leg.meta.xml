@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>135</priority>
+    <scale_y>0.5</scale_y>
+    <connections_parent>
+        <connection>
+            <point_1>68;0</point_1>
+            <point_2>552;0</point_2>
+        </connection>
+    </connections_parent>
+</bodypart>

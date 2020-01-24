@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>152</priority>
+    <scale>2.15</scale>
+    <skip_colorization>1</skip_colorization>
+    <no_patterns>1</no_patterns>
+    <conditions>
+        <condition>
+            <charnamehash2>1</charnamehash2>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <point>32;8</point>
+        </connection>
+    </connections_parent>
+</bodypart>

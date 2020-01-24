@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>250</priority>
+    <fallback>1</fallback>
+    <conditions>
+        <condition>
+            <hair_length>very short;short</hair_length>
+            <hair_style>natural;messy;wavy</hair_style>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <position>hair</position>
+            <point>215;43</point>
+        </connection>
+    </connections_parent>
+</bodypart>

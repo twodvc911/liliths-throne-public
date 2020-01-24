@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority_offset>-0.03</priority_offset>
+    <conditions>
+        <condition>
+            <eye_pupil_shape>horizontal</eye_pupil_shape>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <point>15;8</point>
+        </connection>
+    </connections_parent>
+</bodypart>

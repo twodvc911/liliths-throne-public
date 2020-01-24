@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>152</priority>
+    <pick_priority>10</pick_priority>
+    <no_patterns>1</no_patterns>
+    <scale>1.75</scale>
+    <connections_parent>
+        <connection>
+            <point>42;7</point>
+        </connection>
+    </connections_parent>
+</bodypart>

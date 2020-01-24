@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>50</priority>
+    <scale>0.5</scale>
+    <conditions>
+        <condition>
+            <tail_type>cat_morph_tufted</tail_type>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <point>1051;606</point>
+        </connection>
+    </connections_parent>
+</bodypart>

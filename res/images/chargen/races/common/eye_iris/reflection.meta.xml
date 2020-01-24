@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority_offset>-0.02</priority_offset>
+    <skip_colorization>1</skip_colorization>
+    <connections_parent>
+        <connection>
+            <position>eye_iris_reflection</position>
+            <point>23;35</point>
+        </connection>
+    </connections_parent>
+</bodypart>

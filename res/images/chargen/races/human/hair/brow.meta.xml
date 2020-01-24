@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>170</priority>
+    <no_patterns>1</no_patterns>
+    <conditions>
+        <condition>
+            <face_is_bestial>0</face_is_bestial>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <position>brow_left;brow_right</position>
+            <point>0;34</point>
+        </connection>
+    </connections_parent>
+</bodypart>

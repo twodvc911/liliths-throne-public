@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>101</priority>
+    <conditions>
+        <condition>
+            <pregnancy>3</pregnancy>
+            <leg_configuration>bipedal</leg_configuration>
+        </condition>
+    </conditions>
+    <connections_parent derive_from="preg_1"></connections_parent>
+</bodypart>

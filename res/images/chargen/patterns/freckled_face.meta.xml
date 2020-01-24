@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<pattern>
+    <type>2_colors_pattern</type>
+    <color_primary>#ffffff</color_primary>
+    <color_secondary>#000000</color_secondary>
+    <bodyparts_only>head;ear</bodyparts_only>
+    <scale>0.35</scale>
+</pattern>

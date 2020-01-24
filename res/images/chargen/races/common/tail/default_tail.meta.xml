@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>50</priority>
+    <pick_priority>-1</pick_priority>
+    <scale>0.75</scale>
+    <modifiers>
+        <multiple_offset_y>-22</multiple_offset_y>
+    </modifiers>
+    <connections_parent>
+        <connection>
+            <point>864;875</point>
+        </connection>
+    </connections_parent>
+</bodypart>

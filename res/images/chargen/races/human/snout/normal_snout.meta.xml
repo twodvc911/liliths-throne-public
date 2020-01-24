@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>152</priority>
+    <skip_colorization>1</skip_colorization>
+    <no_patterns>1</no_patterns>
+    <positions>
+        <position id="lips">
+            <type>lips</type>
+            <point>50%;70</point>
+        </position>
+    </positions>
+    <connections_parent>
+        <connection>
+            <point>50%;2</point>
+        </connection>
+    </connections_parent>
+</bodypart>

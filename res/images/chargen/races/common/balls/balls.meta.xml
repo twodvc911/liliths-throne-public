@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>143</priority>
+    <conditions>
+        <condition>
+            <internal_testicles>0</internal_testicles>
+            <genital_arrangement>!cloaca</genital_arrangement>
+            <testicle_size>!vestigial</testicle_size>
+        </condition>
+    </conditions>
+    <scale>0.6</scale>
+    <mod_conditions>
+        <condition scale="0.25">
+            <testicle_size>tiny</testicle_size>
+        </condition>
+        <condition scale="0.45">
+            <testicle_size>average-sized</testicle_size>
+        </condition>
+        <condition scale="0.7">
+            <testicle_size>large</testicle_size>
+        </condition>
+        <condition scale="1.2">
+            <testicle_size>massive</testicle_size>
+        </condition>
+        <condition scale="1.5">
+            <testicle_size>gigantic</testicle_size>
+        </condition>
+        <condition scale="2.0">
+            <testicle_size>absurdly enormous</testicle_size>
+        </condition>
+    </mod_conditions>
+    <connections_parent>
+        <connection>
+            <point>276;0</point>
+            <transition_point_1>238;0</transition_point_1>
+            <transition_point_2>316;0</transition_point_2>
+        </connection>
+    </connections_parent>
+</bodypart>

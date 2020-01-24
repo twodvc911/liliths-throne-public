@@ -70,7 +70,9 @@ public enum PropertyValue {
 	newWeaponDiscovered(false),
 	newClothingDiscovered(false),
 	newItemDiscovered(false),
-	newRaceDiscovered(false);
+	newRaceDiscovered(false),
+
+	generatedImages(false);
 
 	
 	private boolean defaultValue;

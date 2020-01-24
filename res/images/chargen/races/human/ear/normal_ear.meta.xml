@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>148</priority>
+    <connections_parent>
+        <connection>
+            <position>side_ear_left;side_ear_right</position>
+            <point>50;7</point>
+        </connection>
+    </connections_parent>
+</bodypart>

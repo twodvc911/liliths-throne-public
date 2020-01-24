@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>250</priority>
+    <conditions>
+        <condition>
+            <hair_length>shoulder-length;long</hair_length>
+            <hair_style>curly;wavy</hair_style>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <position>hair</position>
+            <point>335;33</point>
+        </connection>
+    </connections_parent>
+</bodypart>

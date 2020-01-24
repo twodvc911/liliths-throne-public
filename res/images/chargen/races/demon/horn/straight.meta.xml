@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>270</priority>
+    <scale>0.75</scale>
+    <pick_priority>-1</pick_priority>
+    <conditions>
+        <condition>
+            <horn_type>!none</horn_type>
+        </condition>
+    </conditions>
+    <scale_params>
+        <scale_type>scale_y</scale_type>
+        <size_param>horn_length_cm</size_param>
+        <scale_of_zero>0.5</scale_of_zero>
+        <scale_of_hundred>3.5</scale_of_hundred>
+    </scale_params>
+    <mod_conditions>
+        <condition scale="0.82">
+            <horns_count_per_row>!1</horns_count_per_row>
+        </condition>
+        <condition scale="0.82">
+            <horns_count_per_row>!1;2</horns_count_per_row>
+        </condition>
+        <condition scale="0.82">
+            <horns_count_per_row>!1;2;3</horns_count_per_row>
+        </condition>
+    </mod_conditions>
+    <connections_parent>
+        <connection>
+            <point>55;188</point>
+        </connection>
+    </connections_parent>
+</bodypart>

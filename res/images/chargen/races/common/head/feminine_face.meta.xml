@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>150</priority>
+    <fallback>1</fallback>
+    <conditions>
+        <condition>
+            <feminity>very feminine;feminine</feminity>
+        </condition>
+    </conditions>
+    <connections_parent derive_from="normal_face"></connections_parent>
+    <positions derive_from="normal_face"></positions>
+</bodypart>

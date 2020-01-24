@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>140</priority>
+    <scale>1.0</scale>
+    <connections_parent>
+        <connection>
+            <position>top_ear_left;top_ear_right</position>
+            <point>100;160</point>
+        </connection>
+    </connections_parent>
+</bodypart>

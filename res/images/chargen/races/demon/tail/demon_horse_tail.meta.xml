@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>50</priority>
+    <scale>1.25</scale>
+    <modifiers>
+        <multiple_offset_y>-15</multiple_offset_y>
+    </modifiers>
+    <conditions>
+        <condition>
+            <tail_type>demon_horse</tail_type>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <point>560;182</point>
+        </connection>
+    </connections_parent>
+</bodypart>

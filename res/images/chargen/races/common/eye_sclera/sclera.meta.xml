@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority_offset>-0.05</priority_offset>
+    <connections_parent>
+        <connection>
+            <point>0;0</point>
+        </connection>
+    </connections_parent>
+</bodypart>

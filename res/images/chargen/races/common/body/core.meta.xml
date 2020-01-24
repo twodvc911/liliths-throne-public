@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>100</priority>
+    <conditions>
+        <condition>
+            <bodytypes>skinny</bodytypes>
+            <leg_configuration>bipedal</leg_configuration>
+        </condition>
+    </conditions>
+    <positions>
+        <position id="head">
+            <type>head</type>
+            <required>1</required>
+            <point>246;2</point>
+        </position>
+        <position id="leg_left">
+            <type>leg</type>
+            <required>1</required>
+            <transition>
+                <bodypart_type>body</bodypart_type>
+                <area_size_percent>15</area_size_percent>
+            </transition>
+            <point_1>2;920</point_1>
+            <point_2>238;920</point_2>
+        </position>
+        <position id="leg_right">
+            <type>leg</type>
+            <required>1</required>
+            <modifiers>
+                <inverse_x>1</inverse_x>
+            </modifiers>
+            <transition>
+                <bodypart_type>body</bodypart_type>
+                <area_size_percent>15</area_size_percent>
+            </transition>
+            <point_1>259;920</point_1>
+            <point_2>496;920</point_2>
+        </position>
+        <position id="arm_left">
+            <type>arm</type>
+            <required>1</required>
+            <multiple>
+                <rows_count_param>arm_rows</rows_count_param>
+                <output_mode>y_offset_down</output_mode>
+                <max_distance>250</max_distance>
+                <secondary_offset>50;-100</secondary_offset>
+                <secondary_priority_change>-40</secondary_priority_change>
+                <secondary_priority_inc>-0.1</secondary_priority_inc>
+            </multiple>
+            <transition>
+                <bodypart_type>body</bodypart_type>
+                <area_size_percent>10</area_size_percent>
+            </transition>
+            <point_1>79;84</point_1>
+            <point_2>79;215</point_2>
+        </position>
+        <position id="arm_right">
+            <type>arm</type>
+            <required>1</required>
+            <multiple>
+                <rows_count_param>arm_rows</rows_count_param>
+                <output_mode>y_offset_down</output_mode>
+                <max_distance>250</max_distance>
+                <secondary_offset>-50;-100</secondary_offset>
+                <secondary_priority_change>-40</secondary_priority_change>
+                <secondary_priority_inc>-0.1</secondary_priority_inc>
+            </multiple>
+            <modifiers>
+                <inverse_x>1</inverse_x>
+            </modifiers>
+            <transition>
+                <bodypart_type>body</bodypart_type>
+                <area_size_percent>10</area_size_percent>
+            </transition>
+            <point_1>419;84</point_1>
+            <point_2>419;215</point_2>
+        </position>
+        <position id="breasts">
+            <type>breasts</type>
+            <required>1</required>
+            <multiple>
+                <rows_count_param>breast_rows</rows_count_param>
+                <output_mode>y_offset_down</output_mode>
+                <max_distance>300</max_distance>
+                <secondary_scale_mul>0.95</secondary_scale_mul>
+                <secondary_priority_inc>-2</secondary_priority_inc>
+            </multiple>
+            <transition>
+                <bodypart_type>body</bodypart_type>
+                <area_size_percent>10</area_size_percent>
+            </transition>
+            <point_1>79;215</point_1>
+            <point_2>419;215</point_2>
+        </position>
+        <position id="breasts-crotch">
+            <type>breasts-crotch</type>
+            <multiple>
+                <rows_count_param>breast_crotch_rows</rows_count_param>
+                <output_mode>polygon_center</output_mode>
+                <max_distance>140</max_distance>
+                <secondary_priority_inc>-2</secondary_priority_inc>
+            </multiple>
+            <transition>
+                <bodypart_type>body</bodypart_type>
+                <area_size_percent>5</area_size_percent>
+            </transition>
+            <point>50%;708</point>
+        </position>
+        <position id="belly">
+            <type>belly</type>
+            <point>0;0</point>
+        </position>
+        <position id="pubic_hair">
+            <type>hair</type>
+            <point>248;900</point>
+        </position>
+        <position id="vagina">
+            <type>vagina</type>
+            <point>248;910</point>
+        </position>
+        <position id="cloaca">
+            <type>cloaca</type>
+            <point>248;886</point>
+        </position>
+        <position id="penis">
+            <type>penis</type>
+            <multiple>
+                <rows_count_param>penises_count</rows_count_param>
+                <output_mode>rotation</output_mode>
+                <max_distance>30</max_distance>
+                <secondary_priority_inc>-0.1</secondary_priority_inc>
+            </multiple>
+            <transition>
+                <bodypart_type>body</bodypart_type>
+                <area_size_percent>10</area_size_percent>
+            </transition>
+            <point>248;840</point>
+        </position>
+        <position id="balls">
+            <type>balls</type>
+            <multiple>
+                <rows_count_param>testicle_pairs_count</rows_count_param>
+                <output_mode>y_offset_down</output_mode>
+                <max_distance>35%</max_distance>
+                <secondary_offset>0;-20</secondary_offset>
+                <secondary_priority_inc>-0.1</secondary_priority_inc>
+            </multiple>
+            <transition>
+                <bodypart_type>body</bodypart_type>
+                <area_size_percent>10</area_size_percent>
+            </transition>
+            <point>248;850</point>
+        </position>
+        <position id="tail">
+            <type>tail</type>
+            <multiple>
+                <rows_count_param>tail_count</rows_count_param>
+                <output_mode>rotation</output_mode>
+                <max_distance>60;90</max_distance>
+                <secondary_priority_inc>-0.1</secondary_priority_inc>
+            </multiple>
+            <point>248;830</point>
+        </position>
+        <position id="wing_left">
+            <type>wing</type>
+            <point>130;357</point>
+        </position>
+        <position id="wing_right">
+            <type>wing</type>
+            <modifiers>
+                <inverse_x>1</inverse_x>
+            </modifiers>
+            <point>369;357</point>
+        </position>
+    </positions>
+</bodypart>

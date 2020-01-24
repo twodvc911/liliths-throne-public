@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>100</priority>
+    <conditions>
+        <condition>
+            <bodytypes>average;large;huge</bodytypes>
+            <leg_configuration>bipedal</leg_configuration>
+        </condition>
+    </conditions>
+    <positions derive_from="core"></positions>
+</bodypart>

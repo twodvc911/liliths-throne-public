@@ -1,5 +1,6 @@
 package com.lilithsthrone.controller.eventListeners.tooltips;
-import java.util.HashSet;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -53,6 +54,7 @@ import com.lilithsthrone.game.inventory.enchanting.LoadedEnchantment;
 import com.lilithsthrone.game.inventory.enchanting.TFEssence;
 import com.lilithsthrone.main.Main;
 import com.lilithsthrone.rendering.CachedImage;
+import com.lilithsthrone.rendering.chargen.CharacterImageRenderer;
 import com.lilithsthrone.rendering.ImageCache;
 import com.lilithsthrone.rendering.RenderingEngine;
 import com.lilithsthrone.utils.Colour;
@@ -719,6 +721,7 @@ public class TooltipInformationEventListener implements EventListener {
 					
 				} else {
 					CachedImage image = null;
+					boolean displayGenImage = false;
 					boolean displayImage = Main.getProperties().hasValue(PropertyValue.thumbnail)
 							&& Main.getProperties().hasValue(PropertyValue.artwork);
 					if (displayImage) {
@@ -726,6 +729,10 @@ public class TooltipInformationEventListener implements EventListener {
 							image = ImageCache.INSTANCE.requestImage(owner.getCurrentArtwork().getCurrentImage());
 						}
 						displayImage = image != null;
+					}
+					if (!displayImage) {
+						image = CharacterImageRenderer.INSTANCE.renderCharacter(owner);
+						displayGenImage = image != null;
 					}
 					
 					boolean crotchBreasts = owner.hasBreastsCrotch()
@@ -736,7 +743,7 @@ public class TooltipInformationEventListener implements EventListener {
 					int[] dimensions = new int[]{419, 508+crotchBreastAddition};
 					int imagePadding = 0;
 					int imageWidth = 0;
-					if (displayImage) {
+					if (displayImage || displayGenImage) {
 						// Add the scaled width to the tooltip dimensions
 						int[] scaledSize = image.getAdjustedSize(300, 445);
 						imageWidth = scaledSize[0];
@@ -755,7 +762,7 @@ public class TooltipInformationEventListener implements EventListener {
 							+ "</b>"
 							+ "</div>");
 
-					if (displayImage) {
+					if (displayImage || displayGenImage) {
 						tooltipSB.append("<div style='width: 410px; float: left'>");
 					}
 
@@ -868,6 +875,11 @@ public class TooltipInformationEventListener implements EventListener {
 									+ "<img id='CHARACTER_IMAGE' style='"+(revealed?"":"-webkit-filter: brightness(0%);")
 										+" width: auto; height: auto; max-width: 300; max-height: 445; padding-top: " + imagePadding + "px;' src='" + image.getThumbnailString()+ "'/>"
 										+(revealed?"":"<p style='position:absolute; top:33%; right:0; width:"+imageWidth+"; font-weight:bold; text-align:center; color:"+Colour.BASE_GREY.toWebHexString()+";'>Unlocked through sex!</p>")
+								+ "</div>");
+					} else if (displayGenImage) {
+						tooltipSB.append("</div>"
+								+ "<div style='float: left;'>"
+									+ "<img id='GEN_CHARACTER_IMAGE' style='width: auto; height: auto; max-width: 300; max-height: 350; padding-top: " + imagePadding + "px;' src='" + image.getThumbnailString()+ "'/>"
 								+ "</div>");
 					}
 				}

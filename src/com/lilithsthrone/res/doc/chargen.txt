@@ -1,0 +1,356 @@
+Bodypart xml meta files.
+
+priority
+    float, 
+    global priority of bodypart layer, bodyparts with lower priority will be drawn first
+
+priority_offset,
+    float, 
+    if set, current bodypart priority will be calculated as parent priority + priority_offset
+
+pick_priority
+    integer, 
+    global priority of bodypart pick, if there will be many bodyparts after applying conditions, 
+    bodypart with the maximal pick_priority will be choosed
+
+fallback
+    flag (0 or 1), 
+    if 1 - current bodypart will be picked if there are no other available. ignoring conditions.
+
+hidden
+    flag (0 or 1), 
+    if 1 - current bodypart (and its childs) will not be drawn.
+
+scale, 
+scale_x, 
+scale_y
+    float, 
+    scale multiplier for current bodypart image
+
+scale_params
+    tag, which conains child tags:
+        scale_type
+            string,
+            type of scaling
+            "scale_y" - scaling verticaly
+            "scale_x" - scaling horizontaly
+            "scale" - scaling both verticaly and horizontaly
+        size_param
+            string,
+            param (used in conditions) which returns int/float value
+            (size in cm)
+        scale_of_zero
+            float,
+            scale for zero size
+        scale_of_hundred
+            float,
+            scale for size 100 (cm, 1m)
+
+min_scale
+    float, 
+    minimal scale after all scalings
+
+max_scale
+    float, 
+    maximal scale after all scalings
+
+no_scale_by_parent
+    flag (0 or 1),
+    if 1 - current bodypart will not be scaled by parent bodypart (current level - 1)
+
+pattern_scale
+    float, 
+    scale of pattern image when applying to current bodypart
+
+mask_calculation_mode
+    values:
+        combine_with_parent_mask
+        - parent bodypart transparent pixels will be transparent for current bodypart
+
+no_patterns
+    flag (0 or 1),
+    if 1 - patterns (spots, freckles...) will not be applied for this bodypart
+
+no_transitions
+    flag (0 or 1),
+    if 1 - color transitions will not be applied for this bodypart
+
+skip_colorization
+    flag (0 or 1),
+    if 1 - colorization will be skipped for this bodypart
+
+derive_color_from_bodypart
+    string,
+    bodypart type name (body, arm, leg, penis...) from wich color for this bodypart will be taken
+
+color_mix
+    tag, which conains child tags:
+        color
+            Color string,
+            color for mix
+        type
+            string,
+            may be "multiply" (multiplying colors) or "transition" (linear mixing colors)
+        value
+            float,
+            mix percent for transition type
+
+modifiers
+    tag, which can contain one or more child tags:
+        "scale", "scale_x", "scale_y", "offset_x", "offset_y", "add_priority", 
+        "rotation", "inverse_x", "inverse_y", "multiple_offset_scale", 
+        "multiple_offset_scale_x", "multiple_offset_scale_y",
+        "multiple_offset_x", "multiple_offset_y"
+        each of these tags should contain float value
+
+conditions
+    conditions which must be true for picking current bodypart
+    each condition may include several tags - subconditions
+    condition is true if all of its subconditions are true
+    if any of conditions is true for character, current bodypart can be used for it.
+
+available subcondition tags:
+
+    "affection_level_to_player"
+    loathing, hatred, strong dislike, dislike, annoyed, neutral, friendly, likes, caring, love, worshipping
+
+    "random2", "random3", "random4"...
+    int, random number from 0 to n-1
+
+    "charnamehash2", "charnamehash3", "charnamehash4", ...
+    int, hash number from 0 to n-1, consistent for each character
+
+    "name"
+    character name
+
+    for body:
+        "pregnancy"
+        level of pregnancy 0-3
+
+        "bodytypes"
+        skinny, slender, average, large, huge
+
+        "muscles"
+        soft, lightly muscled, toned, muscular, ripped
+
+        "height_cm"
+        1 - 500
+
+    for face:
+        "feminity"
+        very masculine, masculine, androgynous, feminine, very feminine
+
+        "face_is_bestial"
+        0 or 1
+
+        "ear_is_bestial"
+        0 or 1
+
+        "ear_type"
+        human, angel, demonic, cat, tufted cat, upright rabbit, floppy rabbit, fox, fennec fox, floppy dog, pointed dog, folded dog, wolf...
+
+        "lips_size"
+        thin, average-sized, full, plump, huge, massive, gigantic, absurdly colossal
+
+    for eyes:
+        "eye_pairs"
+        1 - 10
+
+        "eye_iris_shape"
+        round, horizontal, vertical, heart-shaped, star-shaped
+
+        "eye_pupil_shape"
+        round, horizontal, vertical, heart-shaped, star-shaped
+
+    for hairs:
+        "hair_length"
+        bald, very short, short, shoulder-length, long, very long, incredibly long, floor-length
+
+        "hair_type"
+        head-feather, head-scale, slime-hair, hair
+
+        "hair_style"
+        natural, messy, loose, curly, straight, slicked-back, afro, sidecut, pixie-cut, mohawk, wavy, ponytail, low ponytail, twintails, drill hair,
+        chignon, braided, twin braids, crown braid, hime-cut, bird cage, dreadlocks, bun, bob-cut, chonmage, topknot
+
+        "pubic_hair"
+        none, stubble, manicured, trimmed, natural, unkempt, bushy, wild
+
+    for arms:
+        "arm_rows"
+        1 - 3
+
+        "arm_is_bestial"
+        0 or 1
+
+        "is_hand_nails_polished"
+        0 or 1
+
+    for legs:
+        "leg_is_bestial"
+        0 or 1
+
+        "leg_configuration"
+        arachnid, cephalopod, bipedal, tail, tail_long, taur
+
+        "foot_structure"
+        plantigrade, digitigrade, unguligrade
+
+        "is_foot_nails_polished"
+        0 or 1
+
+    for breasts:
+        "breast_size"
+        flat, almost unnoticeable, extremely tiny, tiny, small, average-sized, large, sizeable, huge, massive, gigantic, colossal, extreme, monstrous, hyper
+
+        "breast_rows"
+        1 - 5
+
+    for nipples:
+        "areola_size"
+        tiny, small, average-sized, large, massive
+
+        "areola_shape"
+        normal, heart, star
+
+        "nipple_size"
+        tiny, small, big, large, massive
+
+        "nipple_shape"
+        normal, inverted, nipple-cunts, lipples
+
+        "nipple_count_per_breast"
+        1 - 4
+
+        "nipple_count_per_breast_crotch"
+        1 - 4
+
+    for breast-crotch:
+        "breast_crotch_size"
+        flat, almost unnoticeable, extremely tiny, tiny, small, average-sized, large, sizeable, huge, massive, gigantic, colossal, extreme, monstrous, hyper
+
+        "breast_crotch_rows"
+        1 - 5
+
+    for vagina:
+        "vagina_labia_size"
+        tiny, small, average-sized, large, massive
+
+        "vagina_clitoris_size"
+        small, big, large, huge, massive, enormous, gigantic, absurdly colossal
+
+        "genital_arrangement"
+        normal, cloaca
+
+    for penis:
+        "penis_size_cm"
+        1 - 100
+
+        "penis_girth"
+        thin, slender, averagely-girthed, thick, fat
+
+        "penises_count"
+        0 - 2
+
+        "has_penis"
+        0 or 1
+
+        "penis_is_veiny"
+        0 or 1
+
+        "penis_is_sheathed"
+        0 or 1
+
+        "penis_is_barbed"
+        0 or 1
+
+        "has_penis_erection"
+        0 or 1
+
+    for testicles:
+        "testicles_count"
+        2 - 8
+
+        "testicle_size"
+        vestigial, tiny, average-sized, large, huge, massive, gigantic, absurdly enormous
+
+        "testicle_pairs_count"
+        1 - 4
+
+        "internal_testicles"
+        0 or 1
+
+    for horns:
+        "horn_length"
+        tiny, small, long, huge, massive
+
+        "horn_length_cm"
+        1 - 75
+
+        "horn_type"
+        none, straight, curved, curled, spiral, unicorn, multi-branched, swept-back
+
+        "horn_rows"
+        1 - 3
+
+        "horns_count_per_row"
+        1 - 4
+
+    for tails:
+        "tail_type"
+        demon_common, demon_hairtip, demon_horse, dog_morph, dog_morph_stubby, lycan, fox_morph, fox_morph_magic, cow_morph, cat_morph, cat_morph_short, cat_morph_tufted, horse_morph, horse_morph_zebra, harpy ...
+
+        "tail_pattern"
+        none, highlights, striped, spotted, mottled, marked, freckled, ombre
+
+        "tail_count"
+        0 - 9
+
+        "tail_girth"
+        thin, slender, averagely-girthed, thick, fat
+
+    for wings:
+        "wing_type"
+        none, demon_common, demon_feathered, angel
+
+        "wing_able_to_fly"
+        0 or 1
+
+        "wing_size"
+        tiny, small, average-sized, large, huge
+
+
+positions
+    position for bodyparts which are parts of current bodypart
+
+    id
+        int. id of position. must be unique in this bodypart
+
+    type
+        string. bodypart code
+
+    required
+        if 1 and no bodyparts will be found for required position, drawing process of character will be canceled
+
+    point_1, point_2 - coordinates (x;y) of points on image
+        bodypart image will be stretched and positioned according to this points, and points in "connections" of bodypart for this position
+    instead of 2 points, one can be used:
+
+    point - coordinate (x;y) of 1 point on image
+        bodypart image will be positioned according to this point (but not stretched)
+
+    ...
+
+
+connections_parent
+    list of connections ("connection" tags) for this bodypart (to bodyparts which contain positions for this bodypart)
+
+    type
+        bodytype code of parent (optional)
+    
+    position
+        id of position. current bodypart will be drawn only in positions with this id (ids) (optional)
+
+    points (point_1, point_2, point)
+        coordinates (x;y) of points inside current image
+        image will be positioned (and stretched if 2 points) according to this points

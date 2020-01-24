@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>50</priority>
+    <connections_parent>
+        <connection>
+            <point>742;92</point>
+        </connection>
+    </connections_parent>
+</bodypart>

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>200</priority>
+    <conditions>
+        <condition>
+            <breast_size>large</breast_size>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <point_1>40;48</point_1>
+            <point_2>369;48</point_2>
+        </connection>
+    </connections_parent>
+    <positions>
+        <position id="nipple_left">
+            <type>nipple</type>
+            <draw_mode>use_parent_alpha</draw_mode>
+            <multiple>
+                <rows_count_param>nipple_count_per_breast</rows_count_param>
+                <output_mode>polygon</output_mode>
+                <max_distance>100</max_distance>
+                <mid_distance>70</mid_distance>
+                <min_distance>5%</min_distance>
+                <secondary_priority_inc>-0.01</secondary_priority_inc>
+            </multiple>
+            <point>111;120</point>
+        </position>
+        <position id="nipple_right">
+            <type>nipple</type>
+            <draw_mode>use_parent_alpha</draw_mode>
+            <multiple>
+                <rows_count_param>nipple_count_per_breast</rows_count_param>
+                <output_mode>polygon</output_mode>
+                <max_distance>100</max_distance>
+                <mid_distance>70</mid_distance>
+                <min_distance>5%</min_distance>
+                <secondary_priority_inc>-0.01</secondary_priority_inc>
+            </multiple>
+            <modifiers>
+                <inverse_x>1</inverse_x>
+            </modifiers>
+            <point>300;120</point>
+        </position>
+    </positions>
+</bodypart>

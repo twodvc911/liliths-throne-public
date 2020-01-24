@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>99</priority>
+    <scale_x>1.5</scale_x>
+    <fallback>1</fallback>
+    <conditions>
+        <condition>
+            <charnamehash2>0</charnamehash2>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <point_1>747;30</point_1>
+            <point_2>747;103</point_2>
+        </connection>
+    </connections_parent>
+</bodypart>

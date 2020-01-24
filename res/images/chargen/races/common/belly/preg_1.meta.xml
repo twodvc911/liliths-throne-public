@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>101</priority>
+    <conditions>
+        <condition>
+            <pregnancy>1</pregnancy>
+            <bodytypes>skinny;slender;average;large</bodytypes>
+            <leg_configuration>bipedal</leg_configuration>
+        </condition>
+        <condition>
+            <pregnancy>0</pregnancy>
+            <bodytypes>huge</bodytypes>
+            <leg_configuration>bipedal</leg_configuration>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <type>body</type>
+            <point>0;0</point>
+        </connection>
+    </connections_parent>
+</bodypart>

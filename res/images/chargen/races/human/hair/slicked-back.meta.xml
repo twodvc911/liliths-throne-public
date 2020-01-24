@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>250</priority>
+    <conditions>
+        <condition>
+            <hair_length>!bald</hair_length>
+            <hair_style>slicked-back</hair_style>
+        </condition>
+        <condition>
+            <hair_length>very short;short</hair_length>
+            <hair_style>afro</hair_style>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <position>hair</position>
+            <point>200;70</point>
+        </connection>
+    </connections_parent>
+</bodypart>

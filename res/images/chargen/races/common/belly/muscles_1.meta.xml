@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>101</priority>
+    <conditions>
+        <condition>
+            <pregnancy>0</pregnancy>
+            <bodytypes>!huge</bodytypes>
+            <muscles>lightly muscled</muscles>
+        </condition>
+        <condition>
+            <leg_configuration>taur</leg_configuration>
+            <bodytypes>!huge</bodytypes>
+            <muscles>lightly muscled</muscles>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <type>body</type>
+            <point>-90;-340</point>
+        </connection>
+    </connections_parent>
+</bodypart>

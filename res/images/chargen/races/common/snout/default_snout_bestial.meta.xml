@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>152</priority>
+    <skip_colorization>1</skip_colorization>
+    <no_patterns>1</no_patterns>
+    <conditions>
+        <condition>
+            <face_is_bestial>1</face_is_bestial>
+        </condition>
+    </conditions>
+    <positions>
+        <position id="lips">
+            <type>lips</type>
+            <point>50%;70</point>
+        </position>
+    </positions>
+    <connections_parent>
+        <connection>
+            <point>50%;14</point>
+        </connection>
+    </connections_parent>
+</bodypart>

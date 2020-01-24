@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority_offset>-0.04</priority_offset>
+    <conditions>
+        <condition>
+            <eye_iris_shape>vertical</eye_iris_shape>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <position>eye_iris</position>
+            <point>17;39</point>
+        </connection>
+    </connections_parent>
+</bodypart>

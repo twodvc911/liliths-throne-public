@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>142</priority>
+    <fallback>1</fallback>
+    <no_patterns>1</no_patterns>
+    <mod_conditions>
+        <condition scale_y="0.75">
+            <has_penis>1</has_penis>
+            <has_penis_erection>1</has_penis_erection>
+        </condition>
+    </mod_conditions>
+    <connections_parent>
+        <connection>
+            <point>20;5</point>
+        </connection>
+    </connections_parent>
+</bodypart>

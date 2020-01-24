@@ -1,5 +1,6 @@
 package com.lilithsthrone.controller;
-import java.io.File;
+
+import java.io.File;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
@@ -5733,6 +5734,7 @@ public class MainControllerInitMethod {
 					new Value<>("LEVEL_DRAIN", PropertyValue.levelDrain),
 					new Value<>("ARTWORK", PropertyValue.artwork),
 					new Value<>("THUMBNAIL", PropertyValue.thumbnail),
+					new Value<>("GENERATED_IMAGES", PropertyValue.generatedImages),
 					new Value<>("SILLY", PropertyValue.sillyMode),
 					new Value<>("AUTO_SEX_CLOTHING_MANAGEMENT", PropertyValue.autoSexClothingManagement),
 					new Value<>("NON_CON", PropertyValue.nonConContent),

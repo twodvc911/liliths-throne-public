@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>250</priority>
+    <hidden>1</hidden>
+    <skip_colorization>1</skip_colorization>
+    <no_patterns>1</no_patterns>
+    <conditions>
+        <condition>
+            <hair_length>bald</hair_length>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <position>hair</position>
+        </connection>
+    </connections_parent>
+</bodypart>

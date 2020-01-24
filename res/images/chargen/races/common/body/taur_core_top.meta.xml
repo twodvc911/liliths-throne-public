@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>101</priority>
+    <conditions>
+        <condition>
+            <leg_configuration>taur</leg_configuration>
+        </condition>
+    </conditions>
+    <positions>
+        <position id="head">
+            <type>head</type>
+            <required>1</required>
+            <point>246;2</point>
+        </position>
+        <position id="arm_left">
+            <type>arm</type>
+            <required>1</required>
+            <multiple>
+                <rows_count_param>arm_rows</rows_count_param>
+                <output_mode>y_offset_down</output_mode>
+                <max_distance>250</max_distance>
+                <secondary_offset>50;-100</secondary_offset>
+                <secondary_priority_change>-40</secondary_priority_change>
+                <secondary_priority_inc>-0.1</secondary_priority_inc>
+            </multiple>
+            <transition>
+                <bodypart_type>body</bodypart_type>
+                <area_size_percent>10</area_size_percent>
+            </transition>
+            <point_1>79;84</point_1>
+            <point_2>79;215</point_2>
+        </position>
+        <position id="arm_right">
+            <type>arm</type>
+            <required>1</required>
+            <multiple>
+                <rows_count_param>arm_rows</rows_count_param>
+                <output_mode>y_offset_down</output_mode>
+                <max_distance>250</max_distance>
+                <secondary_offset>-50;-100</secondary_offset>
+                <secondary_priority_change>-40</secondary_priority_change>
+                <secondary_priority_inc>-0.1</secondary_priority_inc>
+            </multiple>
+            <modifiers>
+                <inverse_x>1</inverse_x>
+            </modifiers>
+            <transition>
+                <bodypart_type>body</bodypart_type>
+                <area_size_percent>10</area_size_percent>
+            </transition>
+            <point_1>419;84</point_1>
+            <point_2>419;215</point_2>
+        </position>
+        <position id="breasts">
+            <type>breasts</type>
+            <required>1</required>
+            <multiple>
+                <rows_count_param>breast_rows</rows_count_param>
+                <output_mode>y_offset_down</output_mode>
+                <max_distance>300</max_distance>
+                <secondary_scale_mul>0.95</secondary_scale_mul>
+                <secondary_priority_inc>-2</secondary_priority_inc>
+            </multiple>
+            <transition>
+                <bodypart_type>body</bodypart_type>
+                <area_size_percent>10</area_size_percent>
+            </transition>
+            <point_1>79;215</point_1>
+            <point_2>419;215</point_2>
+        </position>
+        <position id="belly">
+            <type>belly</type>
+            <modifiers>
+                <add_priority>0.5</add_priority>
+            </modifiers>
+            <point>0;0</point>
+        </position>
+    </positions>
+    <connections_parent>
+        <connection>
+            <point_1>50;100%</point_1>
+            <point_2>447;100%</point_2>
+        </connection>
+    </connections_parent>
+</bodypart>

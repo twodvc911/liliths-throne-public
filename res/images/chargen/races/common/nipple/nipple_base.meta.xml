@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority_offset>0.4</priority_offset>
+    <scale>1.0</scale>
+    <min_scale>0.05</min_scale>
+    <conditions>
+        <condition>
+            <nipple_shape>normal</nipple_shape>
+        </condition>
+    </conditions>
+    <mod_conditions>
+        <condition scale="0.08">
+            <nipple_size>tiny</nipple_size>
+        </condition>
+        <condition scale="0.18">
+            <nipple_size>small</nipple_size>
+        </condition>
+        <condition scale="0.25">
+            <nipple_size>big</nipple_size>
+        </condition>
+        <condition scale="0.4">
+            <nipple_size>large</nipple_size>
+        </condition>
+        <condition scale="0.6">
+            <nipple_size>massive</nipple_size>
+        </condition>
+        <condition scale="0.75">
+            <nipple_count_per_breast>4</nipple_count_per_breast>
+        </condition>
+        <condition scale="0.825">
+            <nipple_count_per_breast>3</nipple_count_per_breast>
+        </condition>
+        <condition scale="0.9">
+            <nipple_count_per_breast>2</nipple_count_per_breast>
+        </condition>
+        <condition scale="1.0">
+            <nipple_count_per_breast>1</nipple_count_per_breast>
+        </condition>
+    </mod_conditions>
+    <positions>
+        <position id="nipple_areola">
+            <type>nipple</type>
+            <draw_mode>use_parent_parent_alpha</draw_mode>
+            <point>50%;50%</point>
+        </position>
+        <position id="nipple_reflection">
+            <type>nipple</type>
+            <point>90;0</point>
+        </position>
+    </positions>
+    <connections_parent>
+        <connection>
+            <point>50%;50%</point>
+        </connection>
+    </connections_parent>
+</bodypart>

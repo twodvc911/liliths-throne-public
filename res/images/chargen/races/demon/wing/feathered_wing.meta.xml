@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>60</priority>
+    <scale>0.44</scale>
+    <conditions>
+        <condition>
+            <wing_type>demon_feathered</wing_type>
+        </condition>
+    </conditions>
+    <mod_conditions>
+        <condition scale="0.5">
+            <wing_size>tiny</wing_size>
+        </condition>
+        <condition scale="0.8">
+            <wing_size>small</wing_size>
+        </condition>
+        <condition scale="1.1">
+            <wing_size>average-sized</wing_size>
+        </condition>
+        <condition scale="1.5">
+            <wing_size>large</wing_size>
+        </condition>
+        <condition scale="2.0">
+            <wing_size>huge</wing_size>
+        </condition>
+    </mod_conditions>
+    <connections_parent>
+        <connection>
+            <point>1706;420</point>
+        </connection>
+    </connections_parent>
+</bodypart>

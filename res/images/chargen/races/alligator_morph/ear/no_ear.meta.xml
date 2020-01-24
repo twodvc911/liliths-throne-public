@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<bodypart>
+    <pick_priority>-1</pick_priority>
+    <hidden>1</hidden>
+    <connections_parent>
+        <connection>
+        </connection>
+    </connections_parent>
+</bodypart>

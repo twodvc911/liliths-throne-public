@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>145</priority>
+    <scale>1.0</scale>
+    <pattern_scale>0.25</pattern_scale>
+    <pick_priority>-1</pick_priority>
+    <scale_params>
+        <scale_type>scale</scale_type>
+        <real_size_base>50</real_size_base>
+        <size_param>penis_size_cm</size_param>
+    </scale_params>
+    <conditions>
+        <condition>
+            <genital_arrangement>normal</genital_arrangement>
+            <penis_is_sheathed>0</penis_is_sheathed>
+        </condition>
+        <condition>
+            <genital_arrangement>cloaca</genital_arrangement>
+            <has_penis_erection>1</has_penis_erection>
+        </condition>
+        <condition>
+            <penis_is_sheathed>1</penis_is_sheathed>
+            <has_penis_erection>1</has_penis_erection>
+        </condition>
+    </conditions>
+    <mod_conditions>
+        <condition scale_x="0.7">
+            <penis_girth>thin</penis_girth>
+        </condition>
+        <condition scale_x="0.85">
+            <penis_girth>slender</penis_girth>
+        </condition>
+        <condition scale_x="1">
+            <penis_girth>averagely-girthed</penis_girth>
+        </condition>
+        <condition scale_x="1.15">
+            <penis_girth>thick</penis_girth>
+        </condition>
+        <condition scale_x="1.25">
+            <penis_girth>fat</penis_girth>
+        </condition>
+        <condition scale_y="0.8">
+            <has_penis_erection>0</has_penis_erection>
+        </condition>
+        <condition inverse_y="1" add_priority="50" offset_y="25">
+            <has_penis_erection>1</has_penis_erection>
+        </condition>
+        <condition offset_y="20">
+            <genital_arrangement>cloaca</genital_arrangement>
+        </condition>
+    </mod_conditions>
+    <connections_parent>
+        <connection>
+            <point>70;0</point>
+            <transition_point_1>0;0</transition_point_1>
+            <transition_point_2>100%;0</transition_point_2>
+        </connection>
+    </connections_parent>
+</bodypart>

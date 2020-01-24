@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>165</priority>
+    <fallback>1</fallback>
+    <connections_parent>
+        <connection>
+            <point>1;54</point>
+        </connection>
+    </connections_parent>
+    <mod_conditions>
+        <condition scale="0.7">
+            <eye_pairs>!1</eye_pairs>
+        </condition>
+        <condition scale="0.7">
+            <eye_pairs>!1;2</eye_pairs>
+        </condition>
+        <condition scale="0.7">
+            <eye_pairs>!1;2;3</eye_pairs>
+        </condition>
+    </mod_conditions>
+    <positions>
+        <position id="eye_shadow">
+            <type>eye_shadow</type>
+            <draw_mode>use_parent_parent_alpha</draw_mode>
+            <point>25%;50%</point>
+        </position>
+        <position id="eye_liner">
+            <type>eye_liner</type>
+            <point>0;0</point>
+        </position>
+        <position id="eye_sclera">
+            <type>eye_sclera</type>
+            <draw_mode>use_parent_alpha</draw_mode>
+            <point>0;0</point>
+        </position>
+        <position id="eye_pupil">
+            <type>eye_pupil</type>
+            <draw_mode>use_parent_alpha</draw_mode>
+            <point>50;60</point>
+        </position>
+        <position id="eye_iris">
+            <type>eye_iris</type>
+            <draw_mode>use_parent_alpha</draw_mode>
+            <point>50;60</point>
+        </position>
+        <position id="eye_iris_reflection">
+            <type>eye_iris</type>
+            <draw_mode>use_parent_alpha</draw_mode>
+            <point>50;60</point>
+        </position>
+    </positions>
+</bodypart>

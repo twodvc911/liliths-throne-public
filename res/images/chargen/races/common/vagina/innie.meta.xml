@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>120</priority>
+    <no_patterns>1</no_patterns>
+    <conditions>
+        <condition>
+            <genital_arrangement>!cloaca</genital_arrangement>
+            <vagina_clitoris_size>tiny</vagina_clitoris_size>
+        </condition>
+    </conditions>
+    <mod_conditions>
+        <condition scale_y="0.5">
+            <vagina_labia_size>tiny</vagina_labia_size>
+        </condition>
+        <condition scale_y="0.75">
+            <vagina_labia_size>small</vagina_labia_size>
+        </condition>
+        <condition scale_y="1.25">
+            <vagina_labia_size>large</vagina_labia_size>
+        </condition>
+        <condition scale_y="1.5">
+            <vagina_labia_size>massive</vagina_labia_size>
+        </condition>
+        <condition scale_y="1.5">
+            <vagina_labia_size>massive</vagina_labia_size>
+        </condition>
+        <condition scale_y="0.4">
+            <has_penis>1</has_penis>
+            <has_penis_erection>0</has_penis_erection>
+        </condition>
+        <condition scale_y="0.75">
+            <has_penis>1</has_penis>
+            <has_penis_erection>1</has_penis_erection>
+        </condition>
+    </mod_conditions>
+    <connections_parent>
+        <connection>
+            <point>7;44</point>
+        </connection>
+    </connections_parent>
+</bodypart>

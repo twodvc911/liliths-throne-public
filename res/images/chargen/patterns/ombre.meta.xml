@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<pattern>
+    <type>2_colors_pattern</type>
+    <color_primary>#ffffff</color_primary>
+    <color_secondary>#000000</color_secondary>
+    <scale>0.5</scale>
+</pattern>

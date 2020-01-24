@@ -1,5 +1,6 @@
 package com.lilithsthrone.game.dialogue.utils;
-import java.awt.Toolkit;
+
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -1886,6 +1887,14 @@ public class OptionsDialogue {
 								"Artwork",
 								"Enables artwork to be displayed in characters' information screens.",
 								Main.getProperties().hasValue(PropertyValue.artwork)));
+
+			UtilText.nodeContentSB.append(getContentPreferenceDiv(
+								"GENERATED_IMAGES",
+								Colour.BASE_GOLD,
+								"Auto generated images",
+								"Enables generated images of PC and NPC to be displayed on information screens if no artwork is available.<br>"
+									+ "<span style='color:orange;'><b>Warning</b>: this is experimental function!</span>",
+								Main.getProperties().hasValue(PropertyValue.generatedImages)));
 
 			UtilText.nodeContentSB.append(getContentPreferenceDiv("THUMBNAIL",
 								Colour.BASE_BLUE_STEEL,

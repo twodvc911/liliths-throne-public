@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>140</priority>
+    <conditions>
+        <condition>
+            <ear_is_bestial>0</ear_is_bestial>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <position>side_ear_left;side_ear_right</position>
+            <point>108;6</point>
+        </connection>
+    </connections_parent>
+</bodypart>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>88</priority>
+    <scale>0.6</scale>
+    <derive_color_from_bodypart>body_taur</derive_color_from_bodypart>
+    <conditions>
+        <condition>
+            <leg_configuration>taur</leg_configuration>
+            <pregnancy>!0</pregnancy>
+        </condition>
+        <condition>
+            <leg_configuration>taur</leg_configuration>
+            <bodytypes>huge</bodytypes>
+        </condition>
+    </conditions>
+    <mod_conditions>
+        <condition scale="1.2">
+            <bodytypes>huge</bodytypes>
+        </condition>
+        <condition scale="1.0">
+            <pregnancy>1</pregnancy>
+        </condition>
+        <condition scale="1.5">
+            <pregnancy>2</pregnancy>
+        </condition>
+        <condition scale="2.0">
+            <pregnancy>3</pregnancy>
+        </condition>
+    </mod_conditions>
+    <connections_parent>
+        <connection>
+            <type>body_taur</type>
+            <point>50%;50%</point>
+        </connection>
+    </connections_parent>
+</bodypart>

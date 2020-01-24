@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>144</priority>
+    <no_patterns>1</no_patterns>
+    <conditions>
+        <condition>
+            <pubic_hair>!none</pubic_hair>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <position>pubic_hair</position>
+            <point>48;68</point>
+        </connection>
+    </connections_parent>
+</bodypart>

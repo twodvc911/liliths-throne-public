@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>145</priority>
+    <derive_color_from_bodypart>penis</derive_color_from_bodypart>
+    <no_patterns>1</no_patterns>
+    <no_transitions>1</no_transitions>
+    <conditions>
+        <condition>
+            <genital_arrangement>normal</genital_arrangement>
+            <penis_is_sheathed>1</penis_is_sheathed>
+            <has_penis_erection>0</has_penis_erection>
+        </condition>
+    </conditions>
+    <mod_conditions>
+        <condition scale="0.8">
+            <penis_girth>thin</penis_girth>
+        </condition>
+        <condition scale="1.0">
+            <penis_girth>slender</penis_girth>
+        </condition>
+        <condition scale="1.25">
+            <penis_girth>averagely-girthed</penis_girth>
+        </condition>
+        <condition scale="1.5">
+            <penis_girth>thick</penis_girth>
+        </condition>
+        <condition scale="1.75">
+            <penis_girth>fat</penis_girth>
+        </condition>
+    </mod_conditions>
+    <connections_parent>
+        <connection>
+            <point>22;22</point>
+        </connection>
+    </connections_parent>
+</bodypart>

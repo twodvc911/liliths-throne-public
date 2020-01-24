@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority_offset>-0.05</priority_offset>
+    <scale>0.25</scale>
+    <min_scale>0.05</min_scale>
+    <color_mix>
+        <color>#a08a9a</color>
+        <type>transition</type>
+        <value>50</value>
+    </color_mix>
+    <no_scale_by_parent>1</no_scale_by_parent>
+    <mod_conditions>
+        <condition scale="0.25">
+            <areola_size>tiny</areola_size>
+        </condition>
+        <condition scale="0.35">
+            <areola_size>small</areola_size>
+        </condition>
+        <condition scale="0.45">
+            <areola_size>average-sized</areola_size>
+        </condition>
+        <condition scale="0.6">
+            <areola_size>big</areola_size>
+        </condition>
+        <condition scale="0.75">
+            <areola_size>large</areola_size>
+        </condition>
+        <condition scale="0.95">
+            <areola_size>massive</areola_size>
+        </condition>
+        <condition scale="1.25">
+            <breast_size>large</breast_size>
+        </condition>
+        <condition scale="1.5">
+            <breast_size>sizeable</breast_size>
+        </condition>
+        <condition scale="1.75">
+            <breast_size>huge</breast_size>
+        </condition>
+        <condition scale="2.0">
+            <breast_size>massive</breast_size>
+        </condition>
+        <condition scale="2.5">
+            <breast_size>gigantic;colossal;extreme;monstrous;hyper</breast_size>
+        </condition>
+        <condition add_priority="-10">
+            <breast_size>flat;almost unnoticeable;extremely tiny</breast_size>
+        </condition>
+    </mod_conditions>
+    <connections_parent>
+        <connection>
+            <position>nipple_areola</position>
+            <point>256;256</point>
+        </connection>
+    </connections_parent>
+</bodypart>

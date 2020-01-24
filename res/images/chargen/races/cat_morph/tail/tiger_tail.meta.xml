@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>50</priority>
+    <scale>0.8</scale>
+    <no_patterns>1</no_patterns>
+    <conditions>
+        <condition>
+            <tail_type>cat_morph</tail_type>
+            <tail_pattern>striped</tail_pattern>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <point>937;91</point>
+        </connection>
+    </connections_parent>
+</bodypart>

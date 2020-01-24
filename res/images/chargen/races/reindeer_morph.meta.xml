@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<raceinfo>
+    <fallback_race>cow_morph</fallback_race>
+    <fallback_race>horse_morph</fallback_race>
+    <fallback_race>human</fallback_race>
+</raceinfo>

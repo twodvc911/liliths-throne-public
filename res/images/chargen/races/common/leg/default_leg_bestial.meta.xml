@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>135</priority>
+    <conditions>
+        <condition>
+            <leg_is_bestial>1</leg_is_bestial>
+        </condition>
+    </conditions>
+    <positions>
+        <position id="foot_makeup">
+            <type>leg</type>
+            <point>145;1157</point>
+        </position>
+    </positions>
+    <connections_parent>
+        <connection>
+            <type>body;body_taur</type>
+            <point_1>26;0</point_1>
+            <point_2>267;0</point_2>
+        </connection>
+    </connections_parent>
+</bodypart>

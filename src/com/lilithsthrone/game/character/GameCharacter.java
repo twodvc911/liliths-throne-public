@@ -1,5 +1,6 @@
 package com.lilithsthrone.game.character;
-import java.io.File;
+
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -242,6 +243,7 @@ import com.lilithsthrone.rendering.Artwork;
 import com.lilithsthrone.rendering.CachedImage;
 import com.lilithsthrone.rendering.ImageCache;
 import com.lilithsthrone.rendering.SVGImages;
+import com.lilithsthrone.rendering.chargen.CharacterImageRenderer;
 import com.lilithsthrone.utils.Colour;
 import com.lilithsthrone.utils.Units;
 import com.lilithsthrone.utils.Util;
@@ -3059,6 +3061,9 @@ public abstract class GameCharacter implements XMLSaving {
 	public String getCharacterInformationScreen(boolean includePerkTree) {
 		infoScreenSB.setLength(0);
 
+		boolean show_artwork_add_btn = false;
+		boolean show_chargen = false;
+		
 		if (Main.getProperties().hasValue(PropertyValue.artwork)) {
 			if (hasArtwork()) {
 				Artwork artwork = this.getCurrentArtwork();
@@ -3093,6 +3098,29 @@ public abstract class GameCharacter implements XMLSaving {
 								+ "<div class='normal-button"+(this.getArtworkList().size()==1?" disabled":"")+"' id='ARTWORK_ARTIST_NEXT' style='float:left; width:10%; margin:0; padding:0; text-align:center;'>&gt;</div>"
 								+ "</div>");
 			} else {
+				show_chargen = true;
+				show_artwork_add_btn = true;
+			}
+		} else {
+			show_chargen = true;
+		}
+
+		if (show_chargen) {
+			CachedImage image = CharacterImageRenderer.INSTANCE.renderCharacter(this);
+			if (image != null) {
+				String imageString = image.getImageString();
+				int width = image.getWidth();
+				int percentageWidth = image.getPercentageWidth();
+				infoScreenSB.append(
+					"<div class='full-width-container' style='position:relative; float:right; width:"+percentageWidth+"%; max-width:"+width+"; object-fit:scale-down;'>"
+							+ "<div class='full-width-container' style='width:100%; margin:0;'>"
+							+ "<img id='CHARACTER_IMAGE' style='width:100%;' src='"+imageString+"'/>"//file:/
+							+ "<div class='overlay no-pointer no-highlight' style='text-align:center;'>" // Add overlay div to stop javaFX's insane image drag+drop
+							+ "</div>"
+							+ (show_artwork_add_btn ? "<div class='title-button' id='ARTWORK_ADD' style='background:transparent; left:auto; right:28px;'>"+SVGImages.SVG_IMAGE_PROVIDER.getAddIcon()+"</div>" : "")
+							+ "</div>"
+							+ "</div>");
+			} else if (show_artwork_add_btn) {
 				infoScreenSB.append("<div class='title-button' id='ARTWORK_ADD' style='position:relative; float:right; background:transparent; left:auto; right:4px;'>"+SVGImages.SVG_IMAGE_PROVIDER.getAddIcon()+"</div>");
 			}
 		}
