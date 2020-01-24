@@ -57,6 +57,7 @@ public class CharacterBodypart {
 	public double rotation_angle = 0.0;
 
 	private final double base_height_for_scale_cm = 180;
+	private final int max_bodypart_depth = 40;
 
 	public CharacterBodypart(String bp_id, String bp_xml_id, RaceBodypart bp, CharacterBodypart bp_parent) throws IOException {
 		this.id = bp_id;
@@ -75,7 +76,7 @@ public class CharacterBodypart {
 		RaceBodypart picked = null;
 		for (Map.Entry<String, RaceBodypart> part_entry : bodyparts_for_use.get(bodypart_code).entrySet()) {
 			if (part_entry.getValue().connectionIsForTypeAndPosition(parent_type, position_id)) {
-				if (picked == null || (part_entry.getValue().pick_priority > max_bodypart_priority)) {
+				if ((picked == null || (part_entry.getValue().pick_priority > max_bodypart_priority)) && part_entry.getValue() != this.bodypart) {
 					picked = part_entry.getValue();
 					max_bodypart_priority = picked.pick_priority;
 				}
@@ -84,8 +85,11 @@ public class CharacterBodypart {
 		return picked;
 	}
 
-	public void initChildPositionParts(Map<String, Map<String, RaceBodypart>> bodyparts_for_use, GameCharacter character) throws NoSuchFieldException, IOException {
+	public void initChildPositionParts(Map<String, Map<String, RaceBodypart>> bodyparts_for_use, GameCharacter character, int depth) throws NoSuchFieldException, IOException {
 		child_parts = new HashMap<>();
+		if (depth > max_bodypart_depth) {
+			return;
+		}
 		for (Map.Entry<String, Map<String, String>> entry : bodypart.positions.entrySet()) {
 			Map<String, String> position_params = entry.getValue();
 			String position_id = entry.getKey();
@@ -124,7 +128,7 @@ public class CharacterBodypart {
 							new_part.col_index = j;
 							new_part.cols_count = bp_cols_count;
 							child_parts.put(position_cl_id, new_part);
-							new_part.initChildPositionParts(bodyparts_for_use, character);
+							new_part.initChildPositionParts(bodyparts_for_use, character, depth+1);
 						} else if ("1".equals(required)) {
 							throw new NoSuchFieldException("No available required bodypart for id="+position_id+", type="+type+" was found!");
 						}
@@ -241,7 +245,7 @@ public class CharacterBodypart {
 			// init drawing params not root bodyparts for character
 
 			// calc priority based on parent
-			if (bodypart.priority_offset != 0) priority =  parent.priority + bodypart.priority_offset;
+			priority = bodypart.priority_offset != 0 ? parent.priority + bodypart.priority_offset : bodypart.priority;
 
 			// getting connection points for this and parent
 			Map<String, String> this_parent_position_params = parent.bodypart.positions.getOrDefault(xml_id, null);
@@ -553,7 +557,7 @@ public class CharacterBodypart {
 				}
 			}
 			
-			if (rotation_angle != 0 && rotation_center == null) {
+			if (rotation_angle != 0) {
 				rotation_center = new Point((point_1_border.x + point_2_border.x)/2, (point_1_border.y + point_2_border.y)/2);
 			}
 		}
@@ -579,7 +583,7 @@ public class CharacterBodypart {
 		point_2_border.y = point_2_border.y * sy;
 	}
 
-	public void initMasks() {
+	public void initRequiredMasks() {
 		if (bodypart.is_hidden) return;
 		if (parent != null) {
 			Map<String, String> this_parent_position_params = parent.bodypart.positions.getOrDefault(xml_id, null);
@@ -588,18 +592,18 @@ public class CharacterBodypart {
 				if (this_parent_position_params.getOrDefault("draw_mode", "").equals("use_parent_alpha")) parent_with_mask = parent;
 				else if (this_parent_position_params.getOrDefault("draw_mode", "").equals("use_parent_parent_alpha") && parent != null) parent_with_mask = parent.parent;
 				else if (this_parent_position_params.getOrDefault("draw_mode", "").equals("use_parent_parent_parent_alpha") && parent != null && parent.parent != null) parent_with_mask = parent.parent.parent;
-				if ((parent_with_mask != null) && !parent_with_mask.initMask()) parent_with_mask = null;
+				if ((parent_with_mask != null) && !parent_with_mask.initCurrentMask()) parent_with_mask = null;
 			}
 		}
 		if (image_mask == null && !bodypart.is_hidden && bodypart.img_file_mask != null && bodypart.use_mask_for_colorization) {
-			initMask();
+			initCurrentMask();
 		}
 		for (Map.Entry<String, CharacterBodypart> entry : child_parts.entrySet()) {
-			entry.getValue().initMasks();
+			entry.getValue().initRequiredMasks();
 		}
 	}
 
-	private boolean initMask() {
+	private boolean initCurrentMask() {
 		if (image_mask == null && !bodypart.is_hidden) {
 			if (bodypart.img_file_mask != null) {
 				try {
@@ -612,7 +616,7 @@ public class CharacterBodypart {
 			}
 			if (image_mask != null && "combine_with_parent_mask".equals(bodypart.mask_calculation_mode)) {
 				if (parent.image_mask == null) {
-					parent.initMask();
+					parent.initCurrentMask();
 				}
 				if (parent.image_mask != null) {
 					image_mask.combineWithMask(parent.image_mask, (int) Math.round(draw_x_point - parent.draw_x_point), (int) Math.round(draw_y_point - parent.draw_y_point));

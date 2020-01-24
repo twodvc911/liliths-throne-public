@@ -37,11 +37,11 @@ public class CharacterImageRenderer {
 	private final double base_image_scale = 1.0;
 	private final int max_image_width = 600;
 	private final int max_image_height = 600;
-	
+
 	private final boolean debug_mode = false;
 	private final boolean reveal_everybody = false;
 	private final boolean save_characters = false;
-	
+
 	private boolean initialized = false;
 	
 	private final Map<String, ColorPattern> materials = new HashMap<>();
@@ -391,7 +391,7 @@ public class CharacterImageRenderer {
 		CharacterBodypart root = null;
 		try {
 			root = new CharacterBodypart(main_body.bodypart_name, main_body.bodypart_name, main_body, null);
-			root.initChildPositionParts(bodyparts_for_use, character);
+			root.initChildPositionParts(bodyparts_for_use, character, 0);
 		} catch (NoSuchFieldException | IOException ex) {
 			root = null;
 			ex.printStackTrace();
@@ -442,7 +442,7 @@ public class CharacterImageRenderer {
 			if (root == null || items == null) return null;
 
 			boolean is_revealed = reveal_everybody || character.isPlayer() || ((Main.game.getPlayer().hasTraitActivated(Perk.OBSERVANT)) && !character.isRaceConcealed()) || (character.getTotalTimesHadSex(Main.game.getPlayer()) > 0);
-			root.initMasks();
+			root.initRequiredMasks();
 
 			int image_width = (int) Math.round(root.full_image_width);
 			int image_height = (int) Math.round(root.full_image_height);

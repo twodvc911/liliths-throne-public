@@ -100,10 +100,6 @@
                 <max_distance>140</max_distance>
                 <secondary_priority_inc>-2</secondary_priority_inc>
             </multiple>
-            <transition>
-                <bodypart_type>body</bodypart_type>
-                <area_size_percent>5</area_size_percent>
-            </transition>
             <point>50%;708</point>
         </position>
         <position id="belly">

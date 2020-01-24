@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>135</priority>
+    <conditions>
+        <condition>
+            <foot_structure>!unguligrade</foot_structure>
+        </condition>
+    </conditions>
+    <positions>
+        <position id="foot_makeup">
+            <type>leg</type>
+            <point>76;1072</point>
+        </position>
+    </positions>
+    <connections_parent>
+        <connection>
+            <type>body;body_taur</type>
+            <point_1>51;0</point_1>
+            <point_2>287;0</point_2>
+        </connection>
+    </connections_parent>
+</bodypart>
