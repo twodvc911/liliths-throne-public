@@ -148,7 +148,6 @@
             <type>tail</type>
             <modifiers>
                 <scale>1.6</scale>
-                <inverse_x>1</inverse_x>
             </modifiers>
             <multiple>
                 <rows_count_param>tail_count</rows_count_param>

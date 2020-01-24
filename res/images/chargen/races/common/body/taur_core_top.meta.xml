@@ -15,6 +15,9 @@
         <position id="arm_left">
             <type>arm</type>
             <required>1</required>
+            <modifiers>
+                <add_priority>15</add_priority>
+            </modifiers>
             <multiple>
                 <rows_count_param>arm_rows</rows_count_param>
                 <output_mode>y_offset_down</output_mode>
@@ -33,6 +36,9 @@
         <position id="arm_right">
             <type>arm</type>
             <required>1</required>
+            <modifiers>
+                <add_priority>15</add_priority>
+            </modifiers>
             <multiple>
                 <rows_count_param>arm_rows</rows_count_param>
                 <output_mode>y_offset_down</output_mode>

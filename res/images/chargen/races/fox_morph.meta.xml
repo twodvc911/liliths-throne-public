@@ -2,5 +2,6 @@
 <raceinfo>
     <fallback_race>wolf_morph</fallback_race>
     <fallback_race>dog_morph</fallback_race>
+    <fallback_race>common</fallback_race>
     <fallback_race>human</fallback_race>
 </raceinfo>

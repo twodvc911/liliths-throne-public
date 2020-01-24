@@ -26,6 +26,9 @@
         <condition scale="1.3">
             <breast_crotch_size>average-sized</breast_crotch_size>
         </condition>
+        <condition offset_y="-40">
+            <leg_configuration>taur</leg_configuration>
+        </condition>
     </mod_conditions>
     <connections_parent>
         <connection>

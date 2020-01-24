@@ -37,6 +37,9 @@
         <condition scale="2.5">
             <breast_crotch_size>hyper</breast_crotch_size>
         </condition>
+        <condition offset_y="-15">
+            <leg_configuration>taur</leg_configuration>
+        </condition>
     </mod_conditions>
     <connections_parent>
         <connection>

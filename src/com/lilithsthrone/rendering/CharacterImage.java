@@ -25,14 +25,14 @@ public class CharacterImage extends CachedImage {
 	
 	private final boolean debug_mode = false;
 	private BufferedImage buff_image = null;
-	private BufferedImage glow_image = null;
+	//private BufferedImage glow_image = null;
 
 	public static CharacterImage fromImage(BufferedImage image) {
 		CharacterImage new_ci = new CharacterImage();
 		new_ci.load(image);
 		return new_ci;
 	}
-	
+
 	public boolean load(String filename) {
 		return load(new File(filename));
 	}

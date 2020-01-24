@@ -33,14 +33,14 @@ public class CharacterImageRenderer {
 	private final String default_fallback_race = "human";
 	private final String[] root_bodyparts = new String[]{"body_taur", "body"};
 
-	private final boolean do_pre_scale = false;
+	private final boolean do_pre_scale = true;
 	private final double base_image_scale = 1.0;
 	private final int max_image_width = 600;
 	private final int max_image_height = 600;
 	
-	private final boolean debug_mode = true;
-	private final boolean reveal_everybody = true;
-	private final boolean save_characters = true;
+	private final boolean debug_mode = false;
+	private final boolean reveal_everybody = false;
+	private final boolean save_characters = false;
 	
 	private boolean initialized = false;
 	
@@ -174,7 +174,7 @@ public class CharacterImageRenderer {
 		if (tongue_race != null && tongue_race != Race.NONE) real_parts_races.put("tongue", tongue_race.name().toLowerCase());
 		if (tail_race != null && tail_race != Race.NONE) real_parts_races.put("tail", tail_race.name().toLowerCase());
 		
-		System.out.println(real_parts_races);
+		//System.out.println(real_parts_races);
 		
 		return real_parts_races;
 	}

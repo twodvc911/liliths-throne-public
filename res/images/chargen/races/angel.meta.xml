@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
 <raceinfo>
     <fallback_race>human</fallback_race>
+    <fallback_race>common</fallback_race>
 </raceinfo>
