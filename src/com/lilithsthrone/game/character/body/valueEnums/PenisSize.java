@@ -1,6 +1,5 @@
 package com.lilithsthrone.game.character.body.valueEnums;
-
-import com.lilithsthrone.utils.Colour;
+import com.lilithsthrone.utils.Colour;
 
 /**
  * Sizes in cm.
@@ -80,4 +79,5 @@ public enum PenisSize {
 	public Colour getColour() {
 		return colour;
 	}
+	
 }

@@ -253,6 +253,8 @@ public enum DialogueFlagValue {
 	ratWarrensEntryWhore,
 	ratWarrensHostile,
 	ratWarrensEntranceGuardsFight,
+	ratWarrensSeenMilkers,
+	ratWarrensMilkersBackground,
 	
 	ratWarrensClearedLeft,
 	ratWarrensClearedCentre,
@@ -280,6 +282,9 @@ public enum DialogueFlagValue {
 	ratWarrensCaptiveFuta,
 	ratWarrensCaptiveMasculine,
 	ratWarrensCaptiveSissy,
+
+	ratWarrensCaptiveFuckedByMurk,
+	ratWarrensCaptiveCompanionFuckedByMurk,
 	
 	ratWarrensCaptiveMilkingStarted,
 	ratWarrensCaptiveMilkingStartedCompanion,
@@ -288,6 +293,7 @@ public enum DialogueFlagValue {
 	
 	ratWarrensCaptiveCompanionGivenBirth, // Reset to false every day
 	ratWarrensCaptiveOwnerSex, // Reset to false every day
-	ratWarrensCaptiveOwnerCompanionSex // Reset to false every day
+	ratWarrensCaptiveOwnerCompanionSex, // Reset to false every day
+	ratWarrensCaptiveDailyTransformed // Reset to false every day
 	;
 }

@@ -1,6 +1,5 @@
 package com.lilithsthrone.game.inventory.clothing;
-
-import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.lilithsthrone.game.character.GameCharacter;
@@ -90,7 +89,7 @@ public enum ClothingSet {
 
 	BDSM("Locked in Bondage",
 			StatusEffect.SET_BDSM,
-			4,
+			3,
 			null,
 			null,
 			null),

@@ -1,6 +1,7 @@
 package com.lilithsthrone.game.character.npc.submission;
-
+import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.w3c.dom.Document;
@@ -9,6 +10,8 @@ import org.w3c.dom.Element;
 import com.lilithsthrone.game.Game;
 import com.lilithsthrone.game.character.CharacterImportSetting;
 import com.lilithsthrone.game.character.EquipClothingSetting;
+import com.lilithsthrone.game.character.GameCharacter;
+import com.lilithsthrone.game.character.attributes.Attribute;
 import com.lilithsthrone.game.character.body.Covering;
 import com.lilithsthrone.game.character.body.types.BodyCoveringType;
 import com.lilithsthrone.game.character.body.types.PenisType;
@@ -19,7 +22,6 @@ import com.lilithsthrone.game.character.body.valueEnums.BodySize;
 import com.lilithsthrone.game.character.body.valueEnums.BreastShape;
 import com.lilithsthrone.game.character.body.valueEnums.Capacity;
 import com.lilithsthrone.game.character.body.valueEnums.ClitorisSize;
-import com.lilithsthrone.game.character.body.valueEnums.CumProduction;
 import com.lilithsthrone.game.character.body.valueEnums.CupSize;
 import com.lilithsthrone.game.character.body.valueEnums.HairLength;
 import com.lilithsthrone.game.character.body.valueEnums.HairStyle;
@@ -30,10 +32,11 @@ import com.lilithsthrone.game.character.body.valueEnums.Muscle;
 import com.lilithsthrone.game.character.body.valueEnums.NippleSize;
 import com.lilithsthrone.game.character.body.valueEnums.OrificeElasticity;
 import com.lilithsthrone.game.character.body.valueEnums.OrificePlasticity;
-import com.lilithsthrone.game.character.body.valueEnums.PenisGirth;
+import com.lilithsthrone.game.character.body.valueEnums.PenetrationGirth;
 import com.lilithsthrone.game.character.body.valueEnums.TesticleSize;
 import com.lilithsthrone.game.character.body.valueEnums.TongueLength;
 import com.lilithsthrone.game.character.body.valueEnums.Wetness;
+import com.lilithsthrone.game.character.effects.Perk;
 import com.lilithsthrone.game.character.effects.PerkCategory;
 import com.lilithsthrone.game.character.effects.PerkManager;
 import com.lilithsthrone.game.character.fetishes.Fetish;
@@ -50,13 +53,18 @@ import com.lilithsthrone.game.character.persona.PersonalityTrait;
 import com.lilithsthrone.game.character.persona.SexualOrientation;
 import com.lilithsthrone.game.character.race.RaceStage;
 import com.lilithsthrone.game.character.race.Subspecies;
+import com.lilithsthrone.game.combat.DamageType;
 import com.lilithsthrone.game.dialogue.DialogueNode;
 import com.lilithsthrone.game.dialogue.places.submission.ratWarrens.RatWarrensCaptiveDialogue;
 import com.lilithsthrone.game.dialogue.responses.Response;
+import com.lilithsthrone.game.dialogue.utils.UtilText;
 import com.lilithsthrone.game.inventory.CharacterInventory;
 import com.lilithsthrone.game.inventory.InventorySlot;
 import com.lilithsthrone.game.inventory.clothing.AbstractClothingType;
 import com.lilithsthrone.game.inventory.clothing.ClothingType;
+import com.lilithsthrone.game.inventory.weapon.AbstractWeaponType;
+import com.lilithsthrone.game.sex.SexAreaOrifice;
+import com.lilithsthrone.game.sex.SexAreaPenetration;
 import com.lilithsthrone.main.Main;
 import com.lilithsthrone.utils.Colour;
 import com.lilithsthrone.utils.Util;
@@ -78,7 +86,7 @@ public class Murk extends NPC {
 	public Murk(boolean isImported) {
 		super(isImported, new NameTriplet("Murk", "Missy", "Missy"), "Triche",
 				"",
-				27, Month.DECEMBER, 22,
+				36, Month.JANUARY, 12,
 				10, Gender.M_P_MALE, Subspecies.RAT_MORPH, RaceStage.GREATER,
 				new CharacterInventory(2500), WorldType.RAT_WARRENS, PlaceType.RAT_WARRENS_MILKING_STORAGE, true);
 	}
@@ -86,15 +94,32 @@ public class Murk extends NPC {
 	@Override
 	public void loadFromXML(Element parentElement, Document doc, CharacterImportSetting... settings) {
 		loadNPCVariablesFromXML(this, null, parentElement, doc, settings);
-		if(Main.isVersionOlderThan(Game.loadingVersion, "0.3.5.6")) { // Reset character
+		if(Main.isVersionOlderThan(Game.loadingVersion, "0.3.5.7")) {  // Reset character
+			this.setName(new NameTriplet("Murk", "Missy", "Missy"));
 			setupPerks(true);
+			equipClothing(EquipClothingSetting.getAllClothingSettings());
 			setStartingBody(true);
-			equipClothing(null);
+		}
+		if(Main.isVersionOlderThan(Game.loadingVersion, "0.3.5.9")) {
+			this.setSkinCovering(new Covering(BodyCoveringType.RAT_FUR, Colour.COVERING_BROWN_DARK), true);
+			this.setSkinCovering(new Covering(BodyCoveringType.RAT_SKIN, Colour.SKIN_PINK_PALE), true);
+			this.setSkinCovering(new Covering(BodyCoveringType.HUMAN, Colour.SKIN_DARK), true);
+			this.setSkinCovering(new Covering(BodyCoveringType.PENIS, Colour.SKIN_PINK_PALE), false);
+			this.setHairCovering(new Covering(BodyCoveringType.HAIR_RAT_FUR, Colour.COVERING_BROWN_DARK), false);
+			this.addPersonalityTrait(PersonalityTrait.SLOVENLY);
+		}
+		if(Main.isVersionOlderThan(Game.loadingVersion, "0.3.6")) {
+			this.setBirthday(LocalDateTime.of(Main.game.getStartingDate().getYear()-36, Month.JANUARY, 12, 12, 0));
+			this.setPenisCumStorage(350);
+			this.resetPerksMap(true);
 		}
 	}
 
 	@Override
 	public void setupPerks(boolean autoSelectPerks) {
+		this.addSpecialPerk(Perk.SPECIAL_DIRTY_MINDED);
+		this.setAttribute(Attribute.MAJOR_CORRUPTION, 60);
+		
 		PerkManager.initialisePerks(this,
 				Util.newArrayListOfValues(),
 				Util.newHashMapOfValues(
@@ -114,7 +139,8 @@ public class Murk extends NPC {
 			this.setPersonalityTraits(
 					PersonalityTrait.COWARDLY,
 					PersonalityTrait.LEWD,
-					PersonalityTrait.SELFISH);
+					PersonalityTrait.SELFISH,
+					PersonalityTrait.SLOVENLY);
 			
 			this.setSexualOrientation(SexualOrientation.AMBIPHILIC);
 			
@@ -141,15 +167,15 @@ public class Murk extends NPC {
 		
 		// Coverings:
 		this.setSkinCovering(new Covering(BodyCoveringType.EYE_RAT, Colour.EYE_YELLOW), true);
-		this.setSkinCovering(new Covering(BodyCoveringType.RAT_FUR, Colour.COVERING_BLACK), true);
-		this.setSkinCovering(new Covering(BodyCoveringType.RAT_SKIN, Colour.SKIN_PINK_LIGHT), true);
-		this.setSkinCovering(new Covering(BodyCoveringType.HUMAN, Colour.SKIN_EBONY), true);
-		this.setSkinCovering(new Covering(BodyCoveringType.PENIS, Colour.SKIN_EBONY), false);
-		this.setHairCovering(new Covering(BodyCoveringType.HAIR_RAT_FUR, Colour.COVERING_BLACK), false);
+		this.setSkinCovering(new Covering(BodyCoveringType.RAT_FUR, Colour.COVERING_BROWN_DARK), true);
+		this.setSkinCovering(new Covering(BodyCoveringType.RAT_SKIN, Colour.SKIN_PINK_PALE), true);
+		this.setSkinCovering(new Covering(BodyCoveringType.HUMAN, Colour.SKIN_DARK), true);
+		this.setSkinCovering(new Covering(BodyCoveringType.PENIS, Colour.SKIN_PINK_PALE), false);
+		this.setHairCovering(new Covering(BodyCoveringType.HAIR_RAT_FUR, Colour.COVERING_BROWN_DARK), false);
 		this.setHairLength(0);
 		this.setHairStyle(HairStyle.NONE);
 
-		this.setHairCovering(new Covering(BodyCoveringType.BODY_HAIR_RAT_FUR, Colour.COVERING_BLACK), false);
+		this.setHairCovering(new Covering(BodyCoveringType.BODY_HAIR_RAT_FUR, Colour.COVERING_BROWN_DARK), false);
 		this.setUnderarmHair(BodyHair.FOUR_NATURAL);
 		this.setAssHair(BodyHair.FOUR_NATURAL);
 		this.setPubicHair(BodyHair.FOUR_NATURAL);
@@ -181,10 +207,10 @@ public class Murk extends NPC {
 		
 		// Penis:
 		this.setPenisVirgin(false);
-		this.setPenisGirth(PenisGirth.FOUR_FAT);
+		this.setPenisGirth(PenetrationGirth.FOUR_FAT);
 		this.setPenisSize(32);
 		this.setTesticleSize(TesticleSize.FOUR_HUGE);
-		this.setPenisCumStorage(CumProduction.FOUR_LARGE.getMedianValue());
+		this.setPenisCumStorage(350);
 		this.fillCumToMaxStorage();
 		
 		// Vagina:
@@ -198,10 +224,14 @@ public class Murk extends NPC {
 	public void equipClothing(List<EquipClothingSetting> settings) {
 		this.unequipAllClothingIntoVoid(true, true);
 		
-		this.addTattoo(InventorySlot.WRIST, new Tattoo(TattooType.getTattooTypeFromId("innoxia_gang_rat_skull"), Colour.CLOTHING_WHITE, Colour.CLOTHING_WHITE, Colour.CLOTHING_WHITE, false, null, null));
+		if(settings.contains(EquipClothingSetting.ADD_TATTOOS)) {
+			this.addTattoo(InventorySlot.WRIST, new Tattoo(TattooType.getTattooTypeFromId("innoxia_gang_rat_skull"), Colour.CLOTHING_WHITE, Colour.CLOTHING_WHITE, Colour.CLOTHING_WHITE, false, null, null));
+			this.setScar(InventorySlot.LEG, new Scar(ScarType.CLAW_MARKS, true));
+		}
+		if(settings.contains(EquipClothingSetting.ADD_WEAPONS)) {
+			this.equipMainWeaponFromNowhere(AbstractWeaponType.generateWeapon("innoxia_bat_metal", DamageType.PHYSICAL, Colour.CLOTHING_GUNMETAL, Colour.CLOTHING_BLACK, null));
+		}
 		
-		this.setScar(InventorySlot.LEG, new Scar(ScarType.CLAW_MARKS, true));
-
 		this.equipClothingFromNowhere(AbstractClothingType.generateClothing(ClothingType.GROIN_CROTCHLESS_BRIEFS, Colour.CLOTHING_BLACK, false), true, this);
 		this.equipClothingFromNowhere(AbstractClothingType.generateClothing("innoxia_leg_crotchless_chaps", Colour.CLOTHING_BLACK, false), true, this);
 		
@@ -262,16 +292,16 @@ public class Murk extends NPC {
 		
 		// Coverings:
 		this.setSkinCovering(new Covering(BodyCoveringType.EYE_RAT, Colour.EYE_YELLOW), true);
-		this.setSkinCovering(new Covering(BodyCoveringType.RAT_FUR, Colour.COVERING_BLACK), true);
+		this.setSkinCovering(new Covering(BodyCoveringType.RAT_FUR, Colour.COVERING_BROWN_DARK), true);
 		this.setSkinCovering(new Covering(BodyCoveringType.RAT_SKIN, Colour.SKIN_PINK_LIGHT), true);
-		this.setSkinCovering(new Covering(BodyCoveringType.HUMAN, Colour.SKIN_EBONY), true);
-		this.setSkinCovering(new Covering(BodyCoveringType.PENIS, Colour.SKIN_EBONY), false);
-		this.setSkinCovering(new Covering(BodyCoveringType.VAGINA, Colour.SKIN_EBONY), false);
-		this.setHairCovering(new Covering(BodyCoveringType.HAIR_RAT_FUR, Colour.COVERING_BLACK), false);
+		this.setSkinCovering(new Covering(BodyCoveringType.HUMAN, Colour.SKIN_DARK), true);
+		this.setSkinCovering(new Covering(BodyCoveringType.PENIS, Colour.SKIN_PINK_PALE), false);
+		this.setSkinCovering(new Covering(BodyCoveringType.VAGINA, Colour.SKIN_PINK_PALE), false);
+		this.setHairCovering(new Covering(BodyCoveringType.HAIR_RAT_FUR, Colour.COVERING_BROWN_DARK), false);
 		this.setHairLength(HairLength.THREE_SHOULDER_LENGTH);
 		this.setHairStyle(HairStyle.LOOSE);
 
-		this.setHairCovering(new Covering(BodyCoveringType.BODY_HAIR_RAT_FUR, Colour.COVERING_BLACK), false);
+		this.setHairCovering(new Covering(BodyCoveringType.BODY_HAIR_RAT_FUR, Colour.COVERING_BROWN_DARK), false);
 		this.setUnderarmHair(BodyHair.ZERO_NONE);
 		this.setAssHair(BodyHair.FOUR_NATURAL);
 		this.setPubicHair(BodyHair.FOUR_NATURAL);
@@ -317,6 +347,11 @@ public class Murk extends NPC {
 	public boolean isUnique() {
 		return true;
 	}
+
+	@Override
+	public String getSpeechColour() {
+		return Colour.BASE_BROWN.toWebHexString();
+	}
 	
 	@Override
 	public void changeFurryLevel(){
@@ -351,5 +386,78 @@ public class Murk extends NPC {
 		} else {
 			return new Response("", "", RatWarrensCaptiveDialogue.STOCKS_ESCAPE_FIGHT_DEFEAT);
 		}
+	}
+	
+	// Dirty talk:
+	public String getDirtyTalkPenisPenetrating(GameCharacter target, boolean isPlayerDom){
+		List<String> availableLines = new ArrayList<>();
+		
+		if(!Main.sex.getOrificesBeingPenetratedBy(this, SexAreaPenetration.PENIS, target).isEmpty()) {
+			for(SexAreaOrifice orifice : Main.sex.getOrificesBeingPenetratedBy(this, SexAreaPenetration.PENIS, target)) {
+				if(Main.game.isGapeContentEnabled()) {
+					switch(orifice) {
+						case ANUS:
+							if(Capacity.isPenisSizeTooBig(
+									target.getAssElasticity(), target.getAssStretchedCapacity(), this.getPenisGirth(), this.getPenisRawSizeValue(), true, false)) {
+								availableLines.add(UtilText.returnStringAtRandom(
+										"Ya feel me fat cock stretchin' yer ass out?! Yer gonna end up as nothin' but me slutty cock-sleeve!",
+										"Ya horny bitch! I'm gonna make ya into me filthy little butt-slut!",
+										"Ya feel that, fuck toy?! Ya feel me fat cock plungin' deep into ya slutty little ass an' stretchin' ya out?!",
+										"Yer slutty asshole is gonna be ruined by the time I'm done with ya!",
+										"Ain't nothin' betta than the feel o' stretchin' fresh butts out an' turnin' 'em into ruined gapin' 'oles!",
+										"Yer slutty asshole is stretchin' out nicely! Ya gonna be well an' truly ruined soon enough!"));
+							} else {
+								availableLines.add(UtilText.returnStringAtRandom(
+										"Ya feel me fat cock sinkin' deep into yer ruined asshole?! Ain't nothin' but me fat cock that can satisfy ya now!",
+										"Ya horny bitch! Take me fat cock deep into yer gapin' butt!",
+										"Ya feel that, fuck toy?! Ya feel me fat cock plungin' deep into ya ruined ass?!"));
+							}
+							break;
+						case VAGINA:
+							if(Capacity.isPenisSizeTooBig(
+									target.getVaginaElasticity(), target.getVaginaStretchedCapacity(), this.getPenisGirth(), this.getPenisRawSizeValue(), true, false)) {
+								availableLines.add(UtilText.returnStringAtRandom(
+										"Ya feel me fat cock stretchin' yer filthy cunt out?! Yer gonna end up as nothin' but me slutty gapin' cock-sleeve!",
+										"Ya horny bitch! I'm gonna ruin yer pussy an turn it into a gapin' hole that'll only fit me fat cock!",
+										"Ya feel that, fuck toy?! Ya feel me fat cock plungin' deep into ya slutty cunt an' stretchin' ya out?!",
+										"Yer filthy cunt is gonna be ruined by the time I'm done with ya!",
+										"Ain't nothin' betta than the feel o' stretchin' fresh pussies out an' turnin' 'em into ruined gapin' 'oles!",
+										"Yer dirty cunt is stretchin' out nicely! Ya gonna be well an' truly ruined soon enough!"));
+							} else {
+								availableLines.add(UtilText.returnStringAtRandom(
+										"Ya feel me fat cock sinkin' deep into yer ruined cunt?! Ain't nothin' but me fat cock that can satisfy ya now!",
+										"Ya horny bitch! Take me fat cock deep into yer gapin' pussy!",
+										"Ya feel that, fuck toy?! Ya feel me fat cock plungin' deep into ya ruined pussy?!"));
+							}
+							break;
+						default:
+							break;
+					}
+				}
+				if(availableLines.isEmpty()) {
+					switch(orifice) {
+						case ANUS:
+							availableLines.add(UtilText.returnStringAtRandom(
+									"Ya feel me fat cock sinkin' deep into yer ass?! Yer nothin' but me slutty cock-sleeve!",
+									"Ya horny bitch! I'm gonna make ya into me filthy little butt-slut!",
+									"Ya feel that, fuck toy?! Ya feel me fat cock plungin' deep into ya slutty little ass?!"));
+							break;
+						case VAGINA:
+							availableLines.add(UtilText.returnStringAtRandom(
+									"Ya feel me fat cock sinkin' deep into yer slutty cunt?! Yer nothin' but me dirty little cock-sleeve!",
+									"Ya horny bitch! Take me fat cock deep into yer dirty cunt!",
+									"Ya feel that, fuck toy?! Ya feel me fat cock plungin' deep into ya slutty pussy?!"));
+							break;
+						default:
+							break;
+					}
+				}
+			}
+		}
+
+		if(!availableLines.isEmpty()) {
+			return UtilText.parse(this, target, availableLines.get(Util.random.nextInt(availableLines.size())));
+		}
+		return super.getDirtyTalkPenisPenetrating(target, isPlayerDom);
 	}
 }

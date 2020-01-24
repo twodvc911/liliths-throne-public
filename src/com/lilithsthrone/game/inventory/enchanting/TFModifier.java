@@ -1,6 +1,5 @@
 package com.lilithsthrone.game.inventory.enchanting;
-
-import java.io.IOException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -282,6 +281,13 @@ public enum TFModifier {
 			"modifier_circle_resistance",
 			Colour.BASE_GREEN,
 			Rarity.COMMON),
+
+	CLOTHING_VIBRATION("vibration",
+			"Makes this piece of clothing vibrate when worn.",
+			"vibration",
+			"modifier_circle_vibration",
+			Colour.BASE_PINK,
+			Rarity.EPIC),
 	
 	// Racial parts:
 
@@ -843,6 +849,13 @@ public enum TFModifier {
 			"normal nipples",
 			"modifier_circle_nipple_normal",
 			Colour.BASE_PURPLE_LIGHT,
+			Rarity.COMMON),
+
+	TF_MOD_NIPPLE_INVERTED("inverted nipples",
+			"Applies an effect related to making nipples inverted.",
+			"inverted nipples",
+			"modifier_circle_nipple_normal",
+			Colour.BASE_RED_LIGHT,
 			Rarity.COMMON),
 	
 	TF_MOD_NIPPLE_VAGINA("nipple cunts",

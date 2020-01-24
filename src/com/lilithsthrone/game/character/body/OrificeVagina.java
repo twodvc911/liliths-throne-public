@@ -1,6 +1,5 @@
 package com.lilithsthrone.game.character.body;
-
-import java.util.Collection;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -242,7 +241,7 @@ public class OrificeVagina implements OrificeInterface {
 		
 		orificeModifiers.add(modifier);
 		
-		if(owner==null) {
+		if(owner==null || owner.getBody()==null) {
 			return "";
 		}
 		if(!owner.hasVagina()) {
