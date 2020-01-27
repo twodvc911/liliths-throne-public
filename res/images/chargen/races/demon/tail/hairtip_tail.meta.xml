@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <bodypart>
     <priority>50</priority>
-    <scale>1.25</scale>
+    <scale>0.6</scale>
     <conditions>
         <condition>
             <tail_type>demon_hair_tip</tail_type>
@@ -9,7 +9,7 @@
     </conditions>
     <connections_parent>
         <connection>
-            <point>508;119</point>
+            <point>1051;606</point>
         </connection>
     </connections_parent>
 </bodypart>

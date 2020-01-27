@@ -4,6 +4,12 @@
     <no_patterns>1</no_patterns>
     <skip_colorization>1</skip_colorization>
     <scale>1.25</scale>
+    <positions>
+        <position id="lips">
+            <type>lips</type>
+            <point>31;58</point>
+        </position>
+    </positions>
     <connections_parent>
         <connection>
             <point>31;5</point>
