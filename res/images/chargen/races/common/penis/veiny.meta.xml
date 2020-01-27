@@ -23,4 +23,5 @@
     </conditions>
     <mod_conditions derive_from="smooth"></mod_conditions>
     <connections_parent derive_from="smooth"></connections_parent>
+    <image_author>@pochikou_flash</image_author>
 </bodypart>

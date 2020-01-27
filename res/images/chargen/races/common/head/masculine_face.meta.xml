@@ -9,4 +9,5 @@
     </conditions>
     <connections_parent derive_from="normal_face"></connections_parent>
     <positions derive_from="normal_face"></positions>
+    <image_author>@pochikou_flash</image_author>
 </bodypart>

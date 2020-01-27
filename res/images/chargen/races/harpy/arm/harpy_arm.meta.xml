@@ -2,12 +2,6 @@
 <bodypart>
     <priority>99</priority>
     <scale_x>2.5</scale_x>
-    <fallback>1</fallback>
-    <conditions>
-        <condition>
-            <charnamehash2>1</charnamehash2>
-        </condition>
-    </conditions>
     <connections_parent>
         <connection>
             <point_1>123;2</point_1>

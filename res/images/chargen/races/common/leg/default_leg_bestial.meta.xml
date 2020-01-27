@@ -15,8 +15,9 @@
     <connections_parent>
         <connection>
             <type>body;body_taur</type>
-            <point_1>26;0</point_1>
-            <point_2>267;0</point_2>
+            <point_1>27;0</point_1>
+            <point_2>268;0</point_2>
         </connection>
     </connections_parent>
+    <image_author>twovgSP</image_author>
 </bodypart>

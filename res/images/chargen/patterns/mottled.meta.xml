@@ -3,5 +3,6 @@
     <type>2_colors_pattern</type>
     <color_primary>#ffffff</color_primary>
     <color_secondary>#000000</color_secondary>
-    <scale>0.9</scale>
+    <scale>1.0</scale>
+    <image_author>public domain</image_author>
 </pattern>
