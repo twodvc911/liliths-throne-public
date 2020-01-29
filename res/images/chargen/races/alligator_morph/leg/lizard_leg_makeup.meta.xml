@@ -11,7 +11,8 @@
         <connection>
             <type>leg</type>
             <position>foot_makeup</position>
-            <point>15;86</point>
+            <point>100%;100%</point>
         </connection>
     </connections_parent>
+    <image_author>twovgSP</image_author>
 </bodypart>

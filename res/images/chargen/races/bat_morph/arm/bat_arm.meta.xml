@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <bodypart>
     <priority>99</priority>
-    <scale_x>1.5</scale_x>
     <connections_parent>
         <connection>
-            <point_1>740;3</point_1>
-            <point_2>740;91</point_2>
+            <point_1>520;3</point_1>
+            <point_2>520;123</point_2>
         </connection>
     </connections_parent>
+    <image_author>twovgSP</image_author>
 </bodypart>

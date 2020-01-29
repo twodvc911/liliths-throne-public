@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <bodypart>
     <priority>152</priority>
-    <scale>1.3</scale>
+    <scale>0.75</scale>
+    <skip_colorization>1</skip_colorization>
     <no_patterns>1</no_patterns>
     <connections_parent>
         <connection>
-            <point>66;22</point>
+            <point>50%;10</point>
         </connection>
     </connections_parent>
+    <image_author>public domain</image_author>
 </bodypart>

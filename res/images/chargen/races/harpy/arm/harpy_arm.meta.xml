@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <bodypart>
     <priority>99</priority>
-    <scale_x>2.5</scale_x>
     <connections_parent>
         <connection>
-            <point_1>123;2</point_1>
-            <point_2>123;56</point_2>
+            <point_1>95%;7</point_1>
+            <point_2>95%;100</point_2>
         </connection>
     </connections_parent>
+    <image_author>@pochikou_flash</image_author>
 </bodypart>
