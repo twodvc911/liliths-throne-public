@@ -4,14 +4,15 @@
     <positions>
         <position id="foot_makeup">
             <type>leg</type>
-            <point>134;1142</point>
+            <point>100%;100%</point>
         </position>
     </positions>
     <connections_parent>
         <connection>
             <type>body;body_taur</type>
-            <point_1>116;0</point_1>
-            <point_2>350;0</point_2>
+            <point_1>134;0</point_1>
+            <point_2>364;0</point_2>
         </connection>
     </connections_parent>
+    <image_author>twovgSP</image_author>
 </bodypart>

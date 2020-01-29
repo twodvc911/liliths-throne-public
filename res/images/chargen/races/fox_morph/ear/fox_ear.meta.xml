@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <bodypart>
     <priority>170</priority>
-    <scale_x>0.9</scale_x>
+    <scale_x>1.0</scale_x>
     <mod_conditions>
-        <condition scale_y="0.5">
+        <condition scale_y="0.5" scale_x="0.7">
             <ear_type>!fennec fox</ear_type>
         </condition>
     </mod_conditions>

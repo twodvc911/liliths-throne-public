@@ -14,8 +14,8 @@
                 <bodypart_type>body_taur</bodypart_type>
                 <area_size_percent>15</area_size_percent>
             </transition>
-            <point_1>237;3</point_1>
-            <point_2>818;3</point_2>
+            <point_1>241;3</point_1>
+            <point_2>822;3</point_2>
             <scale_alignment>y</scale_alignment>
         </position>
         <position id="leg_forward_left">
@@ -28,8 +28,8 @@
             <modifiers>
                 <scale_y>1.05</scale_y>
             </modifiers>
-            <point_1>38;1160</point_1>
-            <point_2>391;1160</point_2>
+            <point_1>41;1160</point_1>
+            <point_2>393;1160</point_2>
         </position>
         <position id="leg_forward_right">
             <type>leg</type>
@@ -41,8 +41,8 @@
             <modifiers>
                 <scale_y>1.2</scale_y>
             </modifiers>
-            <point_1>761;1141</point_1>
-            <point_2>1081;1141</point_2>
+            <point_1>767;1140</point_1>
+            <point_2>1087;1140</point_2>
         </position>
         <position id="leg_back_left">
             <type>leg</type>
@@ -71,8 +71,8 @@
                 <rotation>0</rotation>
                 <scale_y>0.95</scale_y>
             </modifiers>
-            <point_1>1136;1123</point_1>
-            <point_2>1399;1123</point_2>
+            <point_1>1141;1123</point_1>
+            <point_2>1405;1123</point_2>
         </position>
         <position id="breasts-crotch">
             <type>breasts-crotch</type>
@@ -147,7 +147,7 @@
         <position id="tail">
             <type>tail</type>
             <modifiers>
-                <scale>1.6</scale>
+                <scale>1.45</scale>
             </modifiers>
             <multiple>
                 <rows_count_param>tail_count</rows_count_param>
