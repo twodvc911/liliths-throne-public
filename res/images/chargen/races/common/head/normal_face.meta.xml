@@ -15,7 +15,11 @@
     <positions>
         <position id="hair">
             <type>hair</type>
-            <point>166;3</point>
+            <point>50%;3</point>
+        </position>
+        <position id="clothes_head">
+            <type>clothes_head</type>
+            <point>50%;3</point>
         </position>
         <position id="snout">
             <type>snout</type>
@@ -86,6 +90,7 @@
         </position>
         <position id="eye_left">
             <type>eye</type>
+            <required>1</required>
             <multiple>
                 <rows_count_param>eye_pairs</rows_count_param>
                 <output_mode>line</output_mode>
@@ -97,6 +102,7 @@
         </position>
         <position id="eye_right">
             <type>eye</type>
+            <required>1</required>
             <multiple>
                 <rows_count_param>eye_pairs</rows_count_param>
                 <output_mode>line</output_mode>

@@ -5,6 +5,7 @@ import com.lilithsthrone.game.character.body.BodyPartInterface;
 import com.lilithsthrone.game.character.body.Covering;
 import com.lilithsthrone.game.character.body.types.BodyCoveringType;
 import com.lilithsthrone.game.character.body.valueEnums.CoveringPattern;
+import com.lilithsthrone.game.inventory.clothing.AbstractClothing;
 import com.lilithsthrone.utils.Colour;
 import java.util.HashMap;
 import java.util.Map;
@@ -100,6 +101,14 @@ public class BodyColorsMap {
 	public void add_body_color(String bodypart_code, BodyPartInterface bodypart, GameCharacter character) {
 		if (bodypart != null) {
 			add_body_color(bodypart_code, bodypart.getBodyCoveringType(character), character);
+		}
+	}
+	public void add_body_color(String bodypart_code, AbstractClothing clothing) {
+		if (clothing != null && clothing.getPatternColour() != null) {
+			add_body_color(bodypart_code, clothing.getColour().getColor());
+			add_body_color(bodypart_code + ".primary", clothing.getColour().getColor());
+			add_body_color(bodypart_code + ".secondary", clothing.getSecondaryColour().getColor());
+			add_body_color(bodypart_code + ".tertiary", clothing.getTertiaryColour().getColor());
 		}
 	}
 	public void add_body_color(String bodypart_code, BodyCoveringType bc_type, GameCharacter character) {

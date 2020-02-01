@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <bodypart>
-    <priority>250</priority>
+    <priority>400</priority>
     <conditions>
         <condition>
             <hair_length>!bald</hair_length>

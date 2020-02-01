@@ -6,6 +6,7 @@ import com.lilithsthrone.game.character.body.types.BodyCoveringType;
 import com.lilithsthrone.game.character.body.valueEnums.CoveringPattern;
 import com.lilithsthrone.game.character.effects.Perk;
 import com.lilithsthrone.game.character.race.Race;
+import com.lilithsthrone.game.inventory.InventorySlot;
 import com.lilithsthrone.main.Main;
 import com.lilithsthrone.rendering.CachedImage;
 import com.lilithsthrone.rendering.CharacterImage;
@@ -13,8 +14,10 @@ import com.lilithsthrone.utils.Colour;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javafx.scene.paint.Color;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -32,6 +35,8 @@ public class CharacterImageRenderer {
 	private final String common_race = "common";
 	private final String default_fallback_race = "human";
 	private final String[] root_bodyparts = new String[]{"body_taur", "body"};
+
+	private final boolean skip_unknown_races = true;
 
 	private final boolean do_pre_scale = true;
 	private final double base_image_scale = 1.0;
@@ -106,7 +111,7 @@ public class CharacterImageRenderer {
 			real_parts_races.put("belly", getRaceBodypartFallback(null, "belly"));
 			if (character.isTaur()) real_parts_races.put("body_taur", getRaceBodypartFallback(null, "body_taur"));
 		}
-		
+
 		if (head_race != null && head_race != Race.NONE) {
 			real_parts_races.put("head", head_race.name().toLowerCase());
 			real_parts_races.put("snout", head_race.name().toLowerCase());
@@ -173,12 +178,16 @@ public class CharacterImageRenderer {
 		if (cloaca_race != null && cloaca_race != Race.NONE) real_parts_races.put("cloaca", cloaca_race.name().toLowerCase());
 		if (tongue_race != null && tongue_race != Race.NONE) real_parts_races.put("tongue", tongue_race.name().toLowerCase());
 		if (tail_race != null && tail_race != Race.NONE) real_parts_races.put("tail", tail_race.name().toLowerCase());
-		
-		//System.out.println(real_parts_races);
-		
+
+		if (character.getClothingInSlot(InventorySlot.TORSO_UNDER) != null) real_parts_races.put("clothes_torso_under", real_parts_races.get("body"));
+		if (character.getClothingInSlot(InventorySlot.TORSO_OVER) != null) real_parts_races.put("clothes_torso_over", real_parts_races.get("body"));
+		if (character.getClothingInSlot(InventorySlot.GROIN) != null) real_parts_races.put("clothes_groin", real_parts_races.get("body"));
+		if (character.getClothingInSlot(InventorySlot.LEG) != null) real_parts_races.put("clothes_leg", real_parts_races.get("leg"));
+		if (character.getClothingInSlot(InventorySlot.HEAD) != null) real_parts_races.put("clothes_head", real_parts_races.get("head"));
+
 		return real_parts_races;
 	}
-	
+
 	private BodyColorsMap getCharacterColors(GameCharacter character) {
 		BodyColorsMap body_colors = new BodyColorsMap();
 		body_colors.add_body_color("body", character.getBody().getSkin(), character);
@@ -224,9 +233,15 @@ public class CharacterImageRenderer {
 		if (BodyColorsMap.getBodypartCoveringPattern(BodyCoveringType.EYE_SCLERA, character) == CoveringPattern.EYE_SCLERA_HETEROCHROMATIC) body_colors.add_body_secondary_to_main_color("eye_sclera_inversed", "eye_sclera");
 		if (BodyColorsMap.getBodypartCoveringPattern(BodyCoveringType.EYE_PUPILS, character) == CoveringPattern.EYE_PUPILS_HETEROCHROMATIC) body_colors.add_body_secondary_to_main_color("eye_pupil_inversed", "eye_pupil");
 
+		body_colors.add_body_color("clothes_torso_under", character.getClothingInSlot(InventorySlot.TORSO_UNDER));
+		body_colors.add_body_color("clothes_torso_over", character.getClothingInSlot(InventorySlot.TORSO_OVER));
+		body_colors.add_body_color("clothes_groin", character.getClothingInSlot(InventorySlot.GROIN));
+		body_colors.add_body_color("clothes_leg", character.getClothingInSlot(InventorySlot.LEG));
+		body_colors.add_body_color("clothes_head", character.getClothingInSlot(InventorySlot.HEAD));
+
 		return body_colors;
 	}
-	
+
 	private void initBodyparts() {
 		raceBodyparts = new HashMap<>();
 		raceFallbacks = new HashMap<>();
@@ -316,6 +331,9 @@ public class CharacterImageRenderer {
 	}
 	
 	private String getRaceBodypartFallback(String race_name, String bodypart_name) {
+		if (skip_unknown_races && !raceBodyparts.containsKey(race_name) && !raceFallbacks.containsKey(race_name) && !raceBodypartFallbacks.containsKey(race_name)) {
+			return null;
+		}
 		String fallback_race = null;
 		boolean has_fallback_race_config = raceFallbacks.containsKey(race_name);
 		if (race_name != null && bodypart_name != null) {
@@ -347,6 +365,9 @@ public class CharacterImageRenderer {
 	
 	private CharacterBodypart getCharacterBodyPartTree(GameCharacter character) {
 		Map<String, String> real_parts_races = getCharacterBodypartRaces(character);
+
+		if (debug_mode) System.out.println(real_parts_races);
+
 		Map<String, Map<String, RaceBodypart>> bodyparts_for_use = new HashMap<>();
 		for (Map.Entry<String, String> entry : real_parts_races.entrySet()) {
 			String race_name = entry.getValue();
@@ -355,7 +376,7 @@ public class CharacterImageRenderer {
 			if (!raceBodyparts.containsKey(race_name) || !raceBodyparts.get(race_name).containsKey(bodypart_name)) {
 				race_name = fallback_race;
 			}
-			if (raceBodyparts.containsKey(race_name) && raceBodyparts.get(race_name).containsKey(bodypart_name)) {
+			if (race_name!= null && raceBodyparts.containsKey(race_name) && raceBodyparts.get(race_name).containsKey(bodypart_name)) {
 				RaceBodypart fallback_bodypart = null;
 				for (Map.Entry<String, RaceBodypart> part_entry : raceBodyparts.get(race_name).get(bodypart_name).entrySet()) {
 					if (part_entry.getValue().checkBodypartConditions(character)) {
@@ -452,14 +473,15 @@ public class CharacterImageRenderer {
 
 			BodyColorsMap body_colors = getCharacterColors(character);
 
-			//System.out.println("Image size: " + image_width + " " + image_height);
 			if (debug_mode) System.out.println(body_colors);
 
 			int index = 0;
 			BodyPartColoringInfo default_coloring = new BodyPartColoringInfo();
+			Set<String> set_of_hidden = new HashSet<>();
 
 			for(CharacterBodypart item : items) {
 				if (item.bodypart.is_hidden) continue;
+				set_of_hidden.addAll(item.bodypart.hides_bodyparts);
 				item.image.flip_image(item.draw_inverse_x, item.draw_inverse_y);
 				if (item.image_mask != null) {
 					item.image_mask.flip_image(item.draw_inverse_x, item.draw_inverse_y);
@@ -470,10 +492,11 @@ public class CharacterImageRenderer {
 			ColorPattern material = materials.getOrDefault(material_name, null);
 
 			for(CharacterBodypart item : items) {
-				if (item.bodypart.is_hidden) continue;
+				if (item.bodypart.is_hidden || set_of_hidden.contains(item.bodypart.bodypart_name)) continue;
 
 				GradientParams transition_params = null;
 				BodyPartColoringInfo coloring = null;
+				boolean is_clothes = item.bodypart.bodypart_name.startsWith("clothes_");
 
 				if (!item.bodypart.skip_colorization) {
 					if (item.draw_inverse_x || item.draw_inverse_y) coloring = body_colors.getOrDefault(item.bodypart.bodypart_name + "_inversed", null);
@@ -504,23 +527,23 @@ public class CharacterImageRenderer {
 				}
 
 				image.drawColorizedImage(
-					item.image,		// image of bodypart we need to add
+					item.image,				// image of bodypart we need to add
 					(int) Math.round(item.draw_x_point),	// x coord
 					(int) Math.round(item.draw_y_point),	// y coord
 					(int) Math.round(item.draw_width),	// stretched width
 					(int) Math.round(item.draw_height), 	// stretched height
-					coloring,		// coloring of bodypart
-					item.coloring_texture,	// texture to use instead of plan color
-					material != null ? material.getColorizedTextureForBodypart(item.bodypart.pattern_scale * root_scale, null, item.bodypart.bodypart_name) : null,
-					item.bodypart.use_mask_for_colorization ? item.image_mask : null,
-					transition_params,	// gradient transition params
+					coloring,				// coloring of bodypart
+					item.coloring_texture,			// texture to use instead of plan color
+					material != null && !is_clothes ? material.getColorizedTextureForBodypart(item.bodypart.pattern_scale * root_scale, null, item.bodypart.bodypart_name) : null,	// material texture
+					item.bodypart.use_mask_for_colorization ? item.image_mask : null,								// mask for restriction colorized area
+					transition_params,			// gradient transition params
 					item.parent != null ? item.parent.coloring_texture : null,									// parent coloring texture
 					item.parent != null ? new Point(item.parent.draw_x_point, item.parent.draw_y_point) : null,					// parent offset
 					item.parent_with_mask != null ? item.parent_with_mask.image_mask : null,							// parent mask
-					item.parent_with_mask != null ? new Point(item.parent_with_mask.draw_x_point, item.parent_with_mask.draw_y_point) : null,	// parent offset
-					item.rotation_center,	// center of rotation
-					item.rotation_angle,	// rotation angle in degrees
-					index++			// index of layer for debug
+					item.parent_with_mask != null ? new Point(item.parent_with_mask.draw_x_point, item.parent_with_mask.draw_y_point) : null,	// parent mask offset
+					item.rotation_center,			// center of rotation
+					item.rotation_angle,			// rotation angle in degrees
+					index++					// index of layer for debug
 				);
 			}
 			if (save_characters) image.save("res/images/chargen/results/"+character.getName()+"_" + String.format("%.2f", root_scale) +".png");
@@ -528,9 +551,9 @@ public class CharacterImageRenderer {
 			if (!is_revealed) image.color_set(Color.GREY);
 			image.updateImageString();
 
-			for(Map.Entry<String, ColorPattern> pattern : patterns.entrySet()) {
+			patterns.entrySet().forEach((pattern) -> {
 				pattern.getValue().checkCache();
-			}
+			});
 
 			if (debug_mode) System.out.println("---\nGeneration time: " + ((System.nanoTime() - startTime)/1000000) + " msec");
 		} catch(Exception ex) {

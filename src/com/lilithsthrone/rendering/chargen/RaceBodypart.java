@@ -4,6 +4,8 @@ import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.body.valueEnums.CoveringPattern;
 import com.lilithsthrone.game.character.body.valueEnums.PenetrationModifier;
 import com.lilithsthrone.game.character.effects.StatusEffect;
+import com.lilithsthrone.game.inventory.InventorySlot;
+import com.lilithsthrone.game.inventory.clothing.AbstractClothing;
 import com.lilithsthrone.main.Main;
 import com.lilithsthrone.utils.Colour;
 import java.io.File;
@@ -11,8 +13,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import javafx.scene.paint.Color;
 import org.w3c.dom.Document;
@@ -60,6 +64,7 @@ public class RaceBodypart {
 	public Map<String, Double> modifiers = new HashMap<>();
 	public List<Map<String, String>> mod_conditions = new ArrayList<>();
 	public Map<String, String> scale_params = new HashMap<>();
+	public Set<String> hides_bodyparts = new HashSet<>();
 
 	public String derive_parent_connections = null;
 	public String derive_positions = null;
@@ -177,6 +182,9 @@ public class RaceBodypart {
 		Node scale_params_node = ChargenMetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "scale_params");
 		derive_scale_params = ChargenMetaXMLLoader.getNodeAttribute(scale_params_node, "derive_from");
 		scale_params = ChargenMetaXMLLoader.getAllChildNodesAsMap(scale_params_node);
+		
+		String hides_bodyparts_str = ChargenMetaXMLLoader.getStringParam(bodypart_node, "hides_bodyparts", "");
+		hides_bodyparts = new HashSet<>(Arrays.asList(hides_bodyparts_str.split(";")));
 	}
 
 	public void doDerives(Map<String, Map<String, Map<String, RaceBodypart>>> raceBodyparts) {
@@ -221,6 +229,9 @@ public class RaceBodypart {
 			} else if (condition_param.startsWith("charnamehash")) {
 				condition_val = condition_param.replace("charnamehash", "");
 				condition_param = "charnamehash";
+			} else if (condition_param.startsWith("clothes_")) {
+				condition_val = condition_param.replace("clothes_", "");
+				condition_param = "clothes";
 			}
 			switch(condition_param) {
 				case "true":
@@ -398,6 +409,29 @@ public class RaceBodypart {
 					return String.valueOf(character.getBody().isAbleToFlyFromWings() ? 1 : 0);
 				case "wing_size":
 					return character.getWingSize().getName().toLowerCase();
+
+				// clothes
+				case "clothes":
+					InventorySlot c_slot = null;
+					switch(condition_val) {
+						case "torso_under":
+							c_slot = InventorySlot.TORSO_UNDER;
+							break;
+						case "torso_over":
+							c_slot = InventorySlot.TORSO_OVER;
+							break;
+						case "groin":
+							c_slot = InventorySlot.GROIN;
+							break;
+						case "leg":
+							c_slot = InventorySlot.LEG;
+							break;
+						case "head":
+							c_slot = InventorySlot.HEAD;
+							break;
+					}
+					AbstractClothing c_clothing = c_slot != null ? character.getClothingInSlot(c_slot) : null;
+					return c_clothing != null ? c_clothing.getName().toLowerCase(): "";
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <bodypart>
-    <priority>250</priority>
+    <priority>400</priority>
     <fallback>1</fallback>
     <conditions>
         <condition>

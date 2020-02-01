@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>500</priority>
+    <hides_bodyparts>cloaca;vagina;penis</hides_bodyparts>
+    <conditions>
+        <condition>
+            <clothes_leg>ragged skirt</clothes_leg>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <point_1>17;54</point_1>
+            <point_2>339;54</point_2>
+        </connection>
+    </connections_parent>
+    <image_author>innoxia</image_author>
+</bodypart>

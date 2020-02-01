@@ -1,10 +1,10 @@
-Bodypart xml meta files.
+Tags details for bodypart xml meta files.
 
 priority
     float, 
     global priority of bodypart layer, bodyparts with lower priority will be drawn first
 
-priority_offset,
+priority_offset
     float, 
     if set, current bodypart priority will be calculated as parent priority + priority_offset
 
@@ -95,6 +95,10 @@ color_mix
             float,
             mix percent for transition type
 
+hides_bodyparts
+    string,
+    list of body part names, separated by ; which should not be drawn if current bodypart is drawn
+
 modifiers
     tag, which can contain one or more child tags:
         "scale", "scale_x", "scale_y", "offset_x", "offset_y", "add_priority", 
@@ -102,6 +106,7 @@ modifiers
         "multiple_offset_scale_x", "multiple_offset_scale_y",
         "multiple_offset_x", "multiple_offset_y"
         each of these tags should contain float value
+
 
 conditions
     conditions which must be true for picking current bodypart
@@ -319,6 +324,9 @@ available subcondition tags:
         "wing_size"
         tiny, small, average-sized, large, huge
 
+    for clothes:
+        "clothes_torso_under", "clothes_torso_over", "clothes_groin", "clothes_leg", "clothes_head"
+        name of clothes in corresponding slot or empty string if there is nothing equiped
 
 positions
     position for bodyparts which are parts of current bodypart

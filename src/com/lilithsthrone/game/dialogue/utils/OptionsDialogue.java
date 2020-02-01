@@ -1893,7 +1893,7 @@ public class OptionsDialogue {
 								Colour.BASE_GOLD,
 								"Auto generated images",
 								"Enables generated images of PC and NPC to be displayed on information screens if no artwork is available.<br>"
-									+ "<span style='color:orange;'><b>Warning</b>: this is experimental function!</span>",
+									+ "<span style='color:orange;'><b>Warning</b>: this is experimental feature, use at your own risk!</span>",
 								Main.getProperties().hasValue(PropertyValue.generatedImages)));
 
 			UtilText.nodeContentSB.append(getContentPreferenceDiv("THUMBNAIL",

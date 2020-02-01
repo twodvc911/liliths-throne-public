@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>500</priority>
+    <hides_bodyparts>horn</hides_bodyparts>
+    <scale>1.5</scale>
+    <conditions>
+        <condition>
+            <clothes_head>imp arcanist's hat</clothes_head>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <point>240;220</point>
+        </connection>
+    </connections_parent>
+    <image_author>innoxia</image_author>
+</bodypart>

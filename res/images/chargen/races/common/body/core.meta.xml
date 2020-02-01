@@ -11,7 +11,22 @@
         <position id="head">
             <type>head</type>
             <required>1</required>
-            <point>246;2</point>
+            <point>50%;2</point>
+        </position>
+        <position id="clothes_torso_under">
+            <type>clothes_torso_under</type>
+            <point_1>50;135</point_1>
+            <point_2>440;135</point_2>
+        </position>
+        <position id="clothes_torso_over">
+            <type>clothes_torso_over</type>
+            <point_1>50;135</point_1>
+            <point_2>440;135</point_2>
+        </position>
+        <position id="clothes_leg">
+            <type>clothes_leg</type>
+            <point_1>0;789</point_1>
+            <point_2>485;789</point_2>
         </position>
         <position id="leg_left">
             <type>leg</type>

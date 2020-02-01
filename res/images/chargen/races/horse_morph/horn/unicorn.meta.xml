@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <bodypart>
-    <priority>270</priority>
+    <priority>450</priority>
     <scale>0.85</scale>
     <scale_params>
         <scale_type>scale_y</scale_type>

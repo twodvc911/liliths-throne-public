@@ -152,9 +152,9 @@ public class CharacterBodypart {
 		result.add(this);
 		for (Map.Entry<String, CharacterBodypart> entry : child_parts.entrySet()) {
 			List<CharacterBodypart> child_result = entry.getValue().getSortedBodypartList();
-			for(CharacterBodypart child_item : child_result) {
+			child_result.forEach((child_item) -> {
 				result.add(child_item);
-			}
+			});
 		}
 		if (parent == null) {
 			double min_x = 0;
@@ -598,9 +598,9 @@ public class CharacterBodypart {
 		if (image_mask == null && !bodypart.is_hidden && bodypart.img_file_mask != null && bodypart.use_mask_for_colorization) {
 			initCurrentMask();
 		}
-		for (Map.Entry<String, CharacterBodypart> entry : child_parts.entrySet()) {
+		child_parts.entrySet().forEach((entry) -> {
 			entry.getValue().initRequiredMasks();
-		}
+		});
 	}
 
 	private boolean initCurrentMask() {
