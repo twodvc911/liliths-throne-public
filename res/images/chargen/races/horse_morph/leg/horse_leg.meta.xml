@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <bodypart>
     <priority>135</priority>
+    <positions>
+        <position id="clothes_foot">
+            <type>clothes_foot</type>
+            <point>218;830</point>
+        </position>
+    </positions>
     <connections_parent>
         <connection>
             <point_1>144;0</point_1>

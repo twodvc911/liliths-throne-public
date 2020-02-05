@@ -6,6 +6,12 @@
             <foot_structure>unguligrade</foot_structure>
         </condition>
     </conditions>
+    <positions>
+        <position id="clothes_foot">
+            <type>clothes_foot</type>
+            <point>218;830</point>
+        </position>
+    </positions>
     <connections_parent>
         <connection>
             <type>body;body_taur</type>

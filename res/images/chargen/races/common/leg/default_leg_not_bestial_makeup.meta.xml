@@ -2,6 +2,7 @@
 <bodypart>
     <priority_offset>1</priority_offset>
     <derive_color_from_bodypart>foot_nails</derive_color_from_bodypart>
+    <pattern_scale>0.075</pattern_scale>
     <conditions>
         <condition>
             <leg_is_bestial>0</leg_is_bestial>

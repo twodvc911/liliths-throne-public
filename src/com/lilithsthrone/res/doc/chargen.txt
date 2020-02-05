@@ -13,6 +13,12 @@ pick_priority
     global priority of bodypart pick, if there will be many bodyparts after applying conditions, 
     bodypart with the maximal pick_priority will be choosed
 
+variant_index
+    integer,
+    index of bodypart variant, could be omited for simple cases (like variants of ears)
+    need to be set only for linking variants of parent and variants of child body parts (for example arms with hands or hands with hands makeup)
+    corresponding parent and child body parts should have equal variant_index
+
 fallback
     flag (0 or 1), 
     if 1 - current bodypart will be picked if there are no other available. ignoring conditions.

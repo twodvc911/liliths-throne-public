@@ -68,21 +68,54 @@ public class CharacterBodypart {
 		if (!bodypart.is_hidden) initImage();
 	}
 
-	private RaceBodypart pickBodypart(Map<String, Map<String, RaceBodypart>> bodyparts_for_use, String bodypart_code, String parent_type, String position_id) {
+	private RaceBodypart pickBodypart(Map<String, Map<String, RaceBodypart>> bodyparts_for_use, String bodypart_code, String parent_type, String position_id, Integer parent_variant, GameCharacter character) {
 		if (!bodyparts_for_use.containsKey(bodypart_code) || bodyparts_for_use.get(bodypart_code).isEmpty()) {
 			return null;
 		}
 		double max_bodypart_priority = 0;
-		RaceBodypart picked = null;
+		List<RaceBodypart> picked = new ArrayList<>();
 		for (Map.Entry<String, RaceBodypart> part_entry : bodyparts_for_use.get(bodypart_code).entrySet()) {
 			if (part_entry.getValue().connectionIsForTypeAndPosition(parent_type, position_id)) {
-				if ((picked == null || (part_entry.getValue().pick_priority > max_bodypart_priority)) && part_entry.getValue() != this.bodypart) {
-					picked = part_entry.getValue();
-					max_bodypart_priority = picked.pick_priority;
+				if ((picked.isEmpty() || (part_entry.getValue().pick_priority >= max_bodypart_priority)) && part_entry.getValue() != this.bodypart) {
+					if (part_entry.getValue().pick_priority > max_bodypart_priority) picked.clear();
+					picked.add(part_entry.getValue());
+					max_bodypart_priority = part_entry.getValue().pick_priority;
 				}
 			}
 		}
-		return picked;
+		if (picked.size() > 1) {
+			if (parent_variant != null) {
+				List<RaceBodypart> picked_for_parent_variant = new ArrayList<>();
+				for(RaceBodypart picked_i: picked) {
+					if (parent_variant.equals(picked_i.variant_index)) {
+						picked_for_parent_variant.add(picked_i);
+					}
+				}
+				if (picked_for_parent_variant.size() == 1) {
+					return picked_for_parent_variant.get(0);
+				} else if (picked_for_parent_variant.size() > 1) {
+					picked = picked_for_parent_variant;
+				}
+			}
+			picked.sort((RaceBodypart rb1, RaceBodypart rb2) -> {
+				int compare_var = 0;
+				if (rb1.variant_index != null && rb2.variant_index != null) {
+					compare_var = Integer.compare(rb1.variant_index, rb2.variant_index);
+				} else if (rb1.variant_index != null && rb2.variant_index == null) {
+					compare_var = -1;
+				} else if (rb1.variant_index == null && rb2.variant_index != null) {
+					compare_var = 1;
+				}
+				if (compare_var == 0) compare_var = rb1.bodypart_code.compareTo(rb2.bodypart_code);
+				return compare_var;
+			});
+			String hash_str = character.getNameIgnoresPlayerKnowledge() + "_" + character.getId() + "_" + parent_type;
+			int pick_index = Math.abs((int)(hash_str.hashCode()/10)) % picked.size();
+			return picked.get(pick_index);
+		} else if (picked.size() == 1) {
+			return picked.get(0);
+		}
+		return null;
 	}
 
 	public void initChildPositionParts(Map<String, Map<String, RaceBodypart>> bodyparts_for_use, GameCharacter character, int depth) throws NoSuchFieldException, IOException {
@@ -115,7 +148,7 @@ public class CharacterBodypart {
 				
 				for(int i=0; i<bp_rows_count; i++) {
 					for(int j=0; j<bp_cols_count; j++) {
-						RaceBodypart picked_bp = pickBodypart(bodyparts_for_use, type, bodypart.bodypart_name, position_id);
+						RaceBodypart picked_bp = pickBodypart(bodyparts_for_use, type, bodypart.bodypart_name, position_id, bodypart.variant_index, character);
 						if (picked_bp != null) {
 							String position_cl_id = position_id;
 							if (i > 0 || j > 0) {
@@ -141,7 +174,7 @@ public class CharacterBodypart {
 	private void initImage() throws IOException {
 		image = new CharacterImage();
 		if (!image.load(bodypart.img_file)) {
-			throw new IOException("Cant load image "+bodypart.img_file+" for for id="+id+"!");
+			throw new IOException("Can't load image "+bodypart.img_file+" for for id="+id+"!");
 		}
 		image_initial_width = image.getWidth();
 		image_initial_height = image.getHeight();
@@ -607,12 +640,12 @@ public class CharacterBodypart {
 		if (image_mask == null && !bodypart.is_hidden) {
 			if (bodypart.img_file_mask != null) {
 				try {
-					image_mask = CharacterImage.loadMask(bodypart.img_file_mask, (int) Math.round(draw_width), (int) Math.round(draw_height));
+					image_mask = CharacterImage.fromFile(bodypart.img_file_mask, (int) Math.round(draw_width), (int) Math.round(draw_height));
 				} catch(IOException ex) {
 					System.out.println("Can't open mask file "+bodypart.img_file_mask+"!");
 				}
 			} else {
-				image_mask = CharacterImage.generateMask(image.getImage(), (int) Math.round(draw_width), (int) Math.round(draw_height));
+				image_mask = image.generateMask((int) Math.round(draw_width), (int) Math.round(draw_height));
 			}
 			if (image_mask != null && "combine_with_parent_mask".equals(bodypart.mask_calculation_mode)) {
 				if (parent.image_mask == null) {

@@ -58,6 +58,8 @@ public class RaceBodypart {
 	public String mix_type = null;
 	public double mix_param = 50;
 
+	public Integer variant_index = null;
+
 	public List<Map<String, String>> parent_connections = new ArrayList<>();
 	public Map<String, Map<String, String>> positions = new HashMap<>();
 	public List<Map<String, String>> conditions = new ArrayList<>();
@@ -117,7 +119,7 @@ public class RaceBodypart {
 
 	private void initSettingsFromXML(String bp_xml_file) {
 		Node bodypart_node = null;
-		Document xml_document = ChargenMetaXMLLoader.openXMLFile(bp_xml_file);
+		Document xml_document = MetaXMLLoader.openXMLFile(bp_xml_file);
 		if (xml_document != null) {
 			xml_document.normalizeDocument();
 			NodeList bodypart_nodes = xml_document.getElementsByTagName("bodypart");
@@ -127,63 +129,65 @@ public class RaceBodypart {
 		}
 		if (bodypart_node == null) return;
 		
-		derive_image = ChargenMetaXMLLoader.getNodeAttribute(bodypart_node, "derive_image_from");
+		derive_image = MetaXMLLoader.getNodeAttribute(bodypart_node, "derive_image_from");
 		
-		is_hidden = ChargenMetaXMLLoader.getBoolParam(bodypart_node, "hidden");
-		is_fallback = ChargenMetaXMLLoader.getBoolParam(bodypart_node, "fallback");
-		no_patterns = ChargenMetaXMLLoader.getBoolParam(bodypart_node, "no_patterns");
-		no_transitions = ChargenMetaXMLLoader.getBoolParam(bodypart_node, "no_transitions");
-		no_scale_by_parent = ChargenMetaXMLLoader.getBoolParam(bodypart_node, "no_scale_by_parent");
-		skip_colorization = ChargenMetaXMLLoader.getBoolParam(bodypart_node, "skip_colorization");
-		use_mask_for_colorization = ChargenMetaXMLLoader.getBoolParam(bodypart_node, "use_mask_for_colorization");
+		is_hidden = MetaXMLLoader.getBoolParam(bodypart_node, "hidden");
+		is_fallback = MetaXMLLoader.getBoolParam(bodypart_node, "fallback");
+		no_patterns = MetaXMLLoader.getBoolParam(bodypart_node, "no_patterns");
+		no_transitions = MetaXMLLoader.getBoolParam(bodypart_node, "no_transitions");
+		no_scale_by_parent = MetaXMLLoader.getBoolParam(bodypart_node, "no_scale_by_parent");
+		skip_colorization = MetaXMLLoader.getBoolParam(bodypart_node, "skip_colorization");
+		use_mask_for_colorization = MetaXMLLoader.getBoolParam(bodypart_node, "use_mask_for_colorization");
 
-		derive_color_from_bodypart = ChargenMetaXMLLoader.getStringParam(bodypart_node, "derive_color_from_bodypart");
-		mask_calculation_mode = ChargenMetaXMLLoader.getStringParam(bodypart_node, "mask_calculation_mode");
+		derive_color_from_bodypart = MetaXMLLoader.getStringParam(bodypart_node, "derive_color_from_bodypart");
+		mask_calculation_mode = MetaXMLLoader.getStringParam(bodypart_node, "mask_calculation_mode");
 		
-		scale = ChargenMetaXMLLoader.getDoubleParam(bodypart_node, "scale", scale);
-		scale_x = ChargenMetaXMLLoader.getDoubleParam(bodypart_node, "scale_x", scale_x);
-		scale_y = ChargenMetaXMLLoader.getDoubleParam(bodypart_node, "scale_y", scale_y);
-		min_scale = ChargenMetaXMLLoader.getDoubleParam(bodypart_node, "min_scale", min_scale);
-		max_scale = ChargenMetaXMLLoader.getDoubleParam(bodypart_node, "max_scale", max_scale);
-		pattern_scale = ChargenMetaXMLLoader.getDoubleParam(bodypart_node, "pattern_scale", pattern_scale);
-		priority = ChargenMetaXMLLoader.getDoubleParam(bodypart_node, "priority", priority);
-		pick_priority = ChargenMetaXMLLoader.getDoubleParam(bodypart_node, "pick_priority", pick_priority);
-		priority_offset = ChargenMetaXMLLoader.getDoubleParam(bodypart_node, "priority_offset", priority_offset);
-		
-		Node color_mix_node = ChargenMetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "color_mix");
-		color_to_mix = ChargenMetaXMLLoader.getColorParam(color_mix_node, "color", null);
-		mix_type = ChargenMetaXMLLoader.getStringParam(color_mix_node, "type", null);
-		mix_param = ChargenMetaXMLLoader.getDoubleParam(color_mix_node, "value", 50);
+		scale = MetaXMLLoader.getDoubleParam(bodypart_node, "scale", scale);
+		scale_x = MetaXMLLoader.getDoubleParam(bodypart_node, "scale_x", scale_x);
+		scale_y = MetaXMLLoader.getDoubleParam(bodypart_node, "scale_y", scale_y);
+		min_scale = MetaXMLLoader.getDoubleParam(bodypart_node, "min_scale", min_scale);
+		max_scale = MetaXMLLoader.getDoubleParam(bodypart_node, "max_scale", max_scale);
+		pattern_scale = MetaXMLLoader.getDoubleParam(bodypart_node, "pattern_scale", pattern_scale);
+		priority = MetaXMLLoader.getDoubleParam(bodypart_node, "priority", priority);
+		pick_priority = MetaXMLLoader.getDoubleParam(bodypart_node, "pick_priority", pick_priority);
+		priority_offset = MetaXMLLoader.getDoubleParam(bodypart_node, "priority_offset", priority_offset);
 
-		Node conditions_node = ChargenMetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "conditions");
-		derive_conditions = ChargenMetaXMLLoader.getNodeAttribute(conditions_node, "derive_from");
-		conditions = ChargenMetaXMLLoader.getAllChildNodesMapList(conditions_node, "condition");
+		variant_index = MetaXMLLoader.getIntegerParam(bodypart_node, "variant_index", null);
 
-		Node modifiers_node = ChargenMetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "modifiers");
-		derive_modifiers = ChargenMetaXMLLoader.getNodeAttribute(modifiers_node, "derive_from");
-		Map<String, String> str_modifiers = ChargenMetaXMLLoader.getAllChildNodesAsMap(modifiers_node);
+		Node color_mix_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "color_mix");
+		color_to_mix = MetaXMLLoader.getColorParam(color_mix_node, "color", null);
+		mix_type = MetaXMLLoader.getStringParam(color_mix_node, "type", null);
+		mix_param = MetaXMLLoader.getDoubleParam(color_mix_node, "value", 50);
+
+		Node conditions_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "conditions");
+		derive_conditions = MetaXMLLoader.getNodeAttribute(conditions_node, "derive_from");
+		conditions = MetaXMLLoader.getAllChildNodesMapList(conditions_node, "condition");
+
+		Node modifiers_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "modifiers");
+		derive_modifiers = MetaXMLLoader.getNodeAttribute(modifiers_node, "derive_from");
+		Map<String, String> str_modifiers = MetaXMLLoader.getAllChildNodesAsMap(modifiers_node);
 		for(Map.Entry<String, String> entry: str_modifiers.entrySet()) {
 			Double mod_val = getModifierFromParamString(entry.getKey(), entry.getValue());
 			if (mod_val != null) modifiers.put(entry.getKey(), mod_val);
 		}
 
-		Node mod_conditions_node = ChargenMetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "mod_conditions");
-		derive_mod_conditions = ChargenMetaXMLLoader.getNodeAttribute(mod_conditions_node, "derive_from");
-		mod_conditions = ChargenMetaXMLLoader.getAllChildNodesMapList(mod_conditions_node, "condition", ALL_MODIFIER_PARAMS);
+		Node mod_conditions_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "mod_conditions");
+		derive_mod_conditions = MetaXMLLoader.getNodeAttribute(mod_conditions_node, "derive_from");
+		mod_conditions = MetaXMLLoader.getAllChildNodesMapList(mod_conditions_node, "condition", ALL_MODIFIER_PARAMS);
 		
-		Node parent_connections_node = ChargenMetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "connections_parent");
-		derive_parent_connections = ChargenMetaXMLLoader.getNodeAttribute(parent_connections_node, "derive_from");
-		parent_connections = ChargenMetaXMLLoader.getAllChildNodesMapList(parent_connections_node, "connection");
+		Node parent_connections_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "connections_parent");
+		derive_parent_connections = MetaXMLLoader.getNodeAttribute(parent_connections_node, "derive_from");
+		parent_connections = MetaXMLLoader.getAllChildNodesMapList(parent_connections_node, "connection");
 
-		Node positions_node = ChargenMetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "positions");
-		derive_positions = ChargenMetaXMLLoader.getNodeAttribute(positions_node, "derive_from");
-		positions = ChargenMetaXMLLoader.getAllChildNodesMapIDMap(positions_node, "position");
+		Node positions_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "positions");
+		derive_positions = MetaXMLLoader.getNodeAttribute(positions_node, "derive_from");
+		positions = MetaXMLLoader.getAllChildNodesMapIDMap(positions_node, "position");
 
-		Node scale_params_node = ChargenMetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "scale_params");
-		derive_scale_params = ChargenMetaXMLLoader.getNodeAttribute(scale_params_node, "derive_from");
-		scale_params = ChargenMetaXMLLoader.getAllChildNodesAsMap(scale_params_node);
+		Node scale_params_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "scale_params");
+		derive_scale_params = MetaXMLLoader.getNodeAttribute(scale_params_node, "derive_from");
+		scale_params = MetaXMLLoader.getAllChildNodesAsMap(scale_params_node);
 		
-		String hides_bodyparts_str = ChargenMetaXMLLoader.getStringParam(bodypart_node, "hides_bodyparts", "");
+		String hides_bodyparts_str = MetaXMLLoader.getStringParam(bodypart_node, "hides_bodyparts", "");
 		hides_bodyparts = new HashSet<>(Arrays.asList(hides_bodyparts_str.split(";")));
 	}
 
@@ -242,7 +246,7 @@ public class RaceBodypart {
 					return String.valueOf(ThreadLocalRandom.current().nextInt(0, Integer.valueOf(condition_val)));
 				case "charnamehash":
 					String hash_str = character.getNameIgnoresPlayerKnowledge() + "_" + character.getId();
-					return String.valueOf(((int)(hash_str.hashCode()/2)) % Integer.valueOf(condition_val));
+					return String.valueOf(Math.abs((int)(hash_str.hashCode()/10)) % Integer.valueOf(condition_val));
 
 				case "affection_level_to_player":
 					return character.getAffectionLevel(Main.game.getPlayer()).getName().toLowerCase();
@@ -425,6 +429,9 @@ public class RaceBodypart {
 							break;
 						case "leg":
 							c_slot = InventorySlot.LEG;
+							break;
+						case "foot":
+							c_slot = InventorySlot.FOOT;
 							break;
 						case "head":
 							c_slot = InventorySlot.HEAD;

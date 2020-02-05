@@ -11,6 +11,10 @@
             <type>leg</type>
             <point>76;1072</point>
         </position>
+        <position id="clothes_foot">
+            <type>clothes_foot</type>
+            <point>193;912</point>
+        </position>
     </positions>
     <connections_parent>
         <connection>

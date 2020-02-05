@@ -21,7 +21,7 @@ import org.xml.sax.SAXException;
  *
  * @author twovgSP
  */
-public class ChargenMetaXMLLoader {
+public class MetaXMLLoader {
 
 	private static final List<String> DEFAULT_ATTRIBUTES_TO_GET = Arrays.asList(new String[]{"id"});
 
@@ -50,23 +50,27 @@ public class ChargenMetaXMLLoader {
 		return getStringParam(parent_node, param_name, null);
 	}
 	public static String getStringParam(Node parent_node, String param_name, String default_value) {
-		Node c_node = ChargenMetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
+		Node c_node = MetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
 		return c_node != null ? c_node.getTextContent() : default_value;
 	}
 	public static boolean getBoolParam(Node parent_node, String param_name) {
-		Node c_node = ChargenMetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
+		Node c_node = MetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
 		return c_node != null && "1".equals(c_node.getTextContent());
 	}
 	public static double getDoubleParam(Node parent_node, String param_name, double default_value) {
-		Node c_node = ChargenMetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
+		Node c_node = MetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
 		return c_node != null ? Double.parseDouble(c_node.getTextContent()) : default_value;
 	}
 	public static int getIntParam(Node parent_node, String param_name, int default_value) {
-		Node c_node = ChargenMetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
+		Node c_node = MetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
+		return c_node != null ? Integer.valueOf(c_node.getTextContent()) : default_value;
+	}
+	public static Integer getIntegerParam(Node parent_node, String param_name, Integer default_value) {
+		Node c_node = MetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
 		return c_node != null ? Integer.valueOf(c_node.getTextContent()) : default_value;
 	}
 	public static Color getColorParam(Node parent_node, String param_name, Color default_value) {
-		Node c_node = ChargenMetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
+		Node c_node = MetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
 		return c_node != null ? Color.valueOf(c_node.getTextContent()) : default_value;
 	}
 	public static Node getChildFirstNodeOfType(Node parent_node, String type_name) {
@@ -103,7 +107,7 @@ public class ChargenMetaXMLLoader {
 		return node_list;
 	}
 	public static Map<String, String> getAllChildNodesAsMap(Node parent_node) {
-		return ChargenMetaXMLLoader.getAllChildNodesAsMap(parent_node, DEFAULT_ATTRIBUTES_TO_GET);
+		return MetaXMLLoader.getAllChildNodesAsMap(parent_node, DEFAULT_ATTRIBUTES_TO_GET);
 	}
 	public static Map<String, String> getAllChildNodesAsMap(Node parent_node, List<String> attributes_to_map) {
 		Map<String, String> result = new HashMap<>();
@@ -138,27 +142,27 @@ public class ChargenMetaXMLLoader {
 	}
 	public static List<Map<String, String>> getAllChildNodesMapList(Node parent_node, String node_type) {
 		List<Map<String, String>> result = new ArrayList<>();
-		List<Node> child_nodes = ChargenMetaXMLLoader.getAllChildNodesOfType(parent_node, node_type);
+		List<Node> child_nodes = MetaXMLLoader.getAllChildNodesOfType(parent_node, node_type);
 		for(Node child_node: child_nodes)  {
-			Map<String, String> child_map = ChargenMetaXMLLoader.getAllChildNodesAsMap(child_node);
+			Map<String, String> child_map = MetaXMLLoader.getAllChildNodesAsMap(child_node);
 			result.add(child_map);
 		}
 		return result;
 	}
 	public static List<Map<String, String>> getAllChildNodesMapList(Node parent_node, String node_type, List<String> attributes_to_map) {
 		List<Map<String, String>> result = new ArrayList<>();
-		List<Node> child_nodes = ChargenMetaXMLLoader.getAllChildNodesOfType(parent_node, node_type);
+		List<Node> child_nodes = MetaXMLLoader.getAllChildNodesOfType(parent_node, node_type);
 		for(Node child_node: child_nodes)  {
-			Map<String, String> child_map = ChargenMetaXMLLoader.getAllChildNodesAsMap(child_node, attributes_to_map);
+			Map<String, String> child_map = MetaXMLLoader.getAllChildNodesAsMap(child_node, attributes_to_map);
 			result.add(child_map);
 		}
 		return result;
 	}
 	public static Map<String, Map<String, String>> getAllChildNodesMapIDMap(Node parent_node, String node_type) {
 		Map<String, Map<String, String>> result = new HashMap<>();
-		List<Node> child_nodes = ChargenMetaXMLLoader.getAllChildNodesOfType(parent_node, node_type);
+		List<Node> child_nodes = MetaXMLLoader.getAllChildNodesOfType(parent_node, node_type);
 		for(Node child_node: child_nodes)  {
-			Map<String, String> child_map = ChargenMetaXMLLoader.getAllChildNodesAsMap(child_node);
+			Map<String, String> child_map = MetaXMLLoader.getAllChildNodesAsMap(child_node);
 			if (child_map.containsKey("id")) {
 				result.put(child_map.get("id"), child_map);
 			}

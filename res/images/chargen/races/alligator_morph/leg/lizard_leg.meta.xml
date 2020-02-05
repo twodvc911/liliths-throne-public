@@ -7,6 +7,13 @@
             <type>leg</type>
             <point>100%;100%</point>
         </position>
+        <position id="clothes_foot">
+            <type>clothes_foot</type>
+            <point>190;860</point>
+            <modifiers>
+                <scale>1.45</scale>
+            </modifiers>
+        </position>
     </positions>
     <connections_parent>
         <connection>

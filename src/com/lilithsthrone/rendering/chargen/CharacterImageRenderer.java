@@ -2,15 +2,10 @@ package com.lilithsthrone.rendering.chargen;
 
 import com.lilithsthrone.game.PropertyValue;
 import com.lilithsthrone.game.character.GameCharacter;
-import com.lilithsthrone.game.character.body.types.BodyCoveringType;
-import com.lilithsthrone.game.character.body.valueEnums.CoveringPattern;
 import com.lilithsthrone.game.character.effects.Perk;
-import com.lilithsthrone.game.character.race.Race;
-import com.lilithsthrone.game.inventory.InventorySlot;
 import com.lilithsthrone.main.Main;
 import com.lilithsthrone.rendering.CachedImage;
 import com.lilithsthrone.rendering.CharacterImage;
-import com.lilithsthrone.utils.Colour;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,20 +27,21 @@ public class CharacterImageRenderer {
 	private final String chargen_root_dir = "res/images/chargen/races";
 	private final String pattern_dir = "res/images/chargen/patterns";
 	private final String material_dir = "res/images/chargen/materials";
+	private final String results_dir = "res/images/chargen/results";
 	private final String common_race = "common";
 	private final String default_fallback_race = "human";
 	private final String[] root_bodyparts = new String[]{"body_taur", "body"};
 
 	private final boolean skip_unknown_races = true;
 
-	private final boolean do_pre_scale = true;
+	private final boolean do_pre_scale = false;
 	private final double base_image_scale = 1.0;
 	private final int max_image_width = 600;
 	private final int max_image_height = 600;
 
-	private final boolean debug_mode = false;
-	private final boolean reveal_everybody = false;
-	private final boolean save_characters = false;
+	private final boolean debug_mode = true;
+	private final boolean reveal_everybody = true;
+	private final boolean save_characters = true;
 
 	private boolean initialized = false;
 	
@@ -76,180 +72,14 @@ public class CharacterImageRenderer {
 		}
 	}
 	
-	private Map<String, String> getCharacterBodypartRaces(GameCharacter character) {
-		Race body_race = character.getBody().getRace();
-		Race head_race = character.getFaceRace();
-		Race arm_race = character.getArmRace();
-		Race leg_race = character.getLegRace();
-		
-		Race penis_race = character.getPenisRace();
-		Race vagina_race = character.getVaginaRace();
-		Race breasts_race = character.getBreastRace();
-		Race breast_crotch_race = character.getBreastCrotchRace();
-		
-		Race hair_race = character.getHairRace();
-		Race ear_race = character.getEarRace();
-		Race eye_race = character.getEyeRace();
-		Race wing_race = character.getWingRace();
-		Race horn_race = character.getHornRace();
-		Race antenna_race = character.getAntennaRace();
-		
-		Race ass_race = character.getAssRace();
-		Race tongue_race = character.getTongueRace();
-		Race tail_race = character.getTailRace();
-
-		Race cloaca_race = character.getGenitalArrangement().toString().equals("CLOACA") ? (vagina_race != null && vagina_race != Race.NONE ? vagina_race : penis_race) : null;
-
-		Map<String, String> real_parts_races = new HashMap<>();
-
-		if (body_race != null && body_race != Race.NONE) {
-			real_parts_races.put("body", body_race.name().toLowerCase());
-			real_parts_races.put("belly", body_race.name().toLowerCase());
-			if (character.isTaur()) real_parts_races.put("body_taur", body_race.name().toLowerCase());
-		} else {
-			real_parts_races.put("body", getRaceBodypartFallback(null, "body"));
-			real_parts_races.put("belly", getRaceBodypartFallback(null, "belly"));
-			if (character.isTaur()) real_parts_races.put("body_taur", getRaceBodypartFallback(null, "body_taur"));
-		}
-
-		if (head_race != null && head_race != Race.NONE) {
-			real_parts_races.put("head", head_race.name().toLowerCase());
-			real_parts_races.put("snout", head_race.name().toLowerCase());
-			real_parts_races.put("lips", head_race.name().toLowerCase());
-		} else {
-			real_parts_races.put("head", getRaceBodypartFallback(null, "head"));
-			real_parts_races.put("snout", getRaceBodypartFallback(null, "snout"));
-			real_parts_races.put("lips", getRaceBodypartFallback(null, "lips"));
-		}
-		
-		if (arm_race != null && arm_race != Race.NONE) {
-			real_parts_races.put("arm", arm_race.name().toLowerCase());
-		} else {
-			real_parts_races.put("arm", getRaceBodypartFallback(null, "arm"));
-		}
-		
-		if (leg_race != null && leg_race != Race.NONE) {
-			real_parts_races.put("leg", leg_race.name().toLowerCase());
-		} else {
-			real_parts_races.put("leg", getRaceBodypartFallback(null, "leg"));
-		}
-		
-		if (character.getBlusher() != null && character.getBlusher().getPrimaryColour()!=Colour.COVERING_NONE) {
-			if (head_race != null && head_race != Race.NONE) {
-				real_parts_races.put("blusher", head_race.name().toLowerCase());
-			} else {
-				real_parts_races.put("blusher", getRaceBodypartFallback(null, "blusher"));
-			}
-		}
-		
-		if (character.getEyeShadow() != null && character.getEyeShadow().getPrimaryColour()!=Colour.COVERING_NONE) {
-			if (head_race != null && head_race != Race.NONE) {
-				real_parts_races.put("eye_shadow", head_race.name().toLowerCase());
-			} else {
-				real_parts_races.put("eye_shadow", getRaceBodypartFallback(null, "eye_shadow"));
-			}
-		}
-		
-		if (character.getEyeLiner() != null && character.getEyeLiner().getPrimaryColour()!=Colour.COVERING_NONE) {
-			if (head_race != null && head_race != Race.NONE) {
-				real_parts_races.put("eye_liner", head_race.name().toLowerCase());
-			} else {
-				real_parts_races.put("eye_liner", getRaceBodypartFallback(null, "eye_liner"));
-			}
-		}
-
-		if (penis_race != null && penis_race != Race.NONE) real_parts_races.put("penis", penis_race.name().toLowerCase());
-		if (penis_race != null && penis_race != Race.NONE) real_parts_races.put("balls", penis_race.name().toLowerCase());
-		if (vagina_race != null && vagina_race != Race.NONE) real_parts_races.put("vagina", vagina_race.name().toLowerCase());
-		if (breasts_race != null && breasts_race != Race.NONE) real_parts_races.put("breasts", breasts_race.name().toLowerCase());
-		if (breasts_race != null && breasts_race != Race.NONE) real_parts_races.put("nipple", breasts_race.name().toLowerCase());
-		if (breast_crotch_race != null && breast_crotch_race != Race.NONE) real_parts_races.put("breasts-crotch", breast_crotch_race.name().toLowerCase());
-		if (breast_crotch_race != null && breast_crotch_race != Race.NONE) real_parts_races.put("breasts-crotch-nipple", breast_crotch_race.name().toLowerCase());
-		if (hair_race != null && hair_race != Race.NONE) real_parts_races.put("hair", hair_race.name().toLowerCase());
-		if (ear_race != null && ear_race != Race.NONE) real_parts_races.put("ear", ear_race.name().toLowerCase());
-		if (eye_race != null && eye_race != Race.NONE) real_parts_races.put("eye", eye_race.name().toLowerCase());
-		if (eye_race != null && eye_race != Race.NONE) real_parts_races.put("eye_sclera", eye_race.name().toLowerCase());
-		if (eye_race != null && eye_race != Race.NONE) real_parts_races.put("eye_pupil", eye_race.name().toLowerCase());
-		if (eye_race != null && eye_race != Race.NONE) real_parts_races.put("eye_iris", eye_race.name().toLowerCase());
-		if (wing_race != null && wing_race != Race.NONE) real_parts_races.put("wing", wing_race.name().toLowerCase());
-		if (horn_race != null && horn_race != Race.NONE) real_parts_races.put("horn", horn_race.name().toLowerCase());
-		if (antenna_race != null && antenna_race != Race.NONE) real_parts_races.put("antenna", antenna_race.name().toLowerCase());
-		if (ass_race != null && ass_race != Race.NONE) real_parts_races.put("ass", ass_race.name().toLowerCase());
-		if (cloaca_race != null && cloaca_race != Race.NONE) real_parts_races.put("cloaca", cloaca_race.name().toLowerCase());
-		if (tongue_race != null && tongue_race != Race.NONE) real_parts_races.put("tongue", tongue_race.name().toLowerCase());
-		if (tail_race != null && tail_race != Race.NONE) real_parts_races.put("tail", tail_race.name().toLowerCase());
-
-		if (character.getClothingInSlot(InventorySlot.TORSO_UNDER) != null) real_parts_races.put("clothes_torso_under", real_parts_races.get("body"));
-		if (character.getClothingInSlot(InventorySlot.TORSO_OVER) != null) real_parts_races.put("clothes_torso_over", real_parts_races.get("body"));
-		if (character.getClothingInSlot(InventorySlot.GROIN) != null) real_parts_races.put("clothes_groin", real_parts_races.get("body"));
-		if (character.getClothingInSlot(InventorySlot.LEG) != null) real_parts_races.put("clothes_leg", real_parts_races.get("leg"));
-		if (character.getClothingInSlot(InventorySlot.HEAD) != null) real_parts_races.put("clothes_head", real_parts_races.get("head"));
-
-		return real_parts_races;
-	}
-
-	private BodyColorsMap getCharacterColors(GameCharacter character) {
-		BodyColorsMap body_colors = new BodyColorsMap();
-		body_colors.add_body_color("body", character.getBody().getSkin(), character);
-		body_colors.add_body_color("body_taur", character.getBody().getLeg(), character);
-		body_colors.add_body_color("belly", character.getBody().getSkin(), character);
-		body_colors.add_body_color("leg", character.getBody().getLeg(), character);
-		body_colors.add_body_color("arm", character.getBody().getArm(), character);
-		body_colors.add_body_color("head", character.getBody().getFace(), character);
-		body_colors.add_body_color("blusher", character.getBlusher(), character);
-		body_colors.add_body_color("eye_shadow", character.getEyeShadow(), character);
-		body_colors.add_body_color("eye_liner", character.getEyeLiner(), character);
-		body_colors.add_body_color("snout", character.getBody().getFace(), character);
-		body_colors.add_body_color("lips", character.getBody().getFace().getMouth(), character);
-		body_colors.add_body_color("lips", character.getLipstick(), character);
-		body_colors.add_body_color("hand_nails", character.getHandNailPolish(), character);
-		body_colors.add_body_color("foot_nails", character.getFootNailPolish(), character);
-		body_colors.add_body_color("hair", character.getBody().getHair(), character);
-		body_colors.add_body_color("penis", character.getBody().getPenis(), character);
-		body_colors.add_body_color("balls", character.getBody().getPenis() != null ? character.getBody().getPenis().getTesticle() : null, character);
-		body_colors.add_body_color("balls", character.getBody().getLeg(), character);
-		body_colors.add_body_color("vagina", character.getBody().getVagina(), character);
-		body_colors.add_body_color("cloaca", character.getBody().getPenis(), character);
-		body_colors.add_body_color("cloaca", character.getBody().getVagina(), character);
-		body_colors.add_body_color("breasts", character.getBody().getBreast(), character);
-		body_colors.add_body_color("breasts-crotch", character.getBody().getBreastCrotch(), character);
-		body_colors.add_body_color("breasts-crotch-nipple", character.getBody().getBreastCrotch() != null ? character.getBody().getBreastCrotch().getNipples() : null, character);
-		body_colors.add_body_color("nipple", character.getBody().getBreast() != null ? character.getBody().getBreast().getNipples() : null, character);
-		body_colors.add_body_color("horn", character.getBody().getHorn(), character);
-		body_colors.add_body_color("antenna", character.getBody().getAntenna(), character);
-		body_colors.add_body_color("ear", character.getBody().getEar(), character);
-		body_colors.add_body_color("eye", Color.WHITE);
-		body_colors.add_body_color("eye_sclera", BodyCoveringType.EYE_SCLERA, character);
-		body_colors.add_body_color("eye_pupil", BodyCoveringType.EYE_PUPILS, character);
-		body_colors.add_body_color("eye_iris", character.getBody().getEye(), character);
-		body_colors.add_body_color("wing", character.getBody().getWing(), character);
-		body_colors.add_body_color("ass", character.getBody().getAss(), character);
-		body_colors.add_body_color("tongue", character.getBody().getFace()!= null ? character.getBody().getFace().getTongue() : null, character);
-		body_colors.add_body_color("tail", character.getBody().getTail(), character);
-		
-		body_colors.mix_main_body_colors("nipple", "breasts", 0.5);
-
-		if (BodyColorsMap.getBodypartCoveringPattern(character.getBody().getEye(), character) == CoveringPattern.EYE_IRISES_HETEROCHROMATIC) body_colors.add_body_secondary_to_main_color("eye_iris_inversed", "eye_iris");
-		if (BodyColorsMap.getBodypartCoveringPattern(BodyCoveringType.EYE_SCLERA, character) == CoveringPattern.EYE_SCLERA_HETEROCHROMATIC) body_colors.add_body_secondary_to_main_color("eye_sclera_inversed", "eye_sclera");
-		if (BodyColorsMap.getBodypartCoveringPattern(BodyCoveringType.EYE_PUPILS, character) == CoveringPattern.EYE_PUPILS_HETEROCHROMATIC) body_colors.add_body_secondary_to_main_color("eye_pupil_inversed", "eye_pupil");
-
-		body_colors.add_body_color("clothes_torso_under", character.getClothingInSlot(InventorySlot.TORSO_UNDER));
-		body_colors.add_body_color("clothes_torso_over", character.getClothingInSlot(InventorySlot.TORSO_OVER));
-		body_colors.add_body_color("clothes_groin", character.getClothingInSlot(InventorySlot.GROIN));
-		body_colors.add_body_color("clothes_leg", character.getClothingInSlot(InventorySlot.LEG));
-		body_colors.add_body_color("clothes_head", character.getClothingInSlot(InventorySlot.HEAD));
-
-		return body_colors;
-	}
-
 	private void initBodyparts() {
 		raceBodyparts = new HashMap<>();
 		raceFallbacks = new HashMap<>();
 		raceBodypartFallbacks = new HashMap<>();
-		String[] races_meta_files = ChargenMetaXMLLoader.getDirMetaXML(chargen_root_dir);
+		String[] races_meta_files = MetaXMLLoader.getDirMetaXML(chargen_root_dir);
 		for (String file : races_meta_files) {
 			String race_name = file.replaceAll(".meta.xml", "").trim().toLowerCase();
-			Document xml_document = ChargenMetaXMLLoader.openXMLFile(chargen_root_dir + "/" + file);
+			Document xml_document = MetaXMLLoader.openXMLFile(chargen_root_dir + "/" + file);
 			if (xml_document != null) {
 				NodeList fb_race = xml_document.getElementsByTagName("fallback_race");
 				if (fb_race != null && fb_race.getLength() > 0) {
@@ -264,13 +94,13 @@ public class CharacterImageRenderer {
 				}
 			}
 		}
-		String[] races_dirs = ChargenMetaXMLLoader.getSubDirs(chargen_root_dir);
+		String[] races_dirs = MetaXMLLoader.getSubDirs(chargen_root_dir);
 		for (String race_dir : races_dirs) {
 			String race_name = race_dir.trim().toLowerCase();
-			String[] race_meta_files = ChargenMetaXMLLoader.getDirMetaXML(chargen_root_dir + "/" + race_name);
+			String[] race_meta_files = MetaXMLLoader.getDirMetaXML(chargen_root_dir + "/" + race_name);
 			for (String file : race_meta_files) {
 				String bodypart_name = file.replaceAll(".meta.xml", "").trim().toLowerCase();
-				Document xml_document = ChargenMetaXMLLoader.openXMLFile(chargen_root_dir + "/" + race_name + "/" + file);
+				Document xml_document = MetaXMLLoader.openXMLFile(chargen_root_dir + "/" + race_name + "/" + file);
 				if (xml_document != null) {
 					NodeList fb_race = xml_document.getElementsByTagName("fallback_race");
 					if (fb_race != null && fb_race.getLength() > 0) {
@@ -288,10 +118,10 @@ public class CharacterImageRenderer {
 					}
 				}
 			}
-			String[] bodypart_dirs = ChargenMetaXMLLoader.getSubDirs(chargen_root_dir + "/" + race_name);
+			String[] bodypart_dirs = MetaXMLLoader.getSubDirs(chargen_root_dir + "/" + race_name);
 			for (String bodypart_dir : bodypart_dirs) {
 				String bodypart_name = bodypart_dir.trim().toLowerCase();
-				String[] part_meta_files = ChargenMetaXMLLoader.getDirMetaXML(chargen_root_dir + "/" + race_name + "/" + bodypart_name);
+				String[] part_meta_files = MetaXMLLoader.getDirMetaXML(chargen_root_dir + "/" + race_name + "/" + bodypart_name);
 				for (String file : part_meta_files) {
 					String part_code = file.replaceAll(".meta.xml", "").trim().toLowerCase();
 					String part_xml_name = chargen_root_dir + "/" + race_name + "/" + bodypart_name + "/" + file;
@@ -364,14 +194,13 @@ public class CharacterImageRenderer {
 	}
 	
 	private CharacterBodypart getCharacterBodyPartTree(GameCharacter character) {
-		Map<String, String> real_parts_races = getCharacterBodypartRaces(character);
-
-		if (debug_mode) System.out.println(real_parts_races);
-
+		BodyRacesMap character_body_races_map = BodyRacesMap.fromCharacter(character);
+		if (debug_mode) System.out.println(character_body_races_map);
 		Map<String, Map<String, RaceBodypart>> bodyparts_for_use = new HashMap<>();
-		for (Map.Entry<String, String> entry : real_parts_races.entrySet()) {
+		for (Map.Entry<String, String> entry : character_body_races_map.entrySet()) {
 			String race_name = entry.getValue();
 			String bodypart_name = entry.getKey();
+			if (race_name == null || race_name.equals("fallback")) race_name = getRaceBodypartFallback(null, bodypart_name);
 			String fallback_race = getRaceBodypartFallback(race_name, bodypart_name);
 			if (!raceBodyparts.containsKey(race_name) || !raceBodyparts.get(race_name).containsKey(bodypart_name)) {
 				race_name = fallback_race;
@@ -471,7 +300,7 @@ public class CharacterImageRenderer {
 			image = new CharacterImage();
 			image.initForSize(image_width, image_height);
 
-			BodyColorsMap body_colors = getCharacterColors(character);
+			BodyColorsMap body_colors = BodyColorsMap.fromCharacter(character);
 
 			if (debug_mode) System.out.println(body_colors);
 
@@ -482,9 +311,9 @@ public class CharacterImageRenderer {
 			for(CharacterBodypart item : items) {
 				if (item.bodypart.is_hidden) continue;
 				set_of_hidden.addAll(item.bodypart.hides_bodyparts);
-				item.image.flip_image(item.draw_inverse_x, item.draw_inverse_y);
+				item.image.flipImage(item.draw_inverse_x, item.draw_inverse_y);
 				if (item.image_mask != null) {
-					item.image_mask.flip_image(item.draw_inverse_x, item.draw_inverse_y);
+					item.image_mask.flipImage(item.draw_inverse_x, item.draw_inverse_y);
 				}
 			}
 
@@ -526,7 +355,7 @@ public class CharacterImageRenderer {
 					System.out.println(coloring);*/
 				}
 
-				image.drawColorizedImage(
+				image.drawColorizedBodypartImage(
 					item.image,				// image of bodypart we need to add
 					(int) Math.round(item.draw_x_point),	// x coord
 					(int) Math.round(item.draw_y_point),	// y coord
@@ -546,9 +375,9 @@ public class CharacterImageRenderer {
 					index++					// index of layer for debug
 				);
 			}
-			if (save_characters) image.save("res/images/chargen/results/"+character.getName()+"_" + String.format("%.2f", root_scale) +".png");
+			if (save_characters) image.save(results_dir + "/"+character.getName()+"_" + String.format("%.2f", root_scale) +".png");
 			image.scaleDown(max_image_width, max_image_height);
-			if (!is_revealed) image.color_set(Color.GREY);
+			if (!is_revealed) image.colorOverlay(Color.GREY);
 			image.updateImageString();
 
 			patterns.entrySet().forEach((pattern) -> {

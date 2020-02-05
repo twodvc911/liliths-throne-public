@@ -52,7 +52,7 @@ public class ColorPattern {
 
 	private void initSettingsFromXML(String pattern_xml_file) {
 		Node root_node = null;
-		Document xml_document = ChargenMetaXMLLoader.openXMLFile(pattern_xml_file);
+		Document xml_document = MetaXMLLoader.openXMLFile(pattern_xml_file);
 		if (xml_document != null) {
 			xml_document.normalizeDocument();
 			NodeList root_nodes = xml_document.getElementsByTagName("pattern");
@@ -61,12 +61,12 @@ public class ColorPattern {
 			}
 		}
 		if (root_node == null) return;
-		pattern_type = ChargenMetaXMLLoader.getStringParam(root_node, "type");
-		base_scale = ChargenMetaXMLLoader.getDoubleParam(root_node, "scale", base_scale);
-		primary_template_color = ChargenMetaXMLLoader.getColorParam(root_node, "color_primary", primary_template_color);
-		secondary_template_color = ChargenMetaXMLLoader.getColorParam(root_node, "color_secondary", secondary_template_color);
+		pattern_type = MetaXMLLoader.getStringParam(root_node, "type");
+		base_scale = MetaXMLLoader.getDoubleParam(root_node, "scale", base_scale);
+		primary_template_color = MetaXMLLoader.getColorParam(root_node, "color_primary", primary_template_color);
+		secondary_template_color = MetaXMLLoader.getColorParam(root_node, "color_secondary", secondary_template_color);
 		
-		String bodyparts_only = ChargenMetaXMLLoader.getStringParam(root_node, "bodyparts_only");
+		String bodyparts_only = MetaXMLLoader.getStringParam(root_node, "bodyparts_only");
 		if (bodyparts_only != null) {
 			bodypart_names_restriction = Arrays.asList(bodyparts_only.split(";"));
 		}
@@ -111,7 +111,7 @@ public class ColorPattern {
 					secondary_template_color
 				);
 			} else {
-				new_image = image.getResizedCharacterImage(
+				new_image = image.getResizedImage(
 					(int) Math.round(image.getWidth() * result_scale), 
 					(int) Math.round(image.getHeight() * result_scale),
 					true
@@ -124,7 +124,7 @@ public class ColorPattern {
 	
 	public static void loadPatterns(Map<String, ColorPattern> patterns_var, String from_dir) {
 		patterns_var.clear();
-		String[] pattern_meta_files = ChargenMetaXMLLoader.getDirMetaXML(from_dir);
+		String[] pattern_meta_files = MetaXMLLoader.getDirMetaXML(from_dir);
 		for (String file : pattern_meta_files) {
 			try {
 				ColorPattern new_pattern = new ColorPattern(from_dir + "/" + file);

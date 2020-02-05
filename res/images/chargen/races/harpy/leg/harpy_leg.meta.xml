@@ -6,6 +6,10 @@
             <type>leg</type>
             <point>100%;100%</point>
         </position>
+        <position id="clothes_foot">
+            <type>clothes_foot</type>
+            <point>319;807</point>
+        </position>
     </positions>
     <connections_parent>
         <connection>

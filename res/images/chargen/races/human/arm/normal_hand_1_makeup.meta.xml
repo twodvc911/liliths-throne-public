@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <bodypart>
-    <priority_offset>1</priority_offset>
+    <variant_index>1</variant_index>
+    <priority_offset>0.01</priority_offset>
     <derive_color_from_bodypart>hand_nails</derive_color_from_bodypart>
+    <pattern_scale>0.075</pattern_scale>
     <conditions>
         <condition>
             <is_hand_nails_polished>1</is_hand_nails_polished>
@@ -11,7 +13,7 @@
         <connection>
             <type>arm</type>
             <position>hand_makeup</position>
-            <point>3;14</point>
+            <point>10;14</point>
         </connection>
     </connections_parent>
 </bodypart>

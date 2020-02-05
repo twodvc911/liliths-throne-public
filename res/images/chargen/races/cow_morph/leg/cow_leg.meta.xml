@@ -2,6 +2,12 @@
 <bodypart>
     <priority>135</priority>
     <scale_y>1.0</scale_y>
+    <positions>
+        <position id="clothes_foot">
+            <type>clothes_foot</type>
+            <point>189;940</point>
+        </position>
+    </positions>
     <connections_parent>
         <connection>
             <point_1>40;0</point_1>
