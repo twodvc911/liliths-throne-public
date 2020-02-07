@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>290</priority>
+    <hides_bodyparts_by_type>cloaca;vagina;penis;balls;clothes_penis</hides_bodyparts_by_type>
+    <scale_y>0.325</scale_y>
+    <conditions>
+        <condition>
+            <clothes_groin>panties</clothes_groin>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <point_1>18;48</point_1>
+            <point_2>915;48</point_2>
+        </connection>
+    </connections_parent>
+    <image_author>innoxia</image_author>
+</bodypart>

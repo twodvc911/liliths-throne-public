@@ -61,6 +61,7 @@ public class BodyColorsMap {
 			new_info.primary_color = new_info.secondary_color = old_info.secondary_color;
 			new_info.primary_glowing = new_info.secondary_glowing = old_info.secondary_glowing;
 			new_info.covering_pattern = old_info.covering_pattern;
+			new_info.material = old_info.material;
 			body_colors.put(bodypart_main_code, new_info);
 		}
 	}
@@ -72,6 +73,7 @@ public class BodyColorsMap {
 			new_info.primary_color = new_info.secondary_color = old_info.primary_color;
 			new_info.primary_glowing = new_info.secondary_glowing = old_info.primary_glowing;
 			new_info.covering_pattern = old_info.covering_pattern;
+			new_info.material = old_info.material;
 			body_colors.put(bodypart_main_code_to, new_info);
 		}
 	}
@@ -102,7 +104,7 @@ public class BodyColorsMap {
 		}
 		return null;
 	}
-	
+
 	public void add_body_color(String bodypart_code, BodyPartInterface bodypart, GameCharacter character) {
 		if (bodypart != null) {
 			add_body_color(bodypart_code, bodypart.getBodyCoveringType(character), character);
@@ -110,10 +112,10 @@ public class BodyColorsMap {
 	}
 	public void add_body_color(String bodypart_code, AbstractClothing clothing) {
 		if (clothing != null && clothing.getPatternColour() != null) {
-			add_body_color(bodypart_code, clothing.getColour().getColor());
-			add_body_color(bodypart_code + ".primary", clothing.getColour().getColor());
-			add_body_color(bodypart_code + ".secondary", clothing.getSecondaryColour().getColor());
-			add_body_color(bodypart_code + ".tertiary", clothing.getTertiaryColour().getColor());
+			add_body_color(bodypart_code, clothing.getColour().getColor(), "cloth");
+			add_body_color(bodypart_code + ".primary", clothing.getColour().getColor(), "cloth");
+			add_body_color(bodypart_code + ".secondary", clothing.getSecondaryColour().getColor(), "cloth");
+			add_body_color(bodypart_code + ".tertiary", clothing.getTertiaryColour().getColor(), "cloth");
 		}
 	}
 	public void add_body_color(String bodypart_code, BodyCoveringType bc_type, GameCharacter character) {
@@ -129,16 +131,18 @@ public class BodyColorsMap {
 			new_info.covering_pattern = ch_bt_covering.getPattern().toString().toLowerCase();
 			new_info.secondary_color = convertColourToColor(ch_bt_covering.getSecondaryColour());
 			new_info.secondary_glowing = ch_bt_covering.isPrimaryGlowing();
+			new_info.material = character.getBodyMaterial().toString().toLowerCase();
 			body_colors.put(bodypart_code, new_info);
 		}
 	}
-	public void add_body_color(String bodypart_code, Color color) {
+	public void add_body_color(String bodypart_code, Color color, String material) {
 		BodyPartColoringInfo new_info = new BodyPartColoringInfo();
 		new_info.primary_color = color;
 		new_info.secondary_color = color;
+		new_info.material = material;
 		body_colors.put(bodypart_code, new_info);
 	}
-	
+
 	public Color convertColourToColor(Colour col) {
 		//System.out.println(col.getName() + " " + col.toString());
 		switch(col.toString()) {
@@ -159,11 +163,14 @@ public class BodyColorsMap {
 
 	public static BodyColorsMap fromCharacter(GameCharacter character) {
 		BodyColorsMap body_colors = new BodyColorsMap();
+
 		body_colors.add_body_color("body", character.getBody().getSkin(), character);
 		body_colors.add_body_color("body_taur", character.getBody().getLeg(), character);
 		body_colors.add_body_color("belly", character.getBody().getSkin(), character);
 		body_colors.add_body_color("leg", character.getBody().getLeg(), character);
+		body_colors.add_body_color("foot", character.getBody().getLeg(), character);
 		body_colors.add_body_color("arm", character.getBody().getArm(), character);
+		body_colors.add_body_color("hand", character.getBody().getArm(), character);
 		body_colors.add_body_color("head", character.getBody().getFace(), character);
 		body_colors.add_body_color("blusher", character.getBlusher(), character);
 		body_colors.add_body_color("eye_shadow", character.getEyeShadow(), character);
@@ -187,7 +194,7 @@ public class BodyColorsMap {
 		body_colors.add_body_color("horn", character.getBody().getHorn(), character);
 		body_colors.add_body_color("antenna", character.getBody().getAntenna(), character);
 		body_colors.add_body_color("ear", character.getBody().getEar(), character);
-		body_colors.add_body_color("eye", Color.WHITE);
+		body_colors.add_body_color("eye", Color.WHITE, character.getBodyMaterial().toString().toLowerCase());
 		body_colors.add_body_color("eye_sclera", BodyCoveringType.EYE_SCLERA, character);
 		body_colors.add_body_color("eye_pupil", BodyCoveringType.EYE_PUPILS, character);
 		body_colors.add_body_color("eye_iris", character.getBody().getEye(), character);
@@ -205,9 +212,11 @@ public class BodyColorsMap {
 		body_colors.add_body_color("clothes_torso_under", character.getClothingInSlot(InventorySlot.TORSO_UNDER));
 		body_colors.add_body_color("clothes_torso_over", character.getClothingInSlot(InventorySlot.TORSO_OVER));
 		body_colors.add_body_color("clothes_groin", character.getClothingInSlot(InventorySlot.GROIN));
+		body_colors.add_body_color("clothes_penis", character.getClothingInSlot(InventorySlot.PENIS));
 		body_colors.add_body_color("clothes_leg", character.getClothingInSlot(InventorySlot.LEG));
 		body_colors.add_body_color("clothes_foot", character.getClothingInSlot(InventorySlot.FOOT));
 		body_colors.add_body_color("clothes_head", character.getClothingInSlot(InventorySlot.HEAD));
+		body_colors.add_body_color("clothes_neck", character.getClothingInSlot(InventorySlot.NECK));
 
 		return body_colors;
 	}

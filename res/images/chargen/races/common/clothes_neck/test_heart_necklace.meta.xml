@@ -1,16 +1,15 @@
 <?xml version="1.0"?>
 <bodypart>
-    <priority>500</priority>
-    <hides_bodyparts_by_type>horn</hides_bodyparts_by_type>
-    <scale>1.5</scale>
+    <priority>300</priority>
+    <scale>0.275</scale>
     <conditions>
         <condition>
-            <clothes_head>imp arcanist's hat</clothes_head>
+            <clothes_neck>heart necklace</clothes_neck>
         </condition>
     </conditions>
     <connections_parent>
         <connection>
-            <point>240;220</point>
+            <point>508;810</point>
         </connection>
     </connections_parent>
     <image_author>innoxia</image_author>

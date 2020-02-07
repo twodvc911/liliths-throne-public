@@ -49,6 +49,15 @@
             <genital_arrangement>cloaca</genital_arrangement>
         </condition>
     </mod_conditions>
+    <positions>
+        <position id="clothes_penis">
+            <type>clothes_penis</type>
+            <point>50%;100%</point>
+            <modifiers>
+                <scale_y>1.25</scale_y>
+            </modifiers>
+        </position>
+    </positions>
     <connections_parent>
         <connection>
             <point>70;0</point>

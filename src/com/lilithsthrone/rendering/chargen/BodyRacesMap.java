@@ -86,7 +86,9 @@ public class BodyRacesMap {
 		real_parts_races.add_race_for_bodypart("lips", head_race, true);
 
 		real_parts_races.add_race_for_bodypart("arm", arm_race, true);
+		real_parts_races.add_race_for_bodypart("hand", arm_race, true);
 		real_parts_races.add_race_for_bodypart("leg", leg_race, true);
+		real_parts_races.add_race_for_bodypart("foot", leg_race, true);
 
 		if (character.getBlusher() != null && character.getBlusher().getPrimaryColour()!=Colour.COVERING_NONE) {
 			real_parts_races.add_race_for_bodypart("blusher", head_race, true);
@@ -122,9 +124,11 @@ public class BodyRacesMap {
 		real_parts_races.add_race_for_clothes("clothes_torso_under", "body", InventorySlot.TORSO_UNDER, character);
 		real_parts_races.add_race_for_clothes("clothes_torso_over", "body", InventorySlot.TORSO_OVER, character);
 		real_parts_races.add_race_for_clothes("clothes_groin", "body", InventorySlot.GROIN, character);
+		real_parts_races.add_race_for_clothes("clothes_penis", "penis", InventorySlot.PENIS, character);
 		real_parts_races.add_race_for_clothes("clothes_leg", "leg", InventorySlot.LEG, character);
 		real_parts_races.add_race_for_clothes("clothes_foot", "leg", InventorySlot.FOOT, character);
 		real_parts_races.add_race_for_clothes("clothes_head", "head", InventorySlot.HEAD, character);
+		real_parts_races.add_race_for_clothes("clothes_neck", "head", InventorySlot.NECK, character);
 
 		return real_parts_races;
 	}

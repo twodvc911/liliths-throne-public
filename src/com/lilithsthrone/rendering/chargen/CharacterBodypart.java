@@ -16,6 +16,9 @@ import java.util.Map;
 public class CharacterBodypart {
 	public final String id;
 	public final String xml_id;
+	public final String id_path;
+	public final String type_path;
+
 	public final RaceBodypart bodypart;
 	public final CharacterBodypart parent;
 	public Map<String, CharacterBodypart> child_parts = null;
@@ -23,7 +26,7 @@ public class CharacterBodypart {
 	public CharacterImage image_mask = null;
 	public CharacterImage coloring_texture = null;
 
-	public CharacterBodypart parent_with_mask = null;
+	public CharacterBodypart mask_target = null;
 	public boolean draw_inverse_x = false;
 	public boolean draw_inverse_y = false;
 	public String transition_bodypart_code = null;
@@ -63,6 +66,8 @@ public class CharacterBodypart {
 		this.id = bp_id;
 		this.xml_id = bp_xml_id;
 		this.bodypart = bp;
+		this.id_path = (bp_parent != null ? bp_parent.id_path : "") + "." + bp_xml_id;
+		this.type_path = (bp_parent != null ? bp_parent.type_path : "") + "." + bp.bodypart_name;
 		this.parent = bp_parent;
 		this.priority = bp.priority_offset != 0 ? bp_parent.priority + bp.priority_offset : bp.priority;
 		if (!bodypart.is_hidden) initImage();
@@ -622,10 +627,11 @@ public class CharacterBodypart {
 			Map<String, String> this_parent_position_params = parent.bodypart.positions.getOrDefault(xml_id, null);
 			if (this_parent_position_params != null) {
 				// "use_parent_alpha" mode requires parent mask
-				if (this_parent_position_params.getOrDefault("draw_mode", "").equals("use_parent_alpha")) parent_with_mask = parent;
-				else if (this_parent_position_params.getOrDefault("draw_mode", "").equals("use_parent_parent_alpha") && parent != null) parent_with_mask = parent.parent;
-				else if (this_parent_position_params.getOrDefault("draw_mode", "").equals("use_parent_parent_parent_alpha") && parent != null && parent.parent != null) parent_with_mask = parent.parent.parent;
-				if ((parent_with_mask != null) && !parent_with_mask.initCurrentMask()) parent_with_mask = null;
+				if (this_parent_position_params.getOrDefault("draw_mode", "").equals("use_parent_alpha")) mask_target = parent;
+				else if (this_parent_position_params.getOrDefault("draw_mode", "").equals("use_parent_parent_alpha") && parent != null) mask_target = parent.parent;
+				else if (this_parent_position_params.getOrDefault("draw_mode", "").equals("use_parent_parent_parent_alpha") && parent != null && parent.parent != null) mask_target = parent.parent.parent;
+				else if (this_parent_position_params.getOrDefault("draw_mode", "").equals("use_sibling_alpha") && parent != null) mask_target = parent.child_parts.getOrDefault(this_parent_position_params.getOrDefault("draw_mode_target_id", ""), null);
+				if ((mask_target != null) && !mask_target.initCurrentMask()) mask_target = null;
 			}
 		}
 		if (image_mask == null && !bodypart.is_hidden && bodypart.img_file_mask != null && bodypart.use_mask_for_colorization) {
@@ -664,6 +670,8 @@ public class CharacterBodypart {
 		return "{"+
 			"id:" + id + 
 			" xml_id:" + xml_id + 
+			" type_path:" + type_path + 
+			" id_path:" + id_path + 
 			" bodypart:" + bodypart.toString() + 
 			" x:" + draw_x_point + 
 			" y:" + draw_y_point + 

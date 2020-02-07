@@ -4,14 +4,13 @@
     <priority_offset>0.01</priority_offset>
     <positions>
         <position id="hand_makeup">
-            <type>arm</type>
+            <type>hand</type>
             <point>5;156</point>
         </position>
     </positions>
     <connections_parent>
         <connection>
-            <type>arm</type>
-            <position>hand</position>
+            <position>hand;hand_left;hand_right</position>
             <point>79;1</point>
         </connection>
     </connections_parent>

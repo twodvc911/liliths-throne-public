@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <bodypart>
     <priority>500</priority>
-    <hides_bodyparts>cloaca;vagina;penis</hides_bodyparts>
+    <hides_bodyparts_by_type>cloaca;vagina;penis;clothes_penis</hides_bodyparts_by_type>
     <conditions>
         <condition>
             <clothes_leg>ragged skirt</clothes_leg>

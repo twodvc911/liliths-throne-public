@@ -12,6 +12,7 @@ public class BodyPartColoringInfo {
 	public Color secondary_color= Color.WHITE;
 	public boolean secondary_glowing = false;
 	public String covering_pattern = "plain";
+	public String material = "flesh";
 
 	public BodyPartColoringInfo getMixWithColor(Color mix_color, String mix_type, double mix_param) {
 		BodyPartColoringInfo new_info = new BodyPartColoringInfo();

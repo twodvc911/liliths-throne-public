@@ -66,7 +66,8 @@ public class RaceBodypart {
 	public Map<String, Double> modifiers = new HashMap<>();
 	public List<Map<String, String>> mod_conditions = new ArrayList<>();
 	public Map<String, String> scale_params = new HashMap<>();
-	public Set<String> hides_bodyparts = new HashSet<>();
+	public Set<String> hides_bodyparts_by_type = new HashSet<>();
+	public Set<String> hides_bodyparts_by_id = new HashSet<>();
 
 	public String derive_parent_connections = null;
 	public String derive_positions = null;
@@ -186,9 +187,12 @@ public class RaceBodypart {
 		Node scale_params_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "scale_params");
 		derive_scale_params = MetaXMLLoader.getNodeAttribute(scale_params_node, "derive_from");
 		scale_params = MetaXMLLoader.getAllChildNodesAsMap(scale_params_node);
-		
-		String hides_bodyparts_str = MetaXMLLoader.getStringParam(bodypart_node, "hides_bodyparts", "");
-		hides_bodyparts = new HashSet<>(Arrays.asList(hides_bodyparts_str.split(";")));
+
+		String hides_bodyparts_type_str = MetaXMLLoader.getStringParam(bodypart_node, "hides_bodyparts_by_type", "");
+		hides_bodyparts_by_type = new HashSet<>(Arrays.asList(hides_bodyparts_type_str.split(";")));
+
+		String hides_bodyparts_id_str = MetaXMLLoader.getStringParam(bodypart_node, "hides_bodyparts_by_id", "");
+		hides_bodyparts_by_id = new HashSet<>(Arrays.asList(hides_bodyparts_id_str.split(";")));
 	}
 
 	public void doDerives(Map<String, Map<String, Map<String, RaceBodypart>>> raceBodyparts) {
@@ -427,6 +431,9 @@ public class RaceBodypart {
 						case "groin":
 							c_slot = InventorySlot.GROIN;
 							break;
+						case "penis":
+							c_slot = InventorySlot.PENIS;
+							break;
 						case "leg":
 							c_slot = InventorySlot.LEG;
 							break;
@@ -435,6 +442,9 @@ public class RaceBodypart {
 							break;
 						case "head":
 							c_slot = InventorySlot.HEAD;
+							break;
+						case "neck":
+							c_slot = InventorySlot.NECK;
 							break;
 					}
 					AbstractClothing c_clothing = c_slot != null ? character.getClothingInSlot(c_slot) : null;

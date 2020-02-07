@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <bodypart>
     <priority>300</priority>
-    <hides_bodyparts>belly;breasts;nipple</hides_bodyparts>
+    <hides_bodyparts_by_type>belly;breasts;nipple</hides_bodyparts_by_type>
     <conditions>
         <condition>
             <clothes_torso_under>t-shirt</clothes_torso_under>

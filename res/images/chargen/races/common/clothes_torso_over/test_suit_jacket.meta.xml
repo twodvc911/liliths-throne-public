@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>510</priority>
+    <hides_bodyparts_by_type>belly;breasts;nipple;.body.arm;.body_taur.arm;.body.arm.hand;.body_taur.arm.hand;.body.arm.hand.hand;.body_taur.arm.hand.hand</hides_bodyparts_by_type>
+    <scale_y>0.765</scale_y>
+    <scale_x>0.9</scale_x>
+    <conditions>
+        <condition>
+            <clothes_torso_over>suit jacket</clothes_torso_over>
+        </condition>
+    </conditions>
+    <positions>
+        <position id="hand_left">
+            <type>hand</type>
+            <modifiers>
+                <add_priority>-1</add_priority>
+            </modifiers>
+            <point>45;871</point>
+        </position>
+        <position id="hand_right">
+            <type>hand</type>
+            <modifiers>
+                <inverse_x>1</inverse_x>
+                <add_priority>-1</add_priority>
+            </modifiers>
+            <point>687;871</point>
+        </position>
+    </positions>
+    <connections_parent>
+        <connection>
+            <point>50%;100</point>
+        </connection>
+    </connections_parent>
+    <image_author>innoxia</image_author>
+</bodypart>

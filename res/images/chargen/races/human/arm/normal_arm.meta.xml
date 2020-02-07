@@ -3,7 +3,8 @@
     <priority>130</priority>
     <positions>
         <position id="hand">
-            <type>arm</type>
+            <required>1</required>
+            <type>hand</type>
             <point>6;711</point>
         </position>
     </positions>

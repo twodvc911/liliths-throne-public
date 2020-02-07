@@ -34,14 +34,14 @@ public class CharacterImageRenderer {
 
 	private final boolean skip_unknown_races = true;
 
-	private final boolean do_pre_scale = false;
+	private final boolean do_pre_scale = true;
 	private final double base_image_scale = 1.0;
 	private final int max_image_width = 600;
 	private final int max_image_height = 600;
 
-	private final boolean debug_mode = true;
-	private final boolean reveal_everybody = true;
-	private final boolean save_characters = true;
+	private final boolean debug_mode = false;
+	private final boolean reveal_everybody = false;
+	private final boolean save_characters = false;
 
 	private boolean initialized = false;
 	
@@ -306,26 +306,30 @@ public class CharacterImageRenderer {
 
 			int index = 0;
 			BodyPartColoringInfo default_coloring = new BodyPartColoringInfo();
-			Set<String> set_of_hidden = new HashSet<>();
+			Set<String> set_of_hidden_types = new HashSet<>();
+			Set<String> set_of_hidden_ids = new HashSet<>();
 
 			for(CharacterBodypart item : items) {
 				if (item.bodypart.is_hidden) continue;
-				set_of_hidden.addAll(item.bodypart.hides_bodyparts);
+				set_of_hidden_types.addAll(item.bodypart.hides_bodyparts_by_type);
+				set_of_hidden_ids.addAll(item.bodypart.hides_bodyparts_by_id);
 				item.image.flipImage(item.draw_inverse_x, item.draw_inverse_y);
 				if (item.image_mask != null) {
 					item.image_mask.flipImage(item.draw_inverse_x, item.draw_inverse_y);
 				}
 			}
 
-			String material_name = character.getBodyMaterial().toString().toLowerCase();
-			ColorPattern material = materials.getOrDefault(material_name, null);
-
 			for(CharacterBodypart item : items) {
-				if (item.bodypart.is_hidden || set_of_hidden.contains(item.bodypart.bodypart_name)) continue;
+				if (
+					item.bodypart.is_hidden || 
+					set_of_hidden_types.contains(item.bodypart.bodypart_name) || 
+					set_of_hidden_types.contains(item.type_path) || 
+					set_of_hidden_ids.contains(item.id) || 
+					set_of_hidden_ids.contains(item.id_path)
+				) continue;
 
 				GradientParams transition_params = null;
 				BodyPartColoringInfo coloring = null;
-				boolean is_clothes = item.bodypart.bodypart_name.startsWith("clothes_");
 
 				if (!item.bodypart.skip_colorization) {
 					if (item.draw_inverse_x || item.draw_inverse_y) coloring = body_colors.getOrDefault(item.bodypart.bodypart_name + "_inversed", null);
@@ -335,6 +339,8 @@ public class CharacterImageRenderer {
 					coloring = default_coloring;
 				}
 				if (item.bodypart.color_to_mix != null) coloring = coloring.getMixWithColor(item.bodypart.color_to_mix, item.bodypart.mix_type, item.bodypart.mix_param);
+
+				ColorPattern material = materials.getOrDefault(coloring.material, null);
 
 				if (item.transition_bodypart_code != null && body_colors.containsKey(item.transition_bodypart_code) && !item.bodypart.no_transitions) {
 					transition_params = new GradientParams();
@@ -350,7 +356,7 @@ public class CharacterImageRenderer {
 				}
 
 				if (debug_mode) {
-					System.out.println(index + ": " + item.bodypart.bodypart_name + " -> " + item.id + " -> " + item.bodypart.bodypart_code + " (" + item.priority +")");
+					System.out.println(index + ": " + item.bodypart.bodypart_name + " -> " + item.id_path + " ("+item.type_path+")" + " -> " + item.bodypart.bodypart_code + " (" + item.priority +")");
 					/*System.out.println("x: " + item.draw_x_point + " y:" + item.draw_y_point + " w:" + item.draw_width + " h:" + item.draw_height);
 					System.out.println(coloring);*/
 				}
@@ -363,13 +369,13 @@ public class CharacterImageRenderer {
 					(int) Math.round(item.draw_height), 	// stretched height
 					coloring,				// coloring of bodypart
 					item.coloring_texture,			// texture to use instead of plan color
-					material != null && !is_clothes ? material.getColorizedTextureForBodypart(item.bodypart.pattern_scale * root_scale, null, item.bodypart.bodypart_name) : null,	// material texture
+					material != null ? material.getColorizedTextureForBodypart(item.bodypart.pattern_scale * root_scale, null, item.bodypart.bodypart_name) : null,	// material texture
 					item.bodypart.use_mask_for_colorization ? item.image_mask : null,								// mask for restriction colorized area
 					transition_params,			// gradient transition params
 					item.parent != null ? item.parent.coloring_texture : null,									// parent coloring texture
 					item.parent != null ? new Point(item.parent.draw_x_point, item.parent.draw_y_point) : null,					// parent offset
-					item.parent_with_mask != null ? item.parent_with_mask.image_mask : null,							// parent mask
-					item.parent_with_mask != null ? new Point(item.parent_with_mask.draw_x_point, item.parent_with_mask.draw_y_point) : null,	// parent mask offset
+					item.mask_target != null ? item.mask_target.image_mask : null,							// parent mask
+					item.mask_target != null ? new Point(item.mask_target.draw_x_point, item.mask_target.draw_y_point) : null,	// parent mask offset
 					item.rotation_center,			// center of rotation
 					item.rotation_angle,			// rotation angle in degrees
 					index++					// index of layer for debug

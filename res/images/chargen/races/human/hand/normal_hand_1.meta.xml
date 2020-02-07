@@ -1,18 +1,17 @@
 <?xml version="1.0"?>
 <bodypart>
-    <variant_index>2</variant_index>
+    <variant_index>1</variant_index>
     <priority_offset>0.01</priority_offset>
     <positions>
         <position id="hand_makeup">
-            <type>arm</type>
-            <point>22;107</point>
+            <type>hand</type>
+            <point>99;121</point>
         </position>
     </positions>
     <connections_parent>
         <connection>
-            <type>arm</type>
-            <position>hand</position>
-            <point>50;1</point>
+            <position>hand;hand_left;hand_right</position>
+            <point>75;3</point>
         </connection>
     </connections_parent>
     <image_author>@pochikou_flash</image_author>

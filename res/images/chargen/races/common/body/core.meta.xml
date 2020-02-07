@@ -13,21 +13,6 @@
             <required>1</required>
             <point>50%;2</point>
         </position>
-        <position id="clothes_torso_under">
-            <type>clothes_torso_under</type>
-            <point_1>50;135</point_1>
-            <point_2>440;135</point_2>
-        </position>
-        <position id="clothes_torso_over">
-            <type>clothes_torso_over</type>
-            <point_1>50;135</point_1>
-            <point_2>440;135</point_2>
-        </position>
-        <position id="clothes_leg">
-            <type>clothes_leg</type>
-            <point_1>0;789</point_1>
-            <point_2>485;789</point_2>
-        </position>
         <position id="leg_left">
             <type>leg</type>
             <required>1</required>
@@ -182,6 +167,32 @@
                 <inverse_x>1</inverse_x>
             </modifiers>
             <point>369;357</point>
+        </position>
+        <position id="clothes_neck">
+            <type>clothes_neck</type>
+            <draw_mode>use_parent_alpha</draw_mode>
+            <point>50%;174</point>
+        </position>
+        <position id="clothes_torso_under">
+            <type>clothes_torso_under</type>
+            <draw_mode>use_sibling_alpha</draw_mode>
+            <draw_mode_target_id>clothes_torso_over</draw_mode_target_id>
+            <point_1>50;135</point_1>
+            <point_2>440;135</point_2>
+        </position>
+        <position id="clothes_torso_over">
+            <type>clothes_torso_over</type>
+            <point>50%;123</point>
+        </position>
+        <position id="clothes_groin">
+            <type>clothes_groin</type>
+            <point_1>16;780</point_1>
+            <point_2>482;780</point_2>
+        </position>
+        <position id="clothes_leg">
+            <type>clothes_leg</type>
+            <point_1>0;789</point_1>
+            <point_2>485;789</point_2>
         </position>
     </positions>
     <image_author>@pochikou_flash</image_author>

@@ -22,6 +22,7 @@
         </condition>
     </conditions>
     <mod_conditions derive_from="smooth"></mod_conditions>
+    <positions derive_from="smooth"></positions>
     <connections_parent derive_from="smooth"></connections_parent>
     <image_author>@pochikou_flash</image_author>
 </bodypart>
