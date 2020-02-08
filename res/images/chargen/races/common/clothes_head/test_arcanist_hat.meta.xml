@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <bodypart>
-    <priority>500</priority>
+    <priority>650</priority>
     <hides_bodyparts_by_type>horn</hides_bodyparts_by_type>
     <scale>1.5</scale>
     <conditions>

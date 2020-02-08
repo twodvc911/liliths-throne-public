@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <bodypart>
     <priority>140</priority>
-    <use_mask_for_colorization>0</use_mask_for_colorization>
     <scale>0.8</scale>
     <connections_parent>
         <connection>

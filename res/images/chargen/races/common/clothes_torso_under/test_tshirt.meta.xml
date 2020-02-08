@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <bodypart>
-    <priority>300</priority>
+    <priority>600</priority>
     <hides_bodyparts_by_type>belly;breasts;nipple</hides_bodyparts_by_type>
     <conditions>
         <condition>

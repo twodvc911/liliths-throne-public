@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <bodypart>
-    <priority>500</priority>
+    <priority>400</priority>
     <hides_bodyparts_by_type>cloaca;vagina;penis;clothes_penis</hides_bodyparts_by_type>
     <conditions>
         <condition>

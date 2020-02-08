@@ -7,6 +7,11 @@
             <type>hand</type>
             <point>99;121</point>
         </position>
+        <position id="clothes_finger">
+            <type>clothes_finger</type>
+            <draw_mode>use_parent_alpha</draw_mode>
+            <point>20;129</point>
+        </position>
     </positions>
     <connections_parent>
         <connection>

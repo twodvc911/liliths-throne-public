@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <bodypart>
-    <priority>510</priority>
-    <hides_bodyparts_by_type>belly;breasts;nipple;.body.arm;.body_taur.arm;.body.arm.hand;.body_taur.arm.hand;.body.arm.hand.hand;.body_taur.arm.hand.hand</hides_bodyparts_by_type>
+    <priority>650</priority>
+    <hides_bodyparts_by_type>belly;breasts;nipple;.body.arm*;.body_taur.arm*</hides_bodyparts_by_type>
     <scale_y>0.765</scale_y>
     <scale_x>0.9</scale_x>
     <conditions>
@@ -14,6 +14,8 @@
             <type>hand</type>
             <modifiers>
                 <add_priority>-1</add_priority>
+                <scale_x>1.1</scale_x>
+                <scale_y>1.3</scale_y>
             </modifiers>
             <point>45;871</point>
         </position>
@@ -22,6 +24,8 @@
             <modifiers>
                 <inverse_x>1</inverse_x>
                 <add_priority>-1</add_priority>
+                <scale_x>1.1</scale_x>
+                <scale_y>1.3</scale_y>
             </modifiers>
             <point>687;871</point>
         </position>

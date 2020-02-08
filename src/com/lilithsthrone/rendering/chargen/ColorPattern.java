@@ -39,9 +39,8 @@ public class ColorPattern {
 		String file_name = xml_file.getName();
 		pattern_name = file_name.replaceAll(".meta.xml", "").trim().toLowerCase();
 		String pattern_img_name = pattern_name + ".png";
-		String alpha_img_name = pattern_name + ".alpha.png";
 		boolean image_main_required = (pattern_type.equals("2_colors_pattern"));
-		
+
 		image = new CharacterImage();
 		if (!image.load(file_dir + File.separator + pattern_img_name)) image = null;
 		if (image == null && image_main_required) throw new IOException("Cant load image "+pattern_img_name+" for pattern "+pattern_name+"!");

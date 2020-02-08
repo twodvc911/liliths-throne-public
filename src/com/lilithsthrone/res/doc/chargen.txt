@@ -19,6 +19,11 @@ variant_index
     need to be set only for linking variants of parent and variants of child body parts (for example arms with hands or hands with hands makeup)
     corresponding parent and child body parts should have equal variant_index
 
+max_count
+    integer,
+    maximum count of this bodypart instances on image
+    only first max_count ones will be drawn
+
 fallback
     flag (0 or 1), 
     if 1 - current bodypart will be picked if there are no other available. ignoring conditions.

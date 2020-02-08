@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <bodypart>
-    <priority>200</priority>
+    <priority>500</priority>
     <conditions>
         <condition>
             <breast_size>tiny;small</breast_size>

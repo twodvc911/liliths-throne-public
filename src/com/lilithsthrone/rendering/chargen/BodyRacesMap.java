@@ -129,6 +129,7 @@ public class BodyRacesMap {
 		real_parts_races.add_race_for_clothes("clothes_foot", "leg", InventorySlot.FOOT, character);
 		real_parts_races.add_race_for_clothes("clothes_head", "head", InventorySlot.HEAD, character);
 		real_parts_races.add_race_for_clothes("clothes_neck", "head", InventorySlot.NECK, character);
+		real_parts_races.add_race_for_clothes("clothes_finger", "hand", InventorySlot.FINGER, character);
 
 		return real_parts_races;
 	}

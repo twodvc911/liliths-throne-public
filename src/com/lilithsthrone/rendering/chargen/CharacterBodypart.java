@@ -24,6 +24,7 @@ public class CharacterBodypart {
 	public Map<String, CharacterBodypart> child_parts = null;
 	public CharacterImage image = null;
 	public CharacterImage image_mask = null;
+	public CharacterImage image_color_mask = null;
 	public CharacterImage coloring_texture = null;
 
 	public CharacterBodypart mask_target = null;
@@ -32,14 +33,13 @@ public class CharacterBodypart {
 	public String transition_bodypart_code = null;
 	public int transition_area_width_percent = 0;
 	public boolean transition_is_inverted = false;
-	
+
+	public boolean is_hidden = false;
+
 	public double draw_x_point = 0;
 	public double draw_y_point = 0;
 	public double draw_width = 0;
 	public double draw_height = 0;
-	
-	public double full_image_width = 0;
-	public double full_image_height = 0;
 	
 	private int image_initial_width = 0;
 	private int image_initial_height = 0;
@@ -55,7 +55,7 @@ public class CharacterBodypart {
 
 	public Point point_1_border = null;
 	public Point point_2_border = null;
-	
+
 	public Point rotation_center = null;
 	public double rotation_angle = 0.0;
 
@@ -69,6 +69,7 @@ public class CharacterBodypart {
 		this.id_path = (bp_parent != null ? bp_parent.id_path : "") + "." + bp_xml_id;
 		this.type_path = (bp_parent != null ? bp_parent.type_path : "") + "." + bp.bodypart_name;
 		this.parent = bp_parent;
+		this.is_hidden = bp.is_hidden;
 		this.priority = bp.priority_offset != 0 ? bp_parent.priority + bp.priority_offset : bp.priority;
 		if (!bodypart.is_hidden) initImage();
 	}
@@ -177,95 +178,19 @@ public class CharacterBodypart {
 	}
 
 	private void initImage() throws IOException {
-		image = new CharacterImage();
-		if (!image.load(bodypart.img_file)) {
-			throw new IOException("Can't load image "+bodypart.img_file+" for for id="+id+"!");
+		image = bodypart.images.getImage("main");
+		if (image == null) {
+			throw new IOException("Can't load image for id="+id+"!");
 		}
 		image_initial_width = image.getWidth();
 		image_initial_height = image.getHeight();
 	}
-	
-	public List<CharacterBodypart> getSortedBodypartList() {
-		List<CharacterBodypart> result = new ArrayList<>();
+
+	public BodyPartDrawOrderList getBodypartsList() {
+		BodyPartDrawOrderList result = new BodyPartDrawOrderList();
 		result.add(this);
 		for (Map.Entry<String, CharacterBodypart> entry : child_parts.entrySet()) {
-			List<CharacterBodypart> child_result = entry.getValue().getSortedBodypartList();
-			child_result.forEach((child_item) -> {
-				result.add(child_item);
-			});
-		}
-		if (parent == null) {
-			double min_x = 0;
-			double min_y = 0;
-			double max_x = 0;
-			double max_y = 0;
-			boolean minmax_init = false;
-			
-			for(CharacterBodypart item : result) {
-				if (minmax_init) {
-					if (min_x > item.draw_x_point) min_x = item.draw_x_point;
-					if (min_y > item.draw_y_point) min_y = item.draw_y_point;
-					if (max_x < (item.draw_x_point + item.draw_width)) max_x = item.draw_x_point + item.draw_width;
-					if (max_y < (item.draw_y_point + item.draw_height)) max_y = item.draw_y_point + item.draw_height;
-				} else {
-					min_x = item.draw_x_point;
-					min_y = item.draw_y_point;
-					max_x = item.draw_x_point + item.draw_width;
-					max_y = item.draw_y_point + item.draw_height;
-					minmax_init = true;
-				}
-			}
-			
-			for(CharacterBodypart item : result) {
-				if (item.rotation_center != null) {
-					double this_draw_x_point = item.draw_x_point;
-					double this_draw_y_point = item.draw_y_point;
-					double this_draw_width = item.draw_width;
-					double this_draw_height = item.draw_height;
-					Point[] points = {
-						new Point(this_draw_x_point, this_draw_y_point),
-						new Point(this_draw_x_point + this_draw_width, this_draw_y_point),
-						new Point(this_draw_x_point + this_draw_width, this_draw_y_point + this_draw_height),
-						new Point(this_draw_x_point, this_draw_y_point + this_draw_height)
-					};
-					Point this_center = new Point(item.rotation_center.x + this_draw_x_point, item.rotation_center.y + this_draw_y_point);
-					double pt_min_x = 0;
-					double pt_min_y = 0;
-					double pt_max_x = 0;
-					double pt_max_y = 0;
-					boolean pt_minmax_init = false;
-					for(int i=0; i<points.length; i++) {
-						points[i].rotatePoint(this_center, item.rotation_angle);
-						if (pt_minmax_init) {
-							if (pt_min_x > points[i].x) pt_min_x = points[i].x;
-							if (pt_min_y > points[i].y) pt_min_y = points[i].y;
-							if (pt_max_x < points[i].x) pt_max_x = points[i].x;
-							if (pt_max_y < points[i].y) pt_max_y = points[i].y;
-						} else {
-							pt_min_x = pt_max_x = points[i].x;
-							pt_min_y = pt_max_y = points[i].y;
-							pt_minmax_init = true;
-						}
-					}
-					this_draw_x_point = pt_min_x;
-					this_draw_y_point = pt_min_y;
-					this_draw_width = pt_max_x - pt_min_x;
-					this_draw_height = pt_max_y - pt_min_y;
-					if (min_x > this_draw_x_point) min_x = this_draw_x_point;
-					if (min_y > this_draw_y_point) min_y = this_draw_y_point;
-					if (max_x < (this_draw_x_point + this_draw_width)) max_x = this_draw_x_point + this_draw_width;
-					if (max_y < (this_draw_y_point + this_draw_height)) max_y = this_draw_y_point + this_draw_height;
-				}
-			}
-			full_image_width = max_x - min_x;
-			full_image_height = max_y - min_y;
-			for(CharacterBodypart item : result) {
-				item.draw_x_point -= min_x;
-				item.draw_y_point -= min_y;
-			}
-			Collections.sort(result, (d1, d2) -> {
-				return Double.compare(d1.priority, d2.priority);
-			});
+			result.addAll(entry.getValue().getBodypartsList());
 		}
 		return result;
 	}
@@ -621,8 +546,8 @@ public class CharacterBodypart {
 		point_2_border.y = point_2_border.y * sy;
 	}
 
-	public void initRequiredMasks() {
-		if (bodypart.is_hidden) return;
+	public void initRequiredMasks(boolean recursively) {
+		if (bodypart.is_hidden || is_hidden) return;
 		if (parent != null) {
 			Map<String, String> this_parent_position_params = parent.bodypart.positions.getOrDefault(xml_id, null);
 			if (this_parent_position_params != null) {
@@ -634,22 +559,29 @@ public class CharacterBodypart {
 				if ((mask_target != null) && !mask_target.initCurrentMask()) mask_target = null;
 			}
 		}
-		if (image_mask == null && !bodypart.is_hidden && bodypart.img_file_mask != null && bodypart.use_mask_for_colorization) {
-			initCurrentMask();
+		if (image_color_mask == null && !bodypart.is_hidden && bodypart.images.hasImage("color")) {
+			initColorMask();
 		}
-		child_parts.entrySet().forEach((entry) -> {
-			entry.getValue().initRequiredMasks();
-		});
+		if (recursively) {
+			child_parts.entrySet().forEach((entry) -> {
+				entry.getValue().initRequiredMasks(recursively);
+			});
+		}
+	}
+
+	private boolean initColorMask() {
+		if (image_color_mask == null && !bodypart.is_hidden && !is_hidden) {
+			if (bodypart.images.hasImage("color")) {
+				image_color_mask = bodypart.images.getImage("color", (int) Math.round(draw_width), (int) Math.round(draw_height));
+			}
+		}
+		return image_color_mask != null;
 	}
 
 	private boolean initCurrentMask() {
-		if (image_mask == null && !bodypart.is_hidden) {
-			if (bodypart.img_file_mask != null) {
-				try {
-					image_mask = CharacterImage.fromFile(bodypart.img_file_mask, (int) Math.round(draw_width), (int) Math.round(draw_height));
-				} catch(IOException ex) {
-					System.out.println("Can't open mask file "+bodypart.img_file_mask+"!");
-				}
+		if (image_mask == null && !bodypart.is_hidden && !is_hidden) {
+			if (bodypart.images.hasImage("mask")) {
+				image_mask = bodypart.images.getImage("mask", (int) Math.round(draw_width), (int) Math.round(draw_height));
 			} else {
 				image_mask = image.generateMask((int) Math.round(draw_width), (int) Math.round(draw_height));
 			}

@@ -9,10 +9,8 @@ import com.lilithsthrone.rendering.CharacterImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javafx.scene.paint.Color;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -261,7 +259,7 @@ public class CharacterImageRenderer {
 
 			if (debug_mode) System.out.println(character.getName());
 
-			List<CharacterBodypart> items = null;
+			BodyPartDrawOrderList draw_list = null;
 			CharacterBodypart root = getCharacterBodyPartTree(character);
 
 			double root_scale = base_image_scale;
@@ -270,63 +268,41 @@ public class CharacterImageRenderer {
 					root.this_stretch_x = root_scale;
 					root.this_stretch_y = root_scale;
 					root.initDrawingParams(character);
-					items = root.getSortedBodypartList();
+					draw_list = root.getBodypartsList();
+					draw_list.normalizePositions();
 					if (do_pre_scale) {
-						double c_width = root.full_image_width;
-						double c_height = root.full_image_height;
+						double c_width = draw_list.full_image_width;
+						double c_height = draw_list.full_image_height;
 						if (c_width > max_image_width || c_height > max_image_height) {
 							root_scale = Math.min(max_image_width/c_width, max_image_height/c_height);
 							if (debug_mode) System.out.println("Full image scale: " + root_scale);
 							root.this_stretch_x = root_scale;
 							root.this_stretch_y = root_scale;
 							root.initDrawingParams(character);
-							items = root.getSortedBodypartList();
+							draw_list = root.getBodypartsList();
+							draw_list.normalizePositions();
 						}
 					}
 				} catch (IOException | NoSuchFieldException | NumberFormatException ex) {
-					root = null;
+					draw_list = null;
 					ex.printStackTrace();
 				}
 			}
-
-			if (root == null || items == null) return null;
+			if (draw_list == null) return null;
 
 			boolean is_revealed = reveal_everybody || character.isPlayer() || ((Main.game.getPlayer().hasTraitActivated(Perk.OBSERVANT)) && !character.isRaceConcealed()) || (character.getTotalTimesHadSex(Main.game.getPlayer()) > 0);
-			root.initRequiredMasks();
-
-			int image_width = (int) Math.round(root.full_image_width);
-			int image_height = (int) Math.round(root.full_image_height);
 
 			image = new CharacterImage();
-			image.initForSize(image_width, image_height);
+			image.initForSize((int) Math.round(draw_list.full_image_width), (int) Math.round(draw_list.full_image_height));
 
+			BodyPartColoringInfo default_coloring = new BodyPartColoringInfo();
 			BodyColorsMap body_colors = BodyColorsMap.fromCharacter(character);
-
 			if (debug_mode) System.out.println(body_colors);
 
 			int index = 0;
-			BodyPartColoringInfo default_coloring = new BodyPartColoringInfo();
-			Set<String> set_of_hidden_types = new HashSet<>();
-			Set<String> set_of_hidden_ids = new HashSet<>();
-
-			for(CharacterBodypart item : items) {
-				if (item.bodypart.is_hidden) continue;
-				set_of_hidden_types.addAll(item.bodypart.hides_bodyparts_by_type);
-				set_of_hidden_ids.addAll(item.bodypart.hides_bodyparts_by_id);
-				item.image.flipImage(item.draw_inverse_x, item.draw_inverse_y);
-				if (item.image_mask != null) {
-					item.image_mask.flipImage(item.draw_inverse_x, item.draw_inverse_y);
-				}
-			}
-
-			for(CharacterBodypart item : items) {
-				if (
-					item.bodypart.is_hidden || 
-					set_of_hidden_types.contains(item.bodypart.bodypart_name) || 
-					set_of_hidden_types.contains(item.type_path) || 
-					set_of_hidden_ids.contains(item.id) || 
-					set_of_hidden_ids.contains(item.id_path)
-				) continue;
+			draw_list.prepareForDrawing();
+			for(CharacterBodypart item : draw_list.getItems()) {
+				if (item.is_hidden) continue;
 
 				GradientParams transition_params = null;
 				BodyPartColoringInfo coloring = null;
@@ -370,7 +346,7 @@ public class CharacterImageRenderer {
 					coloring,				// coloring of bodypart
 					item.coloring_texture,			// texture to use instead of plan color
 					material != null ? material.getColorizedTextureForBodypart(item.bodypart.pattern_scale * root_scale, null, item.bodypart.bodypart_name) : null,	// material texture
-					item.bodypart.use_mask_for_colorization ? item.image_mask : null,								// mask for restriction colorized area
+					item.image_color_mask,			// mask for restriction colorized area
 					transition_params,			// gradient transition params
 					item.parent != null ? item.parent.coloring_texture : null,									// parent coloring texture
 					item.parent != null ? new Point(item.parent.draw_x_point, item.parent.draw_y_point) : null,					// parent offset

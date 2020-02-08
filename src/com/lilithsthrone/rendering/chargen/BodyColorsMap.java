@@ -217,6 +217,7 @@ public class BodyColorsMap {
 		body_colors.add_body_color("clothes_foot", character.getClothingInSlot(InventorySlot.FOOT));
 		body_colors.add_body_color("clothes_head", character.getClothingInSlot(InventorySlot.HEAD));
 		body_colors.add_body_color("clothes_neck", character.getClothingInSlot(InventorySlot.NECK));
+		body_colors.add_body_color("clothes_finger", character.getClothingInSlot(InventorySlot.FINGER));
 
 		return body_colors;
 	}

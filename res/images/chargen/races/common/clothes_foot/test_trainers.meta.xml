@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <bodypart>
-    <priority>490</priority>
+    <priority_offset>10</priority_offset>
     <scale>0.4</scale>
     <conditions>
         <condition>

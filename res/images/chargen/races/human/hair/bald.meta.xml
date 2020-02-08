@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <bodypart>
-    <priority>250</priority>
+    <priority>600</priority>
     <hidden>1</hidden>
     <skip_colorization>1</skip_colorization>
     <no_patterns>1</no_patterns>

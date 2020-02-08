@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <bodypart>
-    <priority>400</priority>
+    <priority>600</priority>
     <pick_priority>-1</pick_priority>
     <conditions>
         <condition>

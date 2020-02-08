@@ -28,11 +28,10 @@ import org.w3c.dom.NodeList;
  * @author twovgSP
  */
 public class RaceBodypart {
-	public final String race_name;		// hyman, demon, dog_morph...
+	public final String race_name;		// human, demon, dog_morph...
 	public final String bodypart_name;	// body, leg, face, vagina...
 	public final String bodypart_code;	// file name of bodypart file (fox_ears, fat_1, core...)
-	public final String img_file;		// main texture image file path
-	public String img_file_mask = null;	// mask texture image file path
+	public BodyPartImages images = null;	// all images for this body part (main image, masks, etc...)
 
 	public String derive_color_from_bodypart = null;
 	public String mask_calculation_mode = "default";
@@ -43,7 +42,6 @@ public class RaceBodypart {
 	public boolean no_scale_by_parent = false;
 	public boolean no_transitions = false;
 	public boolean skip_colorization = false;
-	public boolean use_mask_for_colorization = false;
 	public double pick_priority = 100;
 	public double priority = 100;
 	public double priority_offset = 0;
@@ -53,12 +51,13 @@ public class RaceBodypart {
 	public double scale_y = 1.0;
 	public double min_scale = 0.00001;
 	public double max_scale = 100;
-	
+
 	public Color color_to_mix = null;
 	public String mix_type = null;
 	public double mix_param = 50;
 
 	public Integer variant_index = null;
+	public Integer max_count = null;
 
 	public List<Map<String, String>> parent_connections = new ArrayList<>();
 	public Map<String, Map<String, String>> positions = new HashMap<>();
@@ -98,23 +97,16 @@ public class RaceBodypart {
 		this.race_name = bp_race_name;
 		
 		initSettingsFromXML(bp_xml_file);
+		String img_file_base;
 		if (derive_image != null) {
 			File bp_xml_f = new File(bp_xml_file);
-			this.img_file = bp_xml_f.getParent() + File.separator + derive_image + ".png";
+			img_file_base = bp_xml_f.getParent() + File.separator + derive_image;
 		} else {
-			this.img_file = bp_img_file;
+			img_file_base = bp_img_file.replace(".png", "");
 		}
-		this.img_file_mask = this.img_file.replace(".png", "_mask.png");
-
-		if (!is_hidden) {
-			File img_file_f = new File(this.img_file);
-			if (!img_file_f.exists() || !img_file_f.isFile()) {
-				throw new IOException("Cant find image file for bodypart="+bp_name+"!");
-			}
-			File img_file_mask_f = new File(this.img_file_mask);
-			if (!img_file_mask_f.exists() || !img_file_mask_f.isFile()) {
-				img_file_mask = null;
-			}
+		images = new BodyPartImages(img_file_base);
+		if (!is_hidden && !images.hasImage("main")) {
+			throw new IOException("Can't find main image file for bodypart="+bp_name+"!");
 		}
 	}
 
@@ -138,7 +130,6 @@ public class RaceBodypart {
 		no_transitions = MetaXMLLoader.getBoolParam(bodypart_node, "no_transitions");
 		no_scale_by_parent = MetaXMLLoader.getBoolParam(bodypart_node, "no_scale_by_parent");
 		skip_colorization = MetaXMLLoader.getBoolParam(bodypart_node, "skip_colorization");
-		use_mask_for_colorization = MetaXMLLoader.getBoolParam(bodypart_node, "use_mask_for_colorization");
 
 		derive_color_from_bodypart = MetaXMLLoader.getStringParam(bodypart_node, "derive_color_from_bodypart");
 		mask_calculation_mode = MetaXMLLoader.getStringParam(bodypart_node, "mask_calculation_mode");
@@ -154,6 +145,7 @@ public class RaceBodypart {
 		priority_offset = MetaXMLLoader.getDoubleParam(bodypart_node, "priority_offset", priority_offset);
 
 		variant_index = MetaXMLLoader.getIntegerParam(bodypart_node, "variant_index", null);
+		max_count = MetaXMLLoader.getIntegerParam(bodypart_node, "max_count", null);
 
 		Node color_mix_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "color_mix");
 		color_to_mix = MetaXMLLoader.getColorParam(color_mix_node, "color", null);
@@ -446,6 +438,9 @@ public class RaceBodypart {
 						case "neck":
 							c_slot = InventorySlot.NECK;
 							break;
+						case "finger":
+							c_slot = InventorySlot.FINGER;
+							break;
 					}
 					AbstractClothing c_clothing = c_slot != null ? character.getClothingInSlot(c_slot) : null;
 					return c_clothing != null ? c_clothing.getName().toLowerCase(): "";
@@ -592,7 +587,7 @@ public class RaceBodypart {
 		return "{code:" + bodypart_code + 
 			" bt:" + bodypart_name + 
 			" race:" + race_name + 
-			" img:" + img_file + 
+			" images:" + images + 
 			" POS:" + positions.size() + (derive_positions != null ? "("+derive_positions+")" : "") +
 			" PCN:" + parent_connections.size() + (derive_parent_connections != null ? "("+derive_parent_connections+")" : "") +
 			" CND:" + conditions.size() + (derive_conditions != null ? "("+derive_conditions+")" : "") +
