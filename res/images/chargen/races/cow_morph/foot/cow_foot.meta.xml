@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <bodypart>
-    <priority>135</priority>
+    <priority_offset>0.1</priority_offset>
     <scale_y>1.0</scale_y>
     <positions>
         <position id="clothes_foot">
             <type>clothes_foot</type>
-            <point>189;940</point>
+            <point>172;-20</point>
         </position>
     </positions>
     <connections_parent>
         <connection>
-            <point_1>40;0</point_1>
-            <point_2>262;0</point_2>
+            <point_1>25;1</point_1>
+            <point_2>172;1</point_2>
         </connection>
     </connections_parent>
     <image_author>twovgSP</image_author>

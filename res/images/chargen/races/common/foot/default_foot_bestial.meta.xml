@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority_offset>0.1</priority_offset>
+    <conditions>
+        <condition>
+            <leg_is_bestial>1</leg_is_bestial>
+        </condition>
+    </conditions>
+    <positions>
+        <position id="foot_makeup">
+            <type>foot</type>
+            <point>145;92</point>
+        </position>
+        <position id="clothes_foot">
+            <type>clothes_foot</type>
+            <point>177;-25</point>
+            <modifiers>
+                <scale>1.4</scale>
+            </modifiers>
+        </position>
+    </positions>
+    <connections_parent>
+        <connection>
+            <type>leg</type>
+            <point_1>40;1</point_1>
+            <point_2>179;1</point_2>
+        </connection>
+    </connections_parent>
+    <image_author>twovgSP</image_author>
+</bodypart>

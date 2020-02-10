@@ -3,16 +3,10 @@
     <priority>135</priority>
     <scale_y>0.85</scale_y>
     <positions>
-        <position id="foot_makeup">
-            <type>leg</type>
-            <point>100%;100%</point>
-        </position>
-        <position id="clothes_foot">
-            <type>clothes_foot</type>
-            <point>190;860</point>
-            <modifiers>
-                <scale>1.45</scale>
-            </modifiers>
+        <position id="foot">
+            <type>foot</type>
+            <point_1>65;100%</point_1>
+            <point_2>154;100%</point_2>
         </position>
     </positions>
     <connections_parent>

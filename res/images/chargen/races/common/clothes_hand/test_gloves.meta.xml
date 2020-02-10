@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <bodypart>
-    <priority_offset>10</priority_offset>
-    <scale>0.4</scale>
-    <hides_bodyparts_by_type>foot</hides_bodyparts_by_type>
+    <priority_offset>0.1</priority_offset>
+    <scale>0.3</scale>
+    <hides_bodyparts_by_type>hand;clothes_finger</hides_bodyparts_by_type>
     <conditions>
         <condition>
-            <clothes_foot>trainers</clothes_foot>
+            <clothes_hand>gloves</clothes_hand>
         </condition>
     </conditions>
     <connections_parent>
         <connection>
-            <point>435;4</point>
+            <point>265;300</point>
         </connection>
     </connections_parent>
     <image_author>innoxia</image_author>

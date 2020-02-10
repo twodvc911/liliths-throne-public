@@ -7,20 +7,17 @@
         </condition>
     </conditions>
     <positions>
-        <position id="foot_makeup">
-            <type>leg</type>
-            <point>76;1072</point>
-        </position>
-        <position id="clothes_foot">
-            <type>clothes_foot</type>
-            <point>193;912</point>
+        <position id="foot">
+            <type>foot</type>
+            <point_1>73;100%</point_1>
+            <point_2>136;100%</point_2>
         </position>
     </positions>
     <connections_parent>
         <connection>
             <type>body;body_taur</type>
-            <point_1>51;0</point_1>
-            <point_2>287;0</point_2>
+            <point_1>2;0</point_1>
+            <point_2>225;0</point_2>
         </connection>
     </connections_parent>
     <image_author>@pochikou_flash</image_author>

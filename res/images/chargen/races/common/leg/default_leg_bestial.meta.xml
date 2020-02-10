@@ -7,23 +7,17 @@
         </condition>
     </conditions>
     <positions>
-        <position id="foot_makeup">
-            <type>leg</type>
-            <point>145;1157</point>
-        </position>
-        <position id="clothes_foot">
-            <type>clothes_foot</type>
-            <point>175;975</point>
-            <modifiers>
-                <scale>1.275</scale>
-            </modifiers>
+        <position id="foot">
+            <type>foot</type>
+            <point_1>15;100%</point_1>
+            <point_2>155;100%</point_2>
         </position>
     </positions>
     <connections_parent>
         <connection>
             <type>body;body_taur</type>
-            <point_1>27;0</point_1>
-            <point_2>268;0</point_2>
+            <point_1>2;0</point_1>
+            <point_2>243;0</point_2>
         </connection>
     </connections_parent>
     <image_author>twovgSP</image_author>

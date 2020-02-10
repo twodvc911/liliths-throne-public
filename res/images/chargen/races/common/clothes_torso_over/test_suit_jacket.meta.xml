@@ -19,6 +19,14 @@
             </modifiers>
             <point>45;871</point>
         </position>
+        <position id="clothes_hand_left">
+            <type>clothes_hand</type>
+            <modifiers>
+                <add_priority>-1</add_priority>
+                <rotation>-20</rotation>
+            </modifiers>
+            <point>45;920</point>
+        </position>
         <position id="hand_right">
             <type>hand</type>
             <modifiers>
@@ -28,6 +36,15 @@
                 <scale_y>1.3</scale_y>
             </modifiers>
             <point>687;871</point>
+        </position>
+        <position id="clothes_hand_right">
+            <type>clothes_hand</type>
+            <modifiers>
+                <inverse_x>1</inverse_x>
+                <rotation>20</rotation>
+                <add_priority>-1</add_priority>
+            </modifiers>
+            <point>687;920</point>
         </position>
     </positions>
     <connections_parent>

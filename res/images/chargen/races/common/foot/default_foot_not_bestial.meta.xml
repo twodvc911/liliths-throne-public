@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority_offset>0.1</priority_offset>
+    <conditions>
+        <condition>
+            <leg_is_bestial>0</leg_is_bestial>
+        </condition>
+    </conditions>
+    <positions>
+        <position id="foot_makeup">
+            <type>foot</type>
+            <draw_mode>use_parent_alpha</draw_mode>
+            <point>45;137</point>
+        </position>
+        <position id="clothes_foot">
+            <type>clothes_foot</type>
+            <point>175;-20</point>
+        </position>
+    </positions>
+    <connections_parent>
+        <connection>
+            <type>leg</type>
+            <point_1>111;1</point_1>
+            <point_2>174;1</point_2>
+        </connection>
+    </connections_parent>
+    <image_author>@pochikou_flash</image_author>
+</bodypart>

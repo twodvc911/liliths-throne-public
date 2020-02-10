@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <bodypart>
-    <priority_offset>1</priority_offset>
+    <priority_offset>0.05</priority_offset>
     <derive_color_from_bodypart>foot_nails</derive_color_from_bodypart>
     <pattern_scale>0.075</pattern_scale>
     <conditions>
         <condition>
-            <leg_is_bestial>0</leg_is_bestial>
+            <leg_is_bestial>1</leg_is_bestial>
             <is_foot_nails_polished>1</is_foot_nails_polished>
         </condition>
     </conditions>
     <connections_parent>
         <connection>
-            <type>leg</type>
+            <type>foot</type>
             <position>foot_makeup</position>
-            <point>50;23</point>
+            <point>140;45</point>
         </connection>
     </connections_parent>
 </bodypart>

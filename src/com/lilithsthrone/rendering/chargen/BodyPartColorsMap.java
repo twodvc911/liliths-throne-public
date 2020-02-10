@@ -16,7 +16,7 @@ import javafx.scene.paint.Color;
  *
  * @author twovgSP
  */
-public class BodyColorsMap {
+public class BodyPartColorsMap {
 
 	private final Map<String, BodyPartColoringInfo> body_colors = new HashMap<>();
 
@@ -164,8 +164,8 @@ public class BodyColorsMap {
 		return col.getColor();
 	}
 
-	public static BodyColorsMap fromCharacter(GameCharacter character) {
-		BodyColorsMap body_colors = new BodyColorsMap();
+	public static BodyPartColorsMap fromCharacter(GameCharacter character) {
+		BodyPartColorsMap body_colors = new BodyPartColorsMap();
 
 		body_colors.add_body_color("body", character.getBody().getSkin(), character);
 		body_colors.add_body_color("body_taur", character.getBody().getLeg(), character);
@@ -208,9 +208,9 @@ public class BodyColorsMap {
 		
 		body_colors.mix_main_body_colors("nipple", "breasts", 0.5);
 
-		if (BodyColorsMap.getBodypartCoveringPattern(character.getBody().getEye(), character) == CoveringPattern.EYE_IRISES_HETEROCHROMATIC) body_colors.add_body_secondary_to_main_color("eye_iris_inversed", "eye_iris");
-		if (BodyColorsMap.getBodypartCoveringPattern(BodyCoveringType.EYE_SCLERA, character) == CoveringPattern.EYE_SCLERA_HETEROCHROMATIC) body_colors.add_body_secondary_to_main_color("eye_sclera_inversed", "eye_sclera");
-		if (BodyColorsMap.getBodypartCoveringPattern(BodyCoveringType.EYE_PUPILS, character) == CoveringPattern.EYE_PUPILS_HETEROCHROMATIC) body_colors.add_body_secondary_to_main_color("eye_pupil_inversed", "eye_pupil");
+		if (BodyPartColorsMap.getBodypartCoveringPattern(character.getBody().getEye(), character) == CoveringPattern.EYE_IRISES_HETEROCHROMATIC) body_colors.add_body_secondary_to_main_color("eye_iris_inversed", "eye_iris");
+		if (BodyPartColorsMap.getBodypartCoveringPattern(BodyCoveringType.EYE_SCLERA, character) == CoveringPattern.EYE_SCLERA_HETEROCHROMATIC) body_colors.add_body_secondary_to_main_color("eye_sclera_inversed", "eye_sclera");
+		if (BodyPartColorsMap.getBodypartCoveringPattern(BodyCoveringType.EYE_PUPILS, character) == CoveringPattern.EYE_PUPILS_HETEROCHROMATIC) body_colors.add_body_secondary_to_main_color("eye_pupil_inversed", "eye_pupil");
 
 		body_colors.add_body_color("clothes_torso_under", character.getClothingInSlot(InventorySlot.TORSO_UNDER));
 		body_colors.add_body_color("clothes_torso_over", character.getClothingInSlot(InventorySlot.TORSO_OVER));
@@ -221,6 +221,7 @@ public class BodyColorsMap {
 		body_colors.add_body_color("clothes_head", character.getClothingInSlot(InventorySlot.HEAD));
 		body_colors.add_body_color("clothes_neck", character.getClothingInSlot(InventorySlot.NECK));
 		body_colors.add_body_color("clothes_finger", character.getClothingInSlot(InventorySlot.FINGER));
+		body_colors.add_body_color("clothes_hand", character.getClothingInSlot(InventorySlot.HAND));
 
 		return body_colors;
 	}

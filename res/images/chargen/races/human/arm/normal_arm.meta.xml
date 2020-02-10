@@ -7,6 +7,10 @@
             <type>hand</type>
             <point>6;711</point>
         </position>
+        <position id="clothes_hand">
+            <type>clothes_hand</type>
+            <point>6;711</point>
+        </position>
     </positions>
     <connections_parent>
         <connection>

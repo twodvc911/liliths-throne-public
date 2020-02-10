@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority_offset>0.1</priority_offset>
+    <positions>
+        <position id="foot_makeup">
+            <type>foot</type>
+            <point>83;215</point>
+        </position>
+        <position id="clothes_foot">
+            <type>clothes_foot</type>
+            <point>132;-20</point>
+            <modifiers>
+                <scale>1.25</scale>
+            </modifiers>
+        </position>
+    </positions>
+    <connections_parent>
+        <connection>
+            <type>leg</type>
+            <point_1>44;1</point_1>
+            <point_2>134;1</point_2>
+        </connection>
+    </connections_parent>
+    <image_author>twovgSP</image_author>
+</bodypart>

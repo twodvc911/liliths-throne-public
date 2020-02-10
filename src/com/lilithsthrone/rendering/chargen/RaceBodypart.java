@@ -401,7 +401,7 @@ public class RaceBodypart {
 				case "tail_girth":
 					return character.getTailGirth().toString().toLowerCase();
 				case "tail_pattern":
-					CoveringPattern tp = BodyColorsMap.getBodypartCoveringPattern(character.getBody().getTail(), character);
+					CoveringPattern tp = BodyPartColorsMap.getBodypartCoveringPattern(character.getBody().getTail(), character);
 					return tp!=null ? tp.toString().toLowerCase() : "none";
 
 				// wings
@@ -442,6 +442,9 @@ public class RaceBodypart {
 							break;
 						case "finger":
 							c_slot = InventorySlot.FINGER;
+							break;
+						case "hand":
+							c_slot = InventorySlot.HAND;
 							break;
 					}
 					AbstractClothing c_clothing = c_slot != null ? character.getClothingInSlot(c_slot) : null;
