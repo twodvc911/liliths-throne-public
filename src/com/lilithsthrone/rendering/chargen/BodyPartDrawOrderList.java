@@ -17,7 +17,7 @@ public class BodyPartDrawOrderList {
 	public double full_image_width;
 	public double full_image_height;
 
-	public class MinMaxResults {
+	private class MinMaxResults {
 		public double min_x = 0;
 		public double min_y = 0;
 		public double max_x = 0;
@@ -87,7 +87,7 @@ public class BodyPartDrawOrderList {
 	}
 
 	public void normalizePositions() {
-		BodyPartDrawOrderList.MinMaxResults minmax = getMinMax();
+		MinMaxResults minmax = getMinMax();
 		full_image_width = minmax.max_x - minmax.min_x;
 		full_image_height = minmax.max_y - minmax.min_y;
 		items.forEach((item) -> {
@@ -117,6 +117,7 @@ public class BodyPartDrawOrderList {
 		Set<String> set_of_hidden_ids = new HashSet<>();
 		Map<RaceBodypart, Integer> max_cnt_map = new HashMap<>();
 
+		// init sets of hidden ids and types, init max counts
 		items.forEach((item) -> {
 			if (item.bodypart.is_hidden) return;
 			set_of_hidden_types.addAll(item.bodypart.hides_bodyparts_by_type);
@@ -125,6 +126,7 @@ public class BodyPartDrawOrderList {
 				max_cnt_map.put(item.bodypart, item.bodypart.max_count);
 			}
 		});
+		// hide by types
 		set_of_hidden_types.forEach((String hidden_type) -> {
 			for(CharacterBodypart item : items) {
 				if (!item.is_hidden && (item.bodypart.bodypart_name.equals(hidden_type) || patternMatches(hidden_type, item.type_path))) {
@@ -132,6 +134,7 @@ public class BodyPartDrawOrderList {
 				}
 			}
 		});
+		// hide by ids
 		set_of_hidden_ids.forEach((String hidden_id) -> {
 			for(CharacterBodypart item : items) {
 				if (!item.is_hidden && (item.id.equals(hidden_id) || patternMatches(hidden_id, item.id_path))) {
@@ -139,6 +142,7 @@ public class BodyPartDrawOrderList {
 				}
 			}
 		});
+		// hide by max counts, init masks
 		items.stream().filter((item) -> (!item.is_hidden)).forEachOrdered((CharacterBodypart item) -> {
 			if (!item.is_hidden && max_cnt_map.containsKey(item.bodypart)) {
 				if (max_cnt_map.get(item.bodypart) > 0) {
@@ -147,8 +151,9 @@ public class BodyPartDrawOrderList {
 					item.is_hidden = true;
 				}
 			}
-			item.initRequiredMasks(false);
+			item.initRequiredMasks();
 		});
+		// image & mask flips
 		items.forEach((item) -> {
 			if (item.is_hidden) return;
 			item.image.flipImage(item.draw_inverse_x, item.draw_inverse_y);

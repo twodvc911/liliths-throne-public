@@ -4,7 +4,6 @@ import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.rendering.CharacterImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +25,7 @@ public class CharacterBodypart {
 	public CharacterImage image_mask = null;
 	public CharacterImage image_color_mask = null;
 	public CharacterImage coloring_texture = null;
+	public CharacterImage covering_texture = null;
 
 	public CharacterBodypart mask_target = null;
 	public boolean draw_inverse_x = false;
@@ -70,7 +70,7 @@ public class CharacterBodypart {
 		this.type_path = (bp_parent != null ? bp_parent.type_path : "") + "." + bp.bodypart_name;
 		this.parent = bp_parent;
 		this.is_hidden = bp.is_hidden;
-		this.priority = bp.priority_offset != 0 ? bp_parent.priority + bp.priority_offset : bp.priority;
+		this.priority = (bp.priority_offset != 0) && (bp_parent != null) ? (bp_parent.priority + bp.priority_offset) : bp.priority;
 		if (!bodypart.is_hidden) initImage();
 	}
 
@@ -179,9 +179,7 @@ public class CharacterBodypart {
 
 	private void initImage() throws IOException {
 		image = bodypart.images.getImage("main");
-		if (image == null) {
-			throw new IOException("Can't load image for id="+id+"!");
-		}
+		if (image == null) throw new IOException("Can't load image for id="+id+"!");
 		image_initial_width = image.getWidth();
 		image_initial_height = image.getHeight();
 	}
@@ -426,7 +424,7 @@ public class CharacterBodypart {
 							if (items_count == 3) start_angle = -0.5 * Math.PI;
 							else if (items_count == 4) start_angle = -0.33 * Math.PI;
 						}
-						if (mid_offset_point != null && min_offset_point != null) {
+						if (max_offset_point != null && mid_offset_point != null && min_offset_point != null) {
 							double rx0 = draw_width/2;
 							double midx = mid_offset_point.x;
 							double minx = min_offset_point.x;
@@ -546,7 +544,7 @@ public class CharacterBodypart {
 		point_2_border.y = point_2_border.y * sy;
 	}
 
-	public void initRequiredMasks(boolean recursively) {
+	public void initRequiredMasks() {
 		if (bodypart.is_hidden || is_hidden) return;
 		if (parent != null) {
 			Map<String, String> this_parent_position_params = parent.bodypart.positions.getOrDefault(xml_id, null);
@@ -561,11 +559,6 @@ public class CharacterBodypart {
 		}
 		if (image_color_mask == null && !bodypart.is_hidden && bodypart.images.hasImage("color")) {
 			initColorMask();
-		}
-		if (recursively) {
-			child_parts.entrySet().forEach((entry) -> {
-				entry.getValue().initRequiredMasks(recursively);
-			});
 		}
 	}
 

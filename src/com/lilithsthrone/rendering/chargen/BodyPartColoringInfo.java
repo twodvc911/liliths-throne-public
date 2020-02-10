@@ -11,7 +11,8 @@ public class BodyPartColoringInfo {
 	public boolean primary_glowing = false;
 	public Color secondary_color= Color.WHITE;
 	public boolean secondary_glowing = false;
-	public String covering_pattern = "plain";
+	public String color_pattern = "plain";
+	public String covering_type = "skin";
 	public String material = "flesh";
 
 	public BodyPartColoringInfo getMixWithColor(Color mix_color, String mix_type, double mix_param) {
@@ -48,13 +49,13 @@ public class BodyPartColoringInfo {
 		}
 		new_info.primary_glowing = primary_glowing;
 		new_info.secondary_glowing = secondary_glowing;
-		new_info.covering_pattern = covering_pattern;
+		new_info.color_pattern = color_pattern;
 		return new_info;
 	}
 	
 	@Override
 	public String toString() {
-		return covering_pattern + 
+		return color_pattern + " " + material + " " + covering_type +
 			" col1: " + primary_color + (primary_glowing ? " glow" : "") +
 			" col2: " + secondary_color + (secondary_glowing ? " glow" : "");
 	}

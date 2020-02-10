@@ -156,10 +156,12 @@ public class CharacterImage extends CachedImage {
 		int image_new_height,
 		BodyPartColoringInfo coloring,
 		CharacterImage coloring_texture,
+		CharacterImage covering_texture,
 		CharacterImage material_texture,
 		CharacterImage coloring_mask,
 		GradientParams transition_params,
 		CharacterImage parent_coloring_texture,
+		CharacterImage parent_covering_texture,
 		Point parent_coloring_draw_point,
 		CharacterImage parent_mask,
 		Point parent_draw_point,
@@ -195,47 +197,68 @@ public class CharacterImage extends CachedImage {
 			parent_draw_point_p = parent_draw_point.toIntPoint();
 		}
 
-		int[] coloring_mask_data = null;
+		int[] coloring_texture_data = null;
 		int coloring_texture_width = 0;
 		int coloring_texture_height = 0;
 		if (coloring_texture != null) {
 			if (debug_mode) coloring_texture.save(DEBUG_PATH + "/part-chargen-coloring-debug"+index+".png");
 			coloring_texture_width = coloring_texture.getWidth();
 			coloring_texture_height = coloring_texture.getHeight();
-			coloring_mask_data = ImageUtils.getImageRGBArray(coloring_texture.getImage());
+			coloring_texture_data = ImageUtils.getImageRGBArray(coloring_texture.getImage());
 		}
 
-		int[] material_mask_data = null;
+		int[] covering_texture_data = null;
+		int covering_texture_width = 0;
+		int covering_texture_height = 0;
+		if (covering_texture != null) {
+			if (debug_mode) covering_texture.save(DEBUG_PATH + "/part-chargen-covering-debug"+index+".png");
+			covering_texture_width = covering_texture.getWidth();
+			covering_texture_height = covering_texture.getHeight();
+			covering_texture_data = ImageUtils.getImageRGBArray(covering_texture.getImage());
+		}
+
+		int[] material_texture_data = null;
 		int material_texture_width = 0;
 		int material_texture_height = 0;
 		if (material_texture != null) {
 			if (debug_mode) material_texture.save(DEBUG_PATH + "/part-chargen-material-debug"+index+".png");
 			material_texture_width = material_texture.getWidth();
 			material_texture_height = material_texture.getHeight();
-			material_mask_data = ImageUtils.getImageRGBArray(material_texture.getImage());
+			material_texture_data = ImageUtils.getImageRGBArray(material_texture.getImage());
 		}
 
-		int[] parent_coloring_mask_data = null;
-		int parent_texture_width = 0;
-		int parent_texture_height = 0;
+		int[] parent_coloring_texture_data = null;
+		int parent_coloring_texture_width = 0;
+		int parent_coloring_texture_height = 0;
 		if (parent_coloring_texture != null) {
-			parent_texture_width = parent_coloring_texture.getWidth();
-			parent_texture_height = parent_coloring_texture.getHeight();
-			parent_coloring_mask_data = ImageUtils.getImageRGBArray(parent_coloring_texture.getImage());
+			parent_coloring_texture_width = parent_coloring_texture.getWidth();
+			parent_coloring_texture_height = parent_coloring_texture.getHeight();
+			parent_coloring_texture_data = ImageUtils.getImageRGBArray(parent_coloring_texture.getImage());
 		}
-		
+
+		int[] parent_covering_texture_data = null;
+		int parent_covering_texture_width = 0;
+		int parent_covering_texture_height = 0;
+		if (parent_covering_texture != null) {
+			parent_covering_texture_width = parent_covering_texture.getWidth();
+			parent_covering_texture_height = parent_covering_texture.getHeight();
+			parent_covering_texture_data = ImageUtils.getImageRGBArray(parent_covering_texture.getImage());
+		}
+
 		int	p, a, r, g, b, pt, 
 			material_r, material_g, material_b;
 		double  gradient_k, dist, material_k_a,
 			colorize_r, colorize_g, colorize_b, 
-			gradient_r, gradient_g, gradient_b;
+			parent_r, parent_g, parent_b;
 		boolean colorization_allowed;
 		BufferedImage new_image = ImageUtils.getResizedImage(bodypart_image.getImage(), image_new_width, image_new_height, true);
 		if (
 			(parent_mask_data != null && parent_draw_point != null) || 
-			coloring_mask_data != null || 
-			parent_coloring_mask_data != null || 
-			material_mask_data != null || 
+			coloring_texture_data != null || 
+			parent_coloring_texture_data != null || 
+			covering_texture_data != null || 
+			parent_covering_texture_data != null || 
+			material_texture_data != null || 
 			(transition_params!=null && (pr!=mr || pg!=mg || pb!=mb)) || 
 			(mr!=255 || mg!=255 || mb!=255)
 		) {
@@ -256,20 +279,20 @@ public class CharacterImage extends CachedImage {
 						r = (p>>16) & 0xff;
 						g = (p>>8) & 0xff;
 						b = p & 0xff;
-						
+
 						colorize_r = mr;
 						colorize_g = mg;
 						colorize_b = mb;
-						
-						gradient_r = pr;
-						gradient_g = pg;
-						gradient_b = pb;
+
+						parent_r = pr;
+						parent_g = pg;
+						parent_b = pb;
 						gradient_k = 1;
 
 						colorization_allowed = (rgbaArrayColorMask == null || (rgbaArrayColorMask[x] & 0xffffff) > 0);
 						if (!colorization_allowed) {
 							colorize_r = colorize_g = colorize_b = 255;
-							gradient_r = gradient_g = gradient_b = 255;
+							parent_r = parent_g = parent_b = 255;
 						}
 
 						int parent_a = 255;
@@ -282,25 +305,39 @@ public class CharacterImage extends CachedImage {
 								parent_a = 0;
 							}
 						}
-						if (transition_params!=null && colorization_allowed) {
-							dist = transition_params.getTransitionDistance(x, y);
-							if (dist < part_transition_pixels) gradient_k = (dist / part_transition_pixels);
-							if (transition_params.is_inverted) gradient_k = 1 - gradient_k;
+						if (colorization_allowed) {
+							if (transition_params!=null) {
+								dist = transition_params.getTransitionDistance(x, y);
+								if (dist < part_transition_pixels) gradient_k = (dist / part_transition_pixels);
+								if (transition_params.is_inverted) gradient_k = 1 - gradient_k;
+							}
+							if (coloring_texture_data != null) {
+								pt = coloring_texture_data[(pos_x+x) % coloring_texture_width + ((pos_y+y) % coloring_texture_height)*coloring_texture_width];
+								colorize_r = (pt>>16) & 0xff;
+								colorize_g = (pt>>8) & 0xff;
+								colorize_b = pt & 0xff;
+							}
+							if (parent_coloring_texture_data != null) {
+								pt = parent_coloring_texture_data[(pos_x+x) % parent_coloring_texture_width + ((pos_y+y) % parent_coloring_texture_height)*parent_coloring_texture_width];
+								parent_r = (pt>>16) & 0xff;
+								parent_g = (pt>>8) & 0xff;
+								parent_b = pt & 0xff;
+							}
+							if (covering_texture_data != null) {
+								pt = covering_texture_data[(pos_x+x) % covering_texture_width + ((pos_y+y) % covering_texture_height)*covering_texture_width];
+								colorize_r *= ((double) ((pt>>16) & 0xff)) / 255.0;
+								colorize_g *= ((double) ((pt>>8) & 0xff)) / 255.0;
+								colorize_b *= ((double) (pt & 0xff)) / 255.0;
+							}
+							if (parent_covering_texture_data != null) {
+								pt = parent_covering_texture_data[(pos_x+x) % parent_covering_texture_width + ((pos_y+y) % parent_covering_texture_height)*parent_covering_texture_width];
+								parent_r *= ((double) ((pt>>16) & 0xff)) / 255.0;
+								parent_g *= ((double) ((pt>>8) & 0xff)) / 255.0;
+								parent_b *= ((double) (pt & 0xff)) / 255.0;
+							}
 						}
-						if (coloring_mask_data != null && colorization_allowed) {
-							pt = coloring_mask_data[(pos_x+x) % coloring_texture_width + ((pos_y+y) % coloring_texture_height)*coloring_texture_width];
-							colorize_r = (pt>>16) & 0xff;
-							colorize_g = (pt>>8) & 0xff;
-							colorize_b = pt & 0xff;
-						}
-						if (parent_coloring_mask_data != null && colorization_allowed) {
-							pt = parent_coloring_mask_data[(pos_x+x) % parent_texture_width + ((pos_y+y) % parent_texture_height)*parent_texture_width];
-							gradient_r = (pt>>16) & 0xff;
-							gradient_g = (pt>>8) & 0xff;
-							gradient_b = pt & 0xff;
-						}
-						if (material_mask_data != null) {
-							pt = material_mask_data[(pos_x+x) % material_texture_width + ((pos_y+y) % material_texture_height)*material_texture_width];
+						if (material_texture_data != null) {
+							pt = material_texture_data[(pos_x+x) % material_texture_width + ((pos_y+y) % material_texture_height)*material_texture_width];
 							material_r = (pt>>16) & 0xff;
 							material_g = (pt>>8) & 0xff;
 							material_b = pt & 0xff;
@@ -310,13 +347,13 @@ public class CharacterImage extends CachedImage {
 							colorize_g = colorize_g * (1 - material_k_a) + material_g * material_k_a;
 							colorize_b = colorize_b * (1 - material_k_a) + material_b * material_k_a;
 							
-							gradient_r = gradient_r * (1 - material_k_a) + material_r * material_k_a;
-							gradient_g = gradient_g * (1 - material_k_a) + material_g * material_k_a;
-							gradient_b = gradient_b * (1 - material_k_a) + material_b * material_k_a;
+							parent_r = parent_r * (1 - material_k_a) + material_r * material_k_a;
+							parent_g = parent_g * (1 - material_k_a) + material_g * material_k_a;
+							parent_b = parent_b * (1 - material_k_a) + material_b * material_k_a;
 						}
-						r = (int) (((colorize_r * gradient_k + gradient_r * (1 - gradient_k)) * r) / 255);
-						g = (int) (((colorize_g * gradient_k + gradient_g * (1 - gradient_k)) * g) / 255);
-						b = (int) (((colorize_b * gradient_k + gradient_b * (1 - gradient_k)) * b) / 255);
+						r = (int) (((colorize_r * gradient_k + parent_r * (1 - gradient_k)) * r) / 255);
+						g = (int) (((colorize_g * gradient_k + parent_g * (1 - gradient_k)) * g) / 255);
+						b = (int) (((colorize_b * gradient_k + parent_b * (1 - gradient_k)) * b) / 255);
 						if (r>255) r=255;
 						if (g>255) g=255;
 						if (b>255) b=255;

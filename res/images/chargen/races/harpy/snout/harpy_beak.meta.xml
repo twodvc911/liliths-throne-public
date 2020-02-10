@@ -3,6 +3,7 @@
     <priority>152</priority>
     <pick_priority>10</pick_priority>
     <no_patterns>1</no_patterns>
+    <no_coverings>1</no_coverings>
     <scale>1.0</scale>
     <connections_parent>
         <connection>

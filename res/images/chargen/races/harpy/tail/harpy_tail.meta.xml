@@ -2,6 +2,7 @@
 <bodypart>
     <priority>50</priority>
     <scale>1.0</scale>
+    <no_coverings>1</no_coverings>
     <modifiers>
         <multiple_offset_y>90</multiple_offset_y>
     </modifiers>

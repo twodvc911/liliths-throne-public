@@ -27,7 +27,6 @@ public class ColorPattern {
 	private Color secondary_template_color = Color.BLACK;
 
 	private CharacterImage image = null;
-	//private CharacterImage alpha_image = null;
 
 	private final int max_cache_size = 10;
 	private final Map<String, CharacterImage> cache = new HashMap<>();
@@ -43,10 +42,7 @@ public class ColorPattern {
 
 		image = new CharacterImage();
 		if (!image.load(file_dir + File.separator + pattern_img_name)) image = null;
-		if (image == null && image_main_required) throw new IOException("Cant load image "+pattern_img_name+" for pattern "+pattern_name+"!");
-		
-		//alpha_image = new CharacterImage();
-		//if (!alpha_image.load(file_dir + File.separator + alpha_img_name)) alpha_image = null;
+		if (image == null && image_main_required) throw new IOException("Can't load image "+pattern_img_name+" for pattern "+pattern_name+"!");
 	}
 
 	private void initSettingsFromXML(String pattern_xml_file) {

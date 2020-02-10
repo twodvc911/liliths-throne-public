@@ -60,8 +60,9 @@ public class BodyColorsMap {
 			BodyPartColoringInfo new_info = new BodyPartColoringInfo();
 			new_info.primary_color = new_info.secondary_color = old_info.secondary_color;
 			new_info.primary_glowing = new_info.secondary_glowing = old_info.secondary_glowing;
-			new_info.covering_pattern = old_info.covering_pattern;
+			new_info.color_pattern = old_info.color_pattern;
 			new_info.material = old_info.material;
+			new_info.covering_type = old_info.covering_type;
 			body_colors.put(bodypart_main_code, new_info);
 		}
 	}
@@ -72,8 +73,9 @@ public class BodyColorsMap {
 			BodyPartColoringInfo new_info = new BodyPartColoringInfo();
 			new_info.primary_color = new_info.secondary_color = old_info.primary_color;
 			new_info.primary_glowing = new_info.secondary_glowing = old_info.primary_glowing;
-			new_info.covering_pattern = old_info.covering_pattern;
+			new_info.color_pattern = old_info.color_pattern;
 			new_info.material = old_info.material;
+			new_info.covering_type = old_info.covering_type;
 			body_colors.put(bodypart_main_code_to, new_info);
 		}
 	}
@@ -128,10 +130,11 @@ public class BodyColorsMap {
 			BodyPartColoringInfo new_info = new BodyPartColoringInfo();
 			new_info.primary_color = convertColourToColor(ch_bt_covering.getPrimaryColour());
 			new_info.primary_glowing = ch_bt_covering.isPrimaryGlowing();
-			new_info.covering_pattern = ch_bt_covering.getPattern().toString().toLowerCase();
+			new_info.color_pattern = ch_bt_covering.getPattern().toString().toLowerCase();
 			new_info.secondary_color = convertColourToColor(ch_bt_covering.getSecondaryColour());
 			new_info.secondary_glowing = ch_bt_covering.isPrimaryGlowing();
 			new_info.material = character.getBodyMaterial().toString().toLowerCase();
+			new_info.covering_type = ch_bt_covering.getType().getNameSingular(character).toLowerCase();
 			body_colors.put(bodypart_code, new_info);
 		}
 	}

@@ -39,6 +39,7 @@ public class RaceBodypart {
 	public boolean is_fallback = false;
 	public boolean is_hidden = false;
 	public boolean no_patterns = false;
+	public boolean no_coverings = false;
 	public boolean no_scale_by_parent = false;
 	public boolean no_transitions = false;
 	public boolean skip_colorization = false;
@@ -127,6 +128,7 @@ public class RaceBodypart {
 		is_hidden = MetaXMLLoader.getBoolParam(bodypart_node, "hidden");
 		is_fallback = MetaXMLLoader.getBoolParam(bodypart_node, "fallback");
 		no_patterns = MetaXMLLoader.getBoolParam(bodypart_node, "no_patterns");
+		no_coverings = MetaXMLLoader.getBoolParam(bodypart_node, "no_coverings");
 		no_transitions = MetaXMLLoader.getBoolParam(bodypart_node, "no_transitions");
 		no_scale_by_parent = MetaXMLLoader.getBoolParam(bodypart_node, "no_scale_by_parent");
 		skip_colorization = MetaXMLLoader.getBoolParam(bodypart_node, "skip_colorization");

@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <bodypart>
     <priority>99</priority>
+    <no_coverings>1</no_coverings>
     <connections_parent>
         <connection>
             <point_1>95%;7</point_1>

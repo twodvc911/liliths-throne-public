@@ -82,6 +82,10 @@ no_patterns
     flag (0 or 1),
     if 1 - patterns (spots, freckles...) will not be applied for this bodypart
 
+no_coverings
+    flag (0 or 1),
+    if 1 - coverings (scales, feathers...) will not be applied for this bodypart
+
 no_transitions
     flag (0 or 1),
     if 1 - color transitions will not be applied for this bodypart

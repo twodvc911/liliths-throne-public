@@ -13,7 +13,7 @@ import java.util.Set;
  *
  * @author twovgSP
  */
-public class BodyRacesMap {
+public class BodyPartRacesMap {
 
 	private final Map<String, String> body_races = new HashMap<>();
 
@@ -51,8 +51,8 @@ public class BodyRacesMap {
 		}
 	}
 
-	public static BodyRacesMap fromCharacter(GameCharacter character) {
-		BodyRacesMap real_parts_races = new BodyRacesMap();
+	public static BodyPartRacesMap fromCharacter(GameCharacter character, boolean include_clothes) {
+		BodyPartRacesMap real_parts_races = new BodyPartRacesMap();
 
 		Race body_race = character.getBody().getRace();
 		Race head_race = character.getFaceRace();
@@ -121,15 +121,17 @@ public class BodyRacesMap {
 		real_parts_races.add_race_for_bodypart("tongue", tongue_race);
 		real_parts_races.add_race_for_bodypart("tail", tail_race);
 
-		real_parts_races.add_race_for_clothes("clothes_torso_under", "body", InventorySlot.TORSO_UNDER, character);
-		real_parts_races.add_race_for_clothes("clothes_torso_over", "body", InventorySlot.TORSO_OVER, character);
-		real_parts_races.add_race_for_clothes("clothes_groin", "body", InventorySlot.GROIN, character);
-		real_parts_races.add_race_for_clothes("clothes_penis", "penis", InventorySlot.PENIS, character);
-		real_parts_races.add_race_for_clothes("clothes_leg", "leg", InventorySlot.LEG, character);
-		real_parts_races.add_race_for_clothes("clothes_foot", "leg", InventorySlot.FOOT, character);
-		real_parts_races.add_race_for_clothes("clothes_head", "head", InventorySlot.HEAD, character);
-		real_parts_races.add_race_for_clothes("clothes_neck", "head", InventorySlot.NECK, character);
-		real_parts_races.add_race_for_clothes("clothes_finger", "hand", InventorySlot.FINGER, character);
+		if (include_clothes) {
+			real_parts_races.add_race_for_clothes("clothes_torso_under", "body", InventorySlot.TORSO_UNDER, character);
+			real_parts_races.add_race_for_clothes("clothes_torso_over", "body", InventorySlot.TORSO_OVER, character);
+			real_parts_races.add_race_for_clothes("clothes_groin", "body", InventorySlot.GROIN, character);
+			real_parts_races.add_race_for_clothes("clothes_penis", "penis", InventorySlot.PENIS, character);
+			real_parts_races.add_race_for_clothes("clothes_leg", "leg", InventorySlot.LEG, character);
+			real_parts_races.add_race_for_clothes("clothes_foot", "leg", InventorySlot.FOOT, character);
+			real_parts_races.add_race_for_clothes("clothes_head", "head", InventorySlot.HEAD, character);
+			real_parts_races.add_race_for_clothes("clothes_neck", "head", InventorySlot.NECK, character);
+			real_parts_races.add_race_for_clothes("clothes_finger", "hand", InventorySlot.FINGER, character);
+		}
 
 		return real_parts_races;
 	}

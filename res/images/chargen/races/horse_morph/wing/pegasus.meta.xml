@@ -2,6 +2,7 @@
 <bodypart>
     <priority>60</priority>
     <scale>0.45</scale>
+    <no_coverings>1</no_coverings>
     <mod_conditions>
         <condition scale="0.5">
             <wing_size>tiny</wing_size>
