@@ -1,23 +1,11 @@
 <?xml version="1.0"?>
-<bodypart>
+<bodypart derive_image_from="horse_morph.leg.horse_leg">
     <priority>135</priority>
     <conditions>
         <condition>
             <foot_structure>unguligrade</foot_structure>
         </condition>
     </conditions>
-    <positions>
-        <position id="clothes_foot">
-            <type>clothes_foot</type>
-            <point>218;830</point>
-        </position>
-    </positions>
-    <connections_parent>
-        <connection>
-            <type>body;body_taur</type>
-            <point_1>144;0</point_1>
-            <point_2>362;0</point_2>
-        </connection>
-    </connections_parent>
-    <image_author>Vanir</image_author>
+    <positions derive_from="horse_morph.leg.horse_leg"></positions>
+    <connections_parent derive_from="horse_morph.leg.horse_leg"></connections_parent>
 </bodypart>

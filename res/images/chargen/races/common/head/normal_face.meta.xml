@@ -115,6 +115,13 @@
             </modifiers>
             <point>303;301</point>
         </position>
+        <position id="clothes_eyes">
+            <type>clothes_eyes</type>
+            <modifiers>
+                <scale>0.73</scale>
+            </modifiers>
+            <point>50%;295</point>
+        </position>
     </positions>
     <image_author>@pochikou_flash</image_author>
 </bodypart>

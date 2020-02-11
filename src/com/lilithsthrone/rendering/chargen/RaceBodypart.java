@@ -100,14 +100,13 @@ public class RaceBodypart {
 		initSettingsFromXML(bp_xml_file);
 		String img_file_base;
 		if (derive_image != null) {
-			File bp_xml_f = new File(bp_xml_file);
-			img_file_base = bp_xml_f.getParent() + File.separator + derive_image;
+			img_file_base = getDerivedImageBase(derive_image, bp_xml_file);
 		} else {
 			img_file_base = bp_img_file.replace(".png", "");
 		}
-		images = new BodyPartImages(img_file_base);
-		if (!is_hidden && !images.hasImage("main")) {
-			throw new IOException("Can't find main image file for bodypart="+bp_name+"!");
+		if (img_file_base != null) images = new BodyPartImages(img_file_base);
+		if (!is_hidden && (images == null || !images.hasImage("main"))) {
+			throw new IOException("Can't find main image file for "+bp_race_name+"."+bp_name+"."+bp_code+"!");
 		}
 	}
 
@@ -122,9 +121,9 @@ public class RaceBodypart {
 			}
 		}
 		if (bodypart_node == null) return;
-		
+
 		derive_image = MetaXMLLoader.getNodeAttribute(bodypart_node, "derive_image_from");
-		
+
 		is_hidden = MetaXMLLoader.getBoolParam(bodypart_node, "hidden");
 		is_fallback = MetaXMLLoader.getBoolParam(bodypart_node, "fallback");
 		no_patterns = MetaXMLLoader.getBoolParam(bodypart_node, "no_patterns");
@@ -135,7 +134,7 @@ public class RaceBodypart {
 
 		derive_color_from_bodypart = MetaXMLLoader.getStringParam(bodypart_node, "derive_color_from_bodypart");
 		mask_calculation_mode = MetaXMLLoader.getStringParam(bodypart_node, "mask_calculation_mode");
-		
+
 		scale = MetaXMLLoader.getDoubleParam(bodypart_node, "scale", scale);
 		scale_x = MetaXMLLoader.getDoubleParam(bodypart_node, "scale_x", scale_x);
 		scale_y = MetaXMLLoader.getDoubleParam(bodypart_node, "scale_y", scale_y);
@@ -169,7 +168,7 @@ public class RaceBodypart {
 		Node mod_conditions_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "mod_conditions");
 		derive_mod_conditions = MetaXMLLoader.getNodeAttribute(mod_conditions_node, "derive_from");
 		mod_conditions = MetaXMLLoader.getAllChildNodesMapList(mod_conditions_node, "condition", ALL_MODIFIER_PARAMS);
-		
+
 		Node parent_connections_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "connections_parent");
 		derive_parent_connections = MetaXMLLoader.getNodeAttribute(parent_connections_node, "derive_from");
 		parent_connections = MetaXMLLoader.getAllChildNodesMapList(parent_connections_node, "connection");
@@ -189,37 +188,53 @@ public class RaceBodypart {
 		hides_bodyparts_by_id = new HashSet<>(Arrays.asList(hides_bodyparts_id_str.split(";")));
 	}
 
+	private static class BodypartDeriveParams {
+		public String derive_race;
+		public String derive_bodypart;
+		public String derive_name;
+	}
+	private BodypartDeriveParams getDeriveParams(String derive_str) {
+		if (derive_str == null) return null;
+		String[] derive_parts = derive_str.trim().split("\\.");
+		int d_len = derive_parts.length;
+		if (d_len == 0) return null;
+		BodypartDeriveParams d_params = new BodypartDeriveParams();
+		d_params.derive_race = race_name;
+		d_params.derive_bodypart = bodypart_name;
+		if (d_len > 0) d_params.derive_name = derive_parts[d_len - 1];
+		if (d_len > 1) d_params.derive_bodypart = derive_parts[d_len - 2];
+		if (d_len > 2) d_params.derive_race = derive_parts[d_len - 3];
+		return d_params;
+	}
+	private RaceBodypart getDerivedBodypart(String derive_str, Map<String, Map<String, Map<String, RaceBodypart>>> raceBodyparts) {
+		BodypartDeriveParams d_params = getDeriveParams(derive_str);
+		if (d_params != null && raceBodyparts.containsKey(d_params.derive_race) && raceBodyparts.get(d_params.derive_race).containsKey(d_params.derive_bodypart)) {
+			return raceBodyparts.get(d_params.derive_race).get(d_params.derive_bodypart).getOrDefault(d_params.derive_name, null);
+		}
+		return null;
+	}
+	private String getDerivedImageBase(String derive_str, String current_xml_path) {
+		BodypartDeriveParams d_params = getDeriveParams(derive_str);
+		if (d_params != null) {
+			try {
+				File bp_xml_path = new File(current_xml_path);
+				File current_bp_path = bp_xml_path.getParentFile();
+				File current_race_path = current_bp_path.getParentFile();
+				File races_root = current_race_path.getParentFile();
+				return races_root.getAbsolutePath() + File.separator + d_params.derive_race + File.separator + d_params.derive_bodypart + File.separator + d_params.derive_name;
+			} catch(NullPointerException ex) {}
+		}
+		return null;
+	}
+
 	public void doDerives(Map<String, Map<String, Map<String, RaceBodypart>>> raceBodyparts) {
-		if (derive_mod_conditions != null) {
-			if (raceBodyparts.containsKey(race_name) && raceBodyparts.get(race_name).containsKey(bodypart_name) && raceBodyparts.get(race_name).get(bodypart_name).containsKey(derive_mod_conditions)) {
-				mod_conditions = raceBodyparts.get(race_name).get(bodypart_name).get(derive_mod_conditions).mod_conditions;
-			}
-		}
-		if (derive_parent_connections != null) {
-			if (raceBodyparts.containsKey(race_name) && raceBodyparts.get(race_name).containsKey(bodypart_name) && raceBodyparts.get(race_name).get(bodypart_name).containsKey(derive_parent_connections)) {
-				parent_connections = raceBodyparts.get(race_name).get(bodypart_name).get(derive_parent_connections).parent_connections;
-			}
-		}
-		if (derive_positions != null) {
-			if (raceBodyparts.containsKey(race_name) && raceBodyparts.get(race_name).containsKey(bodypart_name) && raceBodyparts.get(race_name).get(bodypart_name).containsKey(derive_positions)) {
-				positions = raceBodyparts.get(race_name).get(bodypart_name).get(derive_positions).positions;
-			}
-		}
-		if (derive_conditions != null) {
-			if (raceBodyparts.containsKey(race_name) && raceBodyparts.get(race_name).containsKey(bodypart_name) && raceBodyparts.get(race_name).get(bodypart_name).containsKey(derive_conditions)) {
-				conditions = raceBodyparts.get(race_name).get(bodypart_name).get(derive_conditions).conditions;
-			}
-		}
-		if (derive_modifiers != null) {
-			if (raceBodyparts.containsKey(race_name) && raceBodyparts.get(race_name).containsKey(bodypart_name) && raceBodyparts.get(race_name).get(bodypart_name).containsKey(derive_modifiers)) {
-				modifiers = raceBodyparts.get(race_name).get(bodypart_name).get(derive_modifiers).modifiers;
-			}
-		}
-		if (derive_scale_params != null) {
-			if (raceBodyparts.containsKey(race_name) && raceBodyparts.get(race_name).containsKey(bodypart_name) && raceBodyparts.get(race_name).get(bodypart_name).containsKey(derive_scale_params)) {
-				scale_params = raceBodyparts.get(race_name).get(bodypart_name).get(derive_scale_params).scale_params;
-			}
-		}
+		RaceBodypart derived_bodypart;
+		if ((derived_bodypart = getDerivedBodypart(derive_mod_conditions, raceBodyparts)) != null) mod_conditions = derived_bodypart.mod_conditions;
+		if ((derived_bodypart = getDerivedBodypart(derive_parent_connections, raceBodyparts)) != null) parent_connections = derived_bodypart.parent_connections;
+		if ((derived_bodypart = getDerivedBodypart(derive_positions, raceBodyparts)) != null) positions = derived_bodypart.positions;
+		if ((derived_bodypart = getDerivedBodypart(derive_conditions, raceBodyparts)) != null) conditions = derived_bodypart.conditions;
+		if ((derived_bodypart = getDerivedBodypart(derive_modifiers, raceBodyparts)) != null) modifiers = derived_bodypart.modifiers;
+		if ((derived_bodypart = getDerivedBodypart(derive_scale_params, raceBodyparts)) != null) scale_params = derived_bodypart.scale_params;
 	}
 
 	public static String getCharacterParamByName(String condition_param, GameCharacter character) {
@@ -415,38 +430,9 @@ public class RaceBodypart {
 				// clothes
 				case "clothes":
 					InventorySlot c_slot = null;
-					switch(condition_val) {
-						case "torso_under":
-							c_slot = InventorySlot.TORSO_UNDER;
-							break;
-						case "torso_over":
-							c_slot = InventorySlot.TORSO_OVER;
-							break;
-						case "groin":
-							c_slot = InventorySlot.GROIN;
-							break;
-						case "penis":
-							c_slot = InventorySlot.PENIS;
-							break;
-						case "leg":
-							c_slot = InventorySlot.LEG;
-							break;
-						case "foot":
-							c_slot = InventorySlot.FOOT;
-							break;
-						case "head":
-							c_slot = InventorySlot.HEAD;
-							break;
-						case "neck":
-							c_slot = InventorySlot.NECK;
-							break;
-						case "finger":
-							c_slot = InventorySlot.FINGER;
-							break;
-						case "hand":
-							c_slot = InventorySlot.HAND;
-							break;
-					}
+					try {
+						c_slot = InventorySlot.valueOf(condition_val.toUpperCase());
+					} catch (IllegalArgumentException ex) {}
 					AbstractClothing c_clothing = c_slot != null ? character.getClothingInSlot(c_slot) : null;
 					return c_clothing != null ? c_clothing.getName().toLowerCase(): "";
 			}

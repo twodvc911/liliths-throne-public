@@ -2,7 +2,7 @@
 <bodypart>
     <priority>500</priority>
     <fallback>1</fallback>
-    <mask_calculation_mode>combine_with_parent_mask</mask_calculation_mode>
+    <mask_calculation_mode>combine_with_parent_mask__and</mask_calculation_mode>
     <conditions>
         <condition>
             <breast_size>flat;almost unnoticeable;extremely tiny</breast_size>

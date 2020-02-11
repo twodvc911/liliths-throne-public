@@ -2,6 +2,7 @@
 <bodypart>
     <priority>650</priority>
     <hides_bodyparts_by_type>belly;breasts;nipple;.body.arm*;.body_taur.arm*</hides_bodyparts_by_type>
+    <mask_calculation_mode>combine_with_parent_mask__or</mask_calculation_mode>
     <scale_y>0.765</scale_y>
     <scale_x>0.9</scale_x>
     <conditions>

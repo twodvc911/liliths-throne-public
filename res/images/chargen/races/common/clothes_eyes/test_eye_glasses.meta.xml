@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>550</priority>
+    <scale>0.5</scale>
+    <conditions>
+        <condition>
+            <clothes_eyes>glasses</clothes_eyes>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <point>50%;152</point>
+        </connection>
+    </connections_parent>
+    <image_author>innoxia</image_author>
+</bodypart>

@@ -303,7 +303,7 @@ public class CharacterImageRenderer {
 			image.initForSize((int) Math.round(draw_list.full_image_width), (int) Math.round(draw_list.full_image_height));
 
 			BodyPartColoringInfo default_coloring = new BodyPartColoringInfo();
-			BodyColorsMap body_colors = BodyColorsMap.fromCharacter(character);
+			BodyPartColorsMap body_colors = BodyPartColorsMap.fromCharacter(character);
 			if (debug_mode) System.out.println(body_colors);
 
 			int index = 0;

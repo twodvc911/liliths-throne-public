@@ -180,6 +180,13 @@
             <point_1>50;135</point_1>
             <point_2>440;135</point_2>
         </position>
+        <position id="clothes_hips">
+            <type>clothes_hips</type>
+            <draw_mode>use_parent_alpha</draw_mode>
+            <scale_alignment>y</scale_alignment>
+            <point_1>12;787</point_1>
+            <point_2>499;787</point_2>
+        </position>
         <position id="clothes_torso_over">
             <type>clothes_torso_over</type>
             <point>50%;123</point>
@@ -187,7 +194,7 @@
         <position id="clothes_groin">
             <type>clothes_groin</type>
             <point_1>16;780</point_1>
-            <point_2>482;780</point_2>
+            <point_2>480;780</point_2>
         </position>
         <position id="clothes_leg">
             <type>clothes_leg</type>

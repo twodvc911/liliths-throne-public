@@ -115,8 +115,8 @@ public class CharacterImage extends CachedImage {
 		return CharacterImage.fromImage(ImageUtils.generateMask(buff_image, image_new_width, image_new_height, Color.WHITE, 180, 5, true));
 	}
 
-	public void combineWithMask(CharacterImage second_mask, int mask_offset_x, int mask_offset_y) {
-		ImageUtils.combineImageWithImageMask(buff_image, second_mask.getImage(), mask_offset_x, mask_offset_y);
+	public void combineWithMask(CharacterImage second_mask, boolean combine_and, int mask_offset_x, int mask_offset_y) {
+		ImageUtils.combineImageWithImageMask(buff_image, second_mask.getImage(), combine_and, mask_offset_x, mask_offset_y);
 	}
 
 	public void scaleDown() {

@@ -544,6 +544,23 @@ public class CharacterBodypart {
 		point_2_border.y = point_2_border.y * sy;
 	}
 
+	private CharacterBodypart pickMaskTarget(String target_ids, boolean allow_parent) {
+		if (parent != null && target_ids != null) {
+			String[] str_id_parts = target_ids.split(";");
+			for (String str_id_part : str_id_parts) {
+				CharacterBodypart result = parent.child_parts.getOrDefault(str_id_part, null);
+				if (result != null) {
+					return result;
+				} else if ("parent".equals(str_id_part)) {
+					return parent;
+				}
+			}
+		} else if (allow_parent) {
+			return parent;
+		}
+		return null;
+	}
+
 	public void initRequiredMasks() {
 		if (bodypart.is_hidden || is_hidden) return;
 		if (parent != null) {
@@ -553,7 +570,8 @@ public class CharacterBodypart {
 				if (this_parent_position_params.getOrDefault("draw_mode", "").equals("use_parent_alpha")) mask_target = parent;
 				else if (this_parent_position_params.getOrDefault("draw_mode", "").equals("use_parent_parent_alpha") && parent != null) mask_target = parent.parent;
 				else if (this_parent_position_params.getOrDefault("draw_mode", "").equals("use_parent_parent_parent_alpha") && parent != null && parent.parent != null) mask_target = parent.parent.parent;
-				else if (this_parent_position_params.getOrDefault("draw_mode", "").equals("use_sibling_alpha") && parent != null) mask_target = parent.child_parts.getOrDefault(this_parent_position_params.getOrDefault("draw_mode_target_id", ""), null);
+				else if (this_parent_position_params.getOrDefault("draw_mode", "").equals("use_sibling_alpha") && parent != null) mask_target = pickMaskTarget(this_parent_position_params.getOrDefault("draw_mode_target_id", ""), false);
+				else if (this_parent_position_params.getOrDefault("draw_mode", "").equals("use_sibling_or_parent_alpha") && parent != null) mask_target = pickMaskTarget(this_parent_position_params.getOrDefault("draw_mode_target_id", ""), true);
 				if ((mask_target != null) && !mask_target.initCurrentMask()) mask_target = null;
 			}
 		}
@@ -578,12 +596,12 @@ public class CharacterBodypart {
 			} else {
 				image_mask = image.generateMask((int) Math.round(draw_width), (int) Math.round(draw_height));
 			}
-			if (image_mask != null && "combine_with_parent_mask".equals(bodypart.mask_calculation_mode)) {
+			if (image_mask != null && ("combine_with_parent_mask__and".equals(bodypart.mask_calculation_mode) || "combine_with_parent_mask__or".equals(bodypart.mask_calculation_mode))) {
 				if (parent.image_mask == null) {
 					parent.initCurrentMask();
 				}
 				if (parent.image_mask != null) {
-					image_mask.combineWithMask(parent.image_mask, (int) Math.round(draw_x_point - parent.draw_x_point), (int) Math.round(draw_y_point - parent.draw_y_point));
+					image_mask.combineWithMask(parent.image_mask, "combine_with_parent_mask__and".equals(bodypart.mask_calculation_mode), (int) Math.round(draw_x_point - parent.draw_x_point), (int) Math.round(draw_y_point - parent.draw_y_point));
 				}
 			}
 		}

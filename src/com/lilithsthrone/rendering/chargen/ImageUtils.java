@@ -20,8 +20,10 @@ public class ImageUtils {
 		image.setRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
 		return image;
 	}
-
 	public static BufferedImage getResizedImage(BufferedImage image, int image_new_width, int image_new_height, boolean stretch_image) {
+		return getResizedImage(image, image_new_width, image_new_height, stretch_image, true);
+	}
+	public static BufferedImage getResizedImage(BufferedImage image, int image_new_width, int image_new_height, boolean stretch_image, boolean center_image) {
 		BufferedImage new_image = getNewEmptyBufferedImage(image_new_width, image_new_height);
 		Graphics2D canvas = new_image.createGraphics();
 		canvas.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
@@ -30,7 +32,11 @@ public class ImageUtils {
 		if (stretch_image) {
 			canvas.drawImage(image, 0, 0, image_new_width, image_new_height, null);
 		} else {
-			canvas.drawImage(image, (image_new_width - image.getWidth()) / 2, (image_new_height - image.getHeight()) / 2, image.getWidth(), image.getHeight(), null);
+			if (center_image) {
+				canvas.drawImage(image, (image_new_width - image.getWidth()) / 2, (image_new_height - image.getHeight()) / 2, image.getWidth(), image.getHeight(), null);
+			} else {
+				canvas.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
+			}
 		}
 		canvas.dispose();
 		return new_image;
@@ -198,7 +204,7 @@ public class ImageUtils {
 		}
 		return new_image;
 	}
-	public static void combineImageWithImageMask(BufferedImage buff_image, BufferedImage image_mask, int mask_offset_x, int mask_offset_y) {
+	public static void combineImageWithImageMask(BufferedImage buff_image, BufferedImage image_mask, boolean combine_min, int mask_offset_x, int mask_offset_y) {
 		int w = buff_image.getWidth();
 		int h = buff_image.getHeight();
 		int w_src = image_mask.getWidth();
@@ -210,7 +216,7 @@ public class ImageUtils {
 			buff_image.getRGB(0, y, w, 1, rgbaArray, 0, w);
 			int y_src = y + mask_offset_y;
 			if (y_src >= 0 && y_src < h_src) {
-				image_mask.getRGB(0, y_src,w_src, 1, rgbaArraySrc, 0, w_src);
+				image_mask.getRGB(0, y_src, w_src, 1, rgbaArraySrc, 0, w_src);
 				src_array_filled = true;
 			} else {
 				src_array_filled = false;
@@ -223,7 +229,11 @@ public class ImageUtils {
 					if (x_src >= 0 && x_src < w_src) {
 						int p_src = rgbaArraySrc[x_src];
 						int a_src = (p_src>>24) & 0xff;
-						if (a_src < a) a = a_src;
+						if (combine_min) {
+							if (a_src < a) a = a_src;
+						} else {
+							if (a_src > a) a = a_src;
+						}
 					} else {
 						a = 0;
 					}

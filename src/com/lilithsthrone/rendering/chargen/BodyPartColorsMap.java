@@ -9,6 +9,7 @@ import com.lilithsthrone.game.inventory.InventorySlot;
 import com.lilithsthrone.game.inventory.clothing.AbstractClothing;
 import com.lilithsthrone.utils.Colour;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.scene.paint.Color;
 
@@ -205,23 +206,21 @@ public class BodyPartColorsMap {
 		body_colors.add_body_color("ass", character.getBody().getAss(), character);
 		body_colors.add_body_color("tongue", character.getBody().getFace()!= null ? character.getBody().getFace().getTongue() : null, character);
 		body_colors.add_body_color("tail", character.getBody().getTail(), character);
-		
+
+		body_colors.add_body_color("neck", character.getBody().getFace(), character);
+		body_colors.add_body_color("eyes", Color.WHITE, character.getBodyMaterial().toString().toLowerCase());
+		body_colors.add_body_color("finger", character.getBody().getArm(), character);
+
 		body_colors.mix_main_body_colors("nipple", "breasts", 0.5);
 
 		if (BodyPartColorsMap.getBodypartCoveringPattern(character.getBody().getEye(), character) == CoveringPattern.EYE_IRISES_HETEROCHROMATIC) body_colors.add_body_secondary_to_main_color("eye_iris_inversed", "eye_iris");
 		if (BodyPartColorsMap.getBodypartCoveringPattern(BodyCoveringType.EYE_SCLERA, character) == CoveringPattern.EYE_SCLERA_HETEROCHROMATIC) body_colors.add_body_secondary_to_main_color("eye_sclera_inversed", "eye_sclera");
 		if (BodyPartColorsMap.getBodypartCoveringPattern(BodyCoveringType.EYE_PUPILS, character) == CoveringPattern.EYE_PUPILS_HETEROCHROMATIC) body_colors.add_body_secondary_to_main_color("eye_pupil_inversed", "eye_pupil");
 
-		body_colors.add_body_color("clothes_torso_under", character.getClothingInSlot(InventorySlot.TORSO_UNDER));
-		body_colors.add_body_color("clothes_torso_over", character.getClothingInSlot(InventorySlot.TORSO_OVER));
-		body_colors.add_body_color("clothes_groin", character.getClothingInSlot(InventorySlot.GROIN));
-		body_colors.add_body_color("clothes_penis", character.getClothingInSlot(InventorySlot.PENIS));
-		body_colors.add_body_color("clothes_leg", character.getClothingInSlot(InventorySlot.LEG));
-		body_colors.add_body_color("clothes_foot", character.getClothingInSlot(InventorySlot.FOOT));
-		body_colors.add_body_color("clothes_head", character.getClothingInSlot(InventorySlot.HEAD));
-		body_colors.add_body_color("clothes_neck", character.getClothingInSlot(InventorySlot.NECK));
-		body_colors.add_body_color("clothes_finger", character.getClothingInSlot(InventorySlot.FINGER));
-		body_colors.add_body_color("clothes_hand", character.getClothingInSlot(InventorySlot.HAND));
+		List<AbstractClothing> equiped_items = character.getClothingCurrentlyEquipped();
+		equiped_items.forEach((equiped_item) -> {
+			body_colors.add_body_color("clothes_" + equiped_item.getSlotEquippedTo().name().toLowerCase(), equiped_item);
+		});
 
 		return body_colors;
 	}

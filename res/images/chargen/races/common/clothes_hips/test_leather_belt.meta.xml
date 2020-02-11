@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>800</priority>
+    <conditions>
+        <condition>
+            <clothes_hips>leather belt</clothes_hips>
+        </condition>
+    </conditions>
+    <connections_parent>
+        <connection>
+            <point_1>0;75</point_1>
+            <point_2>100%;75</point_2>
+        </connection>
+    </connections_parent>
+    <image_author>innoxia</image_author>
+</bodypart>

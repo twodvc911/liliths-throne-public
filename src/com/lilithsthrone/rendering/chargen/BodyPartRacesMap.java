@@ -3,8 +3,10 @@ package com.lilithsthrone.rendering.chargen;
 import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.race.Race;
 import com.lilithsthrone.game.inventory.InventorySlot;
+import com.lilithsthrone.game.inventory.clothing.AbstractClothing;
 import com.lilithsthrone.utils.Colour;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -17,7 +19,7 @@ public class BodyPartRacesMap {
 
 	private final Map<String, String> body_races = new HashMap<>();
 
-	public boolean containsKey(String bodypart_type) {
+	public boolean containsBodyPart(String bodypart_type) {
 		return body_races.containsKey(bodypart_type);
 	}
 
@@ -47,6 +49,11 @@ public class BodyPartRacesMap {
 
 	private void add_race_for_clothes(String clothes_bodypart_type, String bodypart_type, InventorySlot clothing_slot, GameCharacter character) {
 		if (clothing_slot != null && character.getClothingInSlot(clothing_slot) != null && body_races.containsKey(bodypart_type)) {
+			body_races.put(clothes_bodypart_type, body_races.get(bodypart_type));
+		}
+	}
+	private void add_race_for_clothes(String clothes_bodypart_type, String bodypart_type, AbstractClothing clothing) {
+		if (clothing != null && body_races.containsKey(bodypart_type)) {
 			body_races.put(clothes_bodypart_type, body_races.get(bodypart_type));
 		}
 	}
@@ -121,17 +128,16 @@ public class BodyPartRacesMap {
 		real_parts_races.add_race_for_bodypart("tongue", tongue_race);
 		real_parts_races.add_race_for_bodypart("tail", tail_race);
 
+		real_parts_races.add_race_for_bodypart("neck", head_race);
+		real_parts_races.add_race_for_bodypart("eyes", head_race);
+		real_parts_races.add_race_for_bodypart("finger", arm_race);
+
 		if (include_clothes) {
-			real_parts_races.add_race_for_clothes("clothes_torso_under", "body", InventorySlot.TORSO_UNDER, character);
-			real_parts_races.add_race_for_clothes("clothes_torso_over", "body", InventorySlot.TORSO_OVER, character);
-			real_parts_races.add_race_for_clothes("clothes_groin", "body", InventorySlot.GROIN, character);
-			real_parts_races.add_race_for_clothes("clothes_penis", "penis", InventorySlot.PENIS, character);
-			real_parts_races.add_race_for_clothes("clothes_leg", "leg", InventorySlot.LEG, character);
-			real_parts_races.add_race_for_clothes("clothes_foot", "leg", InventorySlot.FOOT, character);
-			real_parts_races.add_race_for_clothes("clothes_head", "head", InventorySlot.HEAD, character);
-			real_parts_races.add_race_for_clothes("clothes_neck", "head", InventorySlot.NECK, character);
-			real_parts_races.add_race_for_clothes("clothes_finger", "hand", InventorySlot.FINGER, character);
-			real_parts_races.add_race_for_clothes("clothes_hand", "hand", InventorySlot.HAND, character);
+			character.getClothingCurrentlyEquipped().forEach((equiped_item) -> {
+				String slot_name = equiped_item.getSlotEquippedTo().name().toLowerCase();
+				String clothes_bodypart = real_parts_races.containsBodyPart(slot_name) ? slot_name : "body";
+				real_parts_races.add_race_for_clothes("clothes_" + slot_name, clothes_bodypart, equiped_item);
+			});
 		}
 
 		return real_parts_races;
