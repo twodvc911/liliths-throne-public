@@ -115,11 +115,12 @@ hides_bodyparts
     list of body part names, separated by ; which should not be drawn if current bodypart is drawn
 
 modifiers
-    tag, which can contain one or more child tags:
+    tag, which can contain one or more optional child tags:
         "scale", "scale_x", "scale_y", "offset_x", "offset_y", "add_priority", 
         "rotation", "inverse_x", "inverse_y", "multiple_offset_scale", 
         "multiple_offset_scale_x", "multiple_offset_scale_y",
-        "multiple_offset_x", "multiple_offset_y"
+        "multiple_offset_x", "multiple_offset_y",
+        "positions_scale", "positions_scale_x", "positions_scale_y"
         each of these tags should contain float value
 
 

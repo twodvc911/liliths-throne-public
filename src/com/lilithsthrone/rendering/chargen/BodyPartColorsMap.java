@@ -179,7 +179,7 @@ public class BodyPartColorsMap {
 		body_colors.add_body_color("blusher", character.getBlusher(), character);
 		body_colors.add_body_color("eye_shadow", character.getEyeShadow(), character);
 		body_colors.add_body_color("eye_liner", character.getEyeLiner(), character);
-		body_colors.add_body_color("snout", character.getBody().getFace(), character);
+		body_colors.add_body_color("muzzle", character.getBody().getFace(), character);
 		body_colors.add_body_color("lips", character.getBody().getFace().getMouth(), character);
 		body_colors.add_body_color("lips", character.getLipstick(), character);
 		body_colors.add_body_color("hand_nails", character.getHandNailPolish(), character);

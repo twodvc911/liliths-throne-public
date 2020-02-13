@@ -69,16 +69,11 @@ public class RaceBodypart {
 	public Set<String> hides_bodyparts_by_type = new HashSet<>();
 	public Set<String> hides_bodyparts_by_id = new HashSet<>();
 
-	public String derive_parent_connections = null;
-	public String derive_positions = null;
-	public String derive_conditions = null;
-	public String derive_modifiers = null;
-	public String derive_mod_conditions = null;
-	public String derive_scale_params = null;
-	public String derive_image = null;
+	public String derive_from = null;
 
 	private static final List<String> ALL_MODIFIER_PARAMS = Arrays.asList(new String[]{
 		"scale", "scale_x", "scale_y",
+		"positions_scale", "positions_scale_x", "positions_scale_y",
 		"offset_x", "offset_y", 
 		"add_priority", 
 		"rotation",
@@ -96,16 +91,15 @@ public class RaceBodypart {
 		this.bodypart_name = bp_name;
 		this.bodypart_code = bp_code;
 		this.race_name = bp_race_name;
-		
+
 		initSettingsFromXML(bp_xml_file);
-		String img_file_base;
-		if (derive_image != null) {
-			img_file_base = getDerivedImageBase(derive_image, bp_xml_file);
-		} else {
-			img_file_base = bp_img_file.replace(".png", "");
-		}
-		if (img_file_base != null) images = new BodyPartImages(img_file_base);
-		if (!is_hidden && (images == null || !images.hasImage("main"))) {
+		String img_file_base = bp_img_file.replace(".png", "");
+		images = new BodyPartImages(img_file_base);
+		if (!is_hidden && !images.hasImage("main")) {
+			if (derive_from != null) {
+				img_file_base = getDerivedBasePath(derive_from, bp_xml_file);
+				if (img_file_base != null && (images = new BodyPartImages(img_file_base)).hasImage("main")) return;
+			}
 			throw new IOException("Can't find main image file for "+bp_race_name+"."+bp_name+"."+bp_code+"!");
 		}
 	}
@@ -122,7 +116,26 @@ public class RaceBodypart {
 		}
 		if (bodypart_node == null) return;
 
-		derive_image = MetaXMLLoader.getNodeAttribute(bodypart_node, "derive_image_from");
+		derive_from = MetaXMLLoader.getNodeAttribute(bodypart_node, "derive_from");
+		if (derive_from != null) {
+			String derived_xml = getDerivedBasePath(derive_from, bp_xml_file) + ".meta.xml";
+			if (derived_xml != null) {
+				Document derived_xml_document = MetaXMLLoader.openXMLFile(derived_xml);
+				Node derived_bodypart_node = null;
+				if (derived_xml_document != null) {
+					derived_xml_document.normalizeDocument();
+					NodeList derived_bodypart_nodes = derived_xml_document.getElementsByTagName("bodypart");
+					if (derived_bodypart_nodes != null && derived_bodypart_nodes.getLength() > 0) {
+						derived_bodypart_node = derived_bodypart_nodes.item(0);
+					}
+				}
+				if (derived_bodypart_node != null) {
+					MetaXMLLoader.mergeNodes(bodypart_node, derived_bodypart_node);
+				}
+			} else {
+				throw new NullPointerException("Can't derive xml data "+bodypart_code+" -> "+derive_from+"!");
+			}
+		}
 
 		is_hidden = MetaXMLLoader.getBoolParam(bodypart_node, "hidden");
 		is_fallback = MetaXMLLoader.getBoolParam(bodypart_node, "fallback");
@@ -154,11 +167,9 @@ public class RaceBodypart {
 		mix_param = MetaXMLLoader.getDoubleParam(color_mix_node, "value", 50);
 
 		Node conditions_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "conditions");
-		derive_conditions = MetaXMLLoader.getNodeAttribute(conditions_node, "derive_from");
 		conditions = MetaXMLLoader.getAllChildNodesMapList(conditions_node, "condition");
 
 		Node modifiers_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "modifiers");
-		derive_modifiers = MetaXMLLoader.getNodeAttribute(modifiers_node, "derive_from");
 		Map<String, String> str_modifiers = MetaXMLLoader.getAllChildNodesAsMap(modifiers_node);
 		for(Map.Entry<String, String> entry: str_modifiers.entrySet()) {
 			Double mod_val = getModifierFromParamString(entry.getKey(), entry.getValue());
@@ -166,19 +177,15 @@ public class RaceBodypart {
 		}
 
 		Node mod_conditions_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "mod_conditions");
-		derive_mod_conditions = MetaXMLLoader.getNodeAttribute(mod_conditions_node, "derive_from");
 		mod_conditions = MetaXMLLoader.getAllChildNodesMapList(mod_conditions_node, "condition", ALL_MODIFIER_PARAMS);
 
 		Node parent_connections_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "connections_parent");
-		derive_parent_connections = MetaXMLLoader.getNodeAttribute(parent_connections_node, "derive_from");
 		parent_connections = MetaXMLLoader.getAllChildNodesMapList(parent_connections_node, "connection");
 
 		Node positions_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "positions");
-		derive_positions = MetaXMLLoader.getNodeAttribute(positions_node, "derive_from");
 		positions = MetaXMLLoader.getAllChildNodesMapIDMap(positions_node, "position");
 
 		Node scale_params_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "scale_params");
-		derive_scale_params = MetaXMLLoader.getNodeAttribute(scale_params_node, "derive_from");
 		scale_params = MetaXMLLoader.getAllChildNodesAsMap(scale_params_node);
 
 		String hides_bodyparts_type_str = MetaXMLLoader.getStringParam(bodypart_node, "hides_bodyparts_by_type", "");
@@ -206,14 +213,7 @@ public class RaceBodypart {
 		if (d_len > 2) d_params.derive_race = derive_parts[d_len - 3];
 		return d_params;
 	}
-	private RaceBodypart getDerivedBodypart(String derive_str, Map<String, Map<String, Map<String, RaceBodypart>>> raceBodyparts) {
-		BodypartDeriveParams d_params = getDeriveParams(derive_str);
-		if (d_params != null && raceBodyparts.containsKey(d_params.derive_race) && raceBodyparts.get(d_params.derive_race).containsKey(d_params.derive_bodypart)) {
-			return raceBodyparts.get(d_params.derive_race).get(d_params.derive_bodypart).getOrDefault(d_params.derive_name, null);
-		}
-		return null;
-	}
-	private String getDerivedImageBase(String derive_str, String current_xml_path) {
+	private String getDerivedBasePath(String derive_str, String current_xml_path) {
 		BodypartDeriveParams d_params = getDeriveParams(derive_str);
 		if (d_params != null) {
 			try {
@@ -225,16 +225,6 @@ public class RaceBodypart {
 			} catch(NullPointerException ex) {}
 		}
 		return null;
-	}
-
-	public void doDerives(Map<String, Map<String, Map<String, RaceBodypart>>> raceBodyparts) {
-		RaceBodypart derived_bodypart;
-		if ((derived_bodypart = getDerivedBodypart(derive_mod_conditions, raceBodyparts)) != null) mod_conditions = derived_bodypart.mod_conditions;
-		if ((derived_bodypart = getDerivedBodypart(derive_parent_connections, raceBodyparts)) != null) parent_connections = derived_bodypart.parent_connections;
-		if ((derived_bodypart = getDerivedBodypart(derive_positions, raceBodyparts)) != null) positions = derived_bodypart.positions;
-		if ((derived_bodypart = getDerivedBodypart(derive_conditions, raceBodyparts)) != null) conditions = derived_bodypart.conditions;
-		if ((derived_bodypart = getDerivedBodypart(derive_modifiers, raceBodyparts)) != null) modifiers = derived_bodypart.modifiers;
-		if ((derived_bodypart = getDerivedBodypart(derive_scale_params, raceBodyparts)) != null) scale_params = derived_bodypart.scale_params;
 	}
 
 	public static String getCharacterParamByName(String condition_param, GameCharacter character) {
@@ -579,10 +569,11 @@ public class RaceBodypart {
 			" bt:" + bodypart_name + 
 			" race:" + race_name + 
 			" images:" + images + 
-			" POS:" + positions.size() + (derive_positions != null ? "("+derive_positions+")" : "") +
-			" PCN:" + parent_connections.size() + (derive_parent_connections != null ? "("+derive_parent_connections+")" : "") +
-			" CND:" + conditions.size() + (derive_conditions != null ? "("+derive_conditions+")" : "") +
-			" MOC:" + mod_conditions.size() + (derive_mod_conditions != null ? "("+derive_mod_conditions+")" : "") +
+			(derive_from!= null ? " derive:" + derive_from : "") + 
+			" POS:" + positions.size() +
+			" PCN:" + parent_connections.size() +
+			" CND:" + conditions.size() +
+			" MOC:" + mod_conditions.size() +
 			"}";
 	}
 }

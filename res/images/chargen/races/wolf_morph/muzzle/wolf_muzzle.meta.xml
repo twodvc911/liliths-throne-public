@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<bodypart>
+    <priority>152</priority>
+    <pick_priority>10</pick_priority>
+    <scale>0.6</scale>
+    <positions>
+        <position id="lips">
+            <type>lips</type>
+            <draw_mode>use_parent_parent_alpha</draw_mode>
+            <point>50%;256</point>
+        </position>
+    </positions>
+    <connections_parent>
+        <connection>
+            <point>50%;35</point>
+        </connection>
+    </connections_parent>
+    <image_author>twovgSP</image_author>
+</bodypart>

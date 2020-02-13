@@ -2,10 +2,10 @@
 <bodypart>
     <priority>152</priority>
     <no_patterns>1</no_patterns>
-    <scale>0.9</scale>
+    <scale_x>0.9</scale_x>
     <connections_parent>
         <connection>
-            <point>50%;20</point>
+            <point>50%;40</point>
         </connection>
     </connections_parent>
     <image_author>twovgSP</image_author>

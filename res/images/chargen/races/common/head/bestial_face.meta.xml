@@ -1,17 +1,16 @@
 <?xml version="1.0"?>
-<bodypart>
+<bodypart derive_from="normal_face">
     <priority>150</priority>
-    <fallback>1</fallback>
+    <pick_priority>200</pick_priority>
     <conditions>
         <condition>
-            <feminity>androgynous</feminity>
+            <face_is_bestial>1</face_is_bestial>
         </condition>
     </conditions>
-    <connections_parent>
-        <connection>
-            <point>167;475</point>
-        </connection>
-    </connections_parent>
+    <modifiers>
+        <scale_y>0.75</scale_y>
+        <positions_scale_y>1.33</positions_scale_y>
+    </modifiers>
     <positions>
         <position id="hair">
             <type>hair</type>
@@ -94,10 +93,13 @@
             <multiple>
                 <rows_count_param>eye_pairs</rows_count_param>
                 <output_mode>line</output_mode>
-                <max_distance>50;85</max_distance>
+                <max_distance>50;50</max_distance>
                 <secondary_priority_inc>0.1</secondary_priority_inc>
-                <offset>30;-10</offset>
+                <offset>15;-20</offset>
             </multiple>
+            <modifiers>
+                <scale>0.75</scale>
+            </modifiers>
             <point>32;301</point>
         </position>
         <position id="eye_right">
@@ -106,11 +108,12 @@
             <multiple>
                 <rows_count_param>eye_pairs</rows_count_param>
                 <output_mode>line</output_mode>
-                <max_distance>50;-85</max_distance>
+                <max_distance>50;-50</max_distance>
                 <secondary_priority_inc>0.1</secondary_priority_inc>
-                <offset>-30;-10</offset>
+                <offset>-15;-20</offset>
             </multiple>
             <modifiers>
+                <scale>0.75</scale>
                 <inverse_x>1</inverse_x>
             </modifiers>
             <point>303;301</point>
@@ -123,5 +126,4 @@
             <point>50%;295</point>
         </position>
     </positions>
-    <image_author>@pochikou_flash</image_author>
 </bodypart>

@@ -10,7 +10,7 @@
     <connections_parent>
         <connection>
             <position>hair</position>
-            <point>300;56</point>
+            <point>50%;56</point>
         </connection>
     </connections_parent>
     <image_author>@pochikou_flash</image_author>

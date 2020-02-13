@@ -89,7 +89,7 @@ public class BodyPartRacesMap {
 		if (character.isTaur()) real_parts_races.add_race_for_bodypart("body_taur", body_race, true);
 
 		real_parts_races.add_race_for_bodypart("head", head_race, true);
-		real_parts_races.add_race_for_bodypart("snout", head_race, true);
+		real_parts_races.add_race_for_bodypart("muzzle", head_race, true);
 		real_parts_races.add_race_for_bodypart("lips", head_race, true);
 
 		real_parts_races.add_race_for_bodypart("arm", arm_race, true);

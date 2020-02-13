@@ -48,6 +48,9 @@ public class CharacterBodypart {
 	public double this_stretch_x = 1.0;
 	public double this_stretch_y = 1.0;
 
+	public double this_positions_scale_x = 1.0;
+	public double this_positions_scale_y = 1.0;
+
 	public int row_index = 0;
 	public int rows_count = 0;
 	public int col_index = 0;
@@ -238,8 +241,8 @@ public class CharacterBodypart {
 			draw_inverse_y = false;
 			if (parent.draw_inverse_x) draw_inverse_x = !draw_inverse_x;
 			if (parent.draw_inverse_y) draw_inverse_y = !draw_inverse_y;
-			if (modifiers.getOrDefault("inverse_x", Double.valueOf(1)) < 0) draw_inverse_x = !draw_inverse_x;
-			if (modifiers.getOrDefault("inverse_y", Double.valueOf(1)) < 0) draw_inverse_y = !draw_inverse_y;
+			if (modifiers.getOrDefault("inverse_x", 1.0) < 0) draw_inverse_x = !draw_inverse_x;
+			if (modifiers.getOrDefault("inverse_y", 1.0) < 0) draw_inverse_y = !draw_inverse_y;
 			if ((cols_count > 1) && "1".equals(this_parent_position_params.getOrDefault("multiple_inverse_by_cols", ""))) {
 				if (col_index >= (cols_count/2)) draw_inverse_x = !draw_inverse_x;
 			}
@@ -254,6 +257,8 @@ public class CharacterBodypart {
 			// scale params calculation for current item
 			this_stretch_x = bodypart.scale_x;
 			this_stretch_y = bodypart.scale_y;
+			this_positions_scale_x = modifiers.getOrDefault("positions_scale_x", 1.0) * modifiers.getOrDefault("positions_scale", 1.0);
+			this_positions_scale_y = modifiers.getOrDefault("positions_scale_y", 1.0) * modifiers.getOrDefault("positions_scale", 1.0);
 
 			if (this_c.p1.x != this_c.p2.x || this_c.p1.y != this_c.p2.y) {
 				if (parent_c.p1.x != parent_c.p2.x || parent_c.p1.y != parent_c.p2.y) {
@@ -295,8 +300,8 @@ public class CharacterBodypart {
 					}
 				}
 			}
-			this_stretch_x *= this_stretch_xy * modifiers.getOrDefault("scale_x", Double.valueOf(1)) * modifiers.getOrDefault("scale", Double.valueOf(1));
-			this_stretch_y *= this_stretch_xy * modifiers.getOrDefault("scale_y", Double.valueOf(1)) * modifiers.getOrDefault("scale", Double.valueOf(1));
+			this_stretch_x *= this_stretch_xy * modifiers.getOrDefault("scale_x", 1.0) * modifiers.getOrDefault("scale", 1.0) * parent.this_positions_scale_x;
+			this_stretch_y *= this_stretch_xy * modifiers.getOrDefault("scale_y", 1.0) * modifiers.getOrDefault("scale", 1.0) * parent.this_positions_scale_y;
 
 			if (this_stretch_x < bodypart.min_scale) this_stretch_x = bodypart.min_scale;
 			if (this_stretch_y < bodypart.min_scale) this_stretch_y = bodypart.min_scale;

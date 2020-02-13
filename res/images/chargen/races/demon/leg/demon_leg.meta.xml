@@ -1,11 +1,8 @@
 <?xml version="1.0"?>
-<bodypart derive_image_from="common.leg.default_leg_not_bestial">
-    <priority>135</priority>
+<bodypart derive_from="common.leg.default_leg_not_bestial">
     <conditions>
         <condition>
             <foot_structure>!unguligrade</foot_structure>
         </condition>
     </conditions>
-    <positions derive_from="common.leg.default_leg_not_bestial"></positions>
-    <connections_parent derive_from="common.leg.default_leg_not_bestial"></connections_parent>
 </bodypart>

@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
-<bodypart>
-    <priority>145</priority>
-    <scale>1.0</scale>
-    <pattern_scale>0.25</pattern_scale>
-    <scale_params derive_from="smooth"></scale_params>
+<bodypart derive_from="smooth">
+    <pick_priority>10</pick_priority>
     <conditions>
         <condition>
             <penis_is_veiny>1</penis_is_veiny>
@@ -21,8 +18,5 @@
             <has_penis_erection>1</has_penis_erection>
         </condition>
     </conditions>
-    <mod_conditions derive_from="smooth"></mod_conditions>
-    <positions derive_from="smooth"></positions>
-    <connections_parent derive_from="smooth"></connections_parent>
     <image_author>@pochikou_flash</image_author>
 </bodypart>

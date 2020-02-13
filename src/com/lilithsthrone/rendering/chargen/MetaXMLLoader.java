@@ -2,15 +2,24 @@ package com.lilithsthrone.rendering.chargen;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javafx.scene.paint.Color;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -46,6 +55,22 @@ public class MetaXMLLoader {
 			return null;
 		}
 	}
+
+	public static void mergeNodes(Node to_node, Node node_2) {
+		Set<String> node_names = new HashSet<>();
+		NodeList childs = to_node.getChildNodes();
+		for (int i=0; i<childs.getLength(); i++) {
+			node_names.add(childs.item(i).getNodeName());
+		}
+		NodeList childs_2 = node_2.getChildNodes();
+		for (int i=0; i<childs_2.getLength(); i++) {
+			if (!node_names.contains(childs_2.item(i).getNodeName())) {
+				Node imp = to_node.getOwnerDocument().importNode(childs_2.item(i), true);
+				to_node.appendChild(imp);
+			}
+		}
+	}
+
 	public static String getStringParam(Node parent_node, String param_name) {
 		return getStringParam(parent_node, param_name, null);
 	}
@@ -168,5 +193,18 @@ public class MetaXMLLoader {
 			}
 		}
 		return result;
+	}
+
+	private static String nodeToString(Node node) {
+		StringWriter sw = new StringWriter();
+		try {
+			Transformer t = TransformerFactory.newInstance().newTransformer();
+			t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+			t.setOutputProperty(OutputKeys.INDENT, "yes");
+			t.transform(new DOMSource(node), new StreamResult(sw));
+		} catch (TransformerException te) {
+			System.out.println("nodeToString Transformer Exception");
+		}
+		return sw.toString();
 	}
 }

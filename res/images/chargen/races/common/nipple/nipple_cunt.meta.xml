@@ -1,14 +1,11 @@
 <?xml version="1.0"?>
-<bodypart>
-    <priority_offset>0.4</priority_offset>
+<bodypart derive_from="nipple_base">
     <scale>1.4</scale>
-    <min_scale>0.05</min_scale>
     <conditions>
         <condition>
             <nipple_shape>nipple-cunts</nipple_shape>
         </condition>
     </conditions>
-    <mod_conditions derive_from="nipple_base"></mod_conditions>
     <positions>
         <position id="nipple_areola">
             <type>nipple</type>
@@ -16,10 +13,5 @@
             <point>50%;50%</point>
         </position>
     </positions>
-    <connections_parent>
-        <connection>
-            <point>50%;50%</point>
-        </connection>
-    </connections_parent>
     <image_author>twovgSP</image_author>
 </bodypart>

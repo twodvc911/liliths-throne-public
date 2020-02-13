@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-<bodypart>
-    <priority>101</priority>
+<bodypart derive_from="preg_1">
     <conditions>
         <condition>
             <pregnancy>2</pregnancy>
@@ -13,6 +12,5 @@
             <leg_configuration>bipedal</leg_configuration>
         </condition>
     </conditions>
-    <connections_parent derive_from="preg_1"></connections_parent>
     <image_author>@pochikou_flash</image_author>
 </bodypart>

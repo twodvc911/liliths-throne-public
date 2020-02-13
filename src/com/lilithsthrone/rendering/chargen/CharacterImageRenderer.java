@@ -147,13 +147,6 @@ public class CharacterImageRenderer {
 				}
 			}
 		}
-		raceBodyparts.entrySet().forEach((entry) -> {
-			entry.getValue().entrySet().forEach((entry2) -> {
-				entry2.getValue().entrySet().forEach((entry3) -> {
-					entry3.getValue().doDerives(raceBodyparts);
-				});
-			});
-		});
 	}
 
 	private String pickFallbackRaceFromListFor(List<String> fallback_race_names, String bodypart_name) {
