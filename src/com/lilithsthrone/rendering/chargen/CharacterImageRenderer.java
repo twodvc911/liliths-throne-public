@@ -25,6 +25,7 @@ public class CharacterImageRenderer {
 
 	private final String chargen_root_dir = "res/images/chargen";
 	private final String races_root_dir = chargen_root_dir + "/races";
+	private final String clothes_root_dir = chargen_root_dir + "/clothes";
 	private final String covering_types_dir = chargen_root_dir + "/covering_types";
 	private final String pattern_dir = chargen_root_dir + "/patterns";
 	private final String material_dir = chargen_root_dir + "/materials";
@@ -81,68 +82,73 @@ public class CharacterImageRenderer {
 		raceBodyparts = new HashMap<>();
 		raceFallbacks = new HashMap<>();
 		raceBodypartFallbacks = new HashMap<>();
-		String[] races_meta_files = MetaXMLLoader.getDirMetaXML(races_root_dir);
-		for (String file : races_meta_files) {
-			String race_name = file.replaceAll(".meta.xml", "").trim().toLowerCase();
-			Document xml_document = MetaXMLLoader.openXMLFile(races_root_dir + "/" + file);
-			if (xml_document != null) {
-				NodeList fb_race = xml_document.getElementsByTagName("fallback_race");
-				if (fb_race != null && fb_race.getLength() > 0) {
-					for(int i=0; i<fb_race.getLength(); i++) {
-						String fallback_race_name = fb_race.item(i).getTextContent();
-						fallback_race_name = fallback_race_name.trim().toLowerCase();
-						if (!raceFallbacks.containsKey(race_name)) {
-							raceFallbacks.put(race_name, new ArrayList<>());
-						}
-						raceFallbacks.get(race_name).add(fallback_race_name);
-					}
-				}
-			}
-		}
-		String[] races_dirs = MetaXMLLoader.getSubDirs(races_root_dir);
-		for (String race_dir : races_dirs) {
-			String race_name = race_dir.trim().toLowerCase();
-			String[] race_meta_files = MetaXMLLoader.getDirMetaXML(races_root_dir + "/" + race_name);
-			for (String file : race_meta_files) {
-				String bodypart_name = file.replaceAll(".meta.xml", "").trim().toLowerCase();
-				Document xml_document = MetaXMLLoader.openXMLFile(races_root_dir + "/" + race_name + "/" + file);
+		List<String> dirs_to_scan = new ArrayList<>();
+		dirs_to_scan.add(races_root_dir);
+		dirs_to_scan.add(clothes_root_dir);
+		for(String dir_to_scan: dirs_to_scan) {
+			String[] races_meta_files = MetaXMLHelper.getDirMetaXML(dir_to_scan);
+			for (String file : races_meta_files) {
+				String race_name = file.replaceAll(".meta.xml", "").trim().toLowerCase();
+				Document xml_document = MetaXMLHelper.openXMLFile(dir_to_scan + "/" + file);
 				if (xml_document != null) {
 					NodeList fb_race = xml_document.getElementsByTagName("fallback_race");
 					if (fb_race != null && fb_race.getLength() > 0) {
 						for(int i=0; i<fb_race.getLength(); i++) {
 							String fallback_race_name = fb_race.item(i).getTextContent();
 							fallback_race_name = fallback_race_name.trim().toLowerCase();
-							if (!raceBodypartFallbacks.containsKey(race_name)) {
-								raceBodypartFallbacks.put(race_name, new HashMap<>());
+							if (!raceFallbacks.containsKey(race_name)) {
+								raceFallbacks.put(race_name, new ArrayList<>());
 							}
-							if (!raceBodypartFallbacks.get(race_name).containsKey(bodypart_name)) {
-								raceBodypartFallbacks.get(race_name).put(bodypart_name, new ArrayList<>());
-							}
-							raceBodypartFallbacks.get(race_name).get(bodypart_name).add(fallback_race_name);
+							raceFallbacks.get(race_name).add(fallback_race_name);
 						}
 					}
 				}
 			}
-			String[] bodypart_dirs = MetaXMLLoader.getSubDirs(races_root_dir + "/" + race_name);
-			for (String bodypart_dir : bodypart_dirs) {
-				String bodypart_name = bodypart_dir.trim().toLowerCase();
-				String[] part_meta_files = MetaXMLLoader.getDirMetaXML(races_root_dir + "/" + race_name + "/" + bodypart_name);
-				for (String file : part_meta_files) {
-					String part_code = file.replaceAll(".meta.xml", "").trim().toLowerCase();
-					String part_xml_name = races_root_dir + "/" + race_name + "/" + bodypart_name + "/" + file;
-					String img_name = races_root_dir + "/" + race_name + "/" + bodypart_name + "/" + part_code + ".png";
-					RaceBodypart new_part;
-					try {
-						new_part = new RaceBodypart(bodypart_name, part_code, race_name, part_xml_name, img_name);
-						if (!raceBodyparts.containsKey(race_name)) {
-							raceBodyparts.put(race_name, new HashMap<>());
+			String[] races_dirs = MetaXMLHelper.getSubDirs(dir_to_scan);
+			for (String race_dir : races_dirs) {
+				String race_name = race_dir.trim().toLowerCase();
+				String[] race_meta_files = MetaXMLHelper.getDirMetaXML(dir_to_scan + "/" + race_name);
+				for (String file : race_meta_files) {
+					String bodypart_name = file.replaceAll(".meta.xml", "").trim().toLowerCase();
+					Document xml_document = MetaXMLHelper.openXMLFile(dir_to_scan + "/" + race_name + "/" + file);
+					if (xml_document != null) {
+						NodeList fb_race = xml_document.getElementsByTagName("fallback_race");
+						if (fb_race != null && fb_race.getLength() > 0) {
+							for(int i=0; i<fb_race.getLength(); i++) {
+								String fallback_race_name = fb_race.item(i).getTextContent();
+								fallback_race_name = fallback_race_name.trim().toLowerCase();
+								if (!raceBodypartFallbacks.containsKey(race_name)) {
+									raceBodypartFallbacks.put(race_name, new HashMap<>());
+								}
+								if (!raceBodypartFallbacks.get(race_name).containsKey(bodypart_name)) {
+									raceBodypartFallbacks.get(race_name).put(bodypart_name, new ArrayList<>());
+								}
+								raceBodypartFallbacks.get(race_name).get(bodypart_name).add(fallback_race_name);
+							}
 						}
-						if (!raceBodyparts.get(race_name).containsKey(bodypart_name)) {
-							raceBodyparts.get(race_name).put(bodypart_name, new HashMap<>());
+					}
+				}
+				String[] bodypart_dirs = MetaXMLHelper.getSubDirs(dir_to_scan + "/" + race_name);
+				for (String bodypart_dir : bodypart_dirs) {
+					String bodypart_name = bodypart_dir.trim().toLowerCase();
+					String[] part_meta_files = MetaXMLHelper.getDirMetaXML(dir_to_scan + "/" + race_name + "/" + bodypart_name);
+					for (String file : part_meta_files) {
+						String part_code = file.replaceAll(".meta.xml", "").trim().toLowerCase();
+						String part_xml_name = dir_to_scan + "/" + race_name + "/" + bodypart_name + "/" + file;
+						String img_name = dir_to_scan + "/" + race_name + "/" + bodypart_name + "/" + part_code + ".png";
+						RaceBodypart new_part;
+						try {
+							new_part = new RaceBodypart(bodypart_name, part_code, race_name, part_xml_name, img_name);
+							if (!raceBodyparts.containsKey(race_name)) {
+								raceBodyparts.put(race_name, new HashMap<>());
+							}
+							if (!raceBodyparts.get(race_name).containsKey(bodypart_name)) {
+								raceBodyparts.get(race_name).put(bodypart_name, new HashMap<>());
+							}
+							raceBodyparts.get(race_name).get(bodypart_name).put(part_code, new_part);
+						} catch (IOException ex) {
+							System.out.println(ex.toString());
 						}
-						raceBodyparts.get(race_name).get(bodypart_name).put(part_code, new_part);
-					} catch (IOException ex) {
-						System.out.println(ex.toString());
 					}
 				}
 			}

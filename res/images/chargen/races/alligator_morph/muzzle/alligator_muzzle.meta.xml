@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
 <bodypart>
     <priority>152</priority>
-    <scale>0.45</scale>
-    <skip_colorization>1</skip_colorization>
-    <no_patterns>1</no_patterns>
+    <scale_x>0.44</scale_x>
+    <scale_y>0.8</scale_y>
     <connections_parent>
         <connection>
-            <point>265;-12</point>
+            <point>50%;-12</point>
         </connection>
     </connections_parent>
     <image_author>twovgSP</image_author>

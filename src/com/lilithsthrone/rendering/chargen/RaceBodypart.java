@@ -106,7 +106,7 @@ public class RaceBodypart {
 
 	private void initSettingsFromXML(String bp_xml_file) {
 		Node bodypart_node = null;
-		Document xml_document = MetaXMLLoader.openXMLFile(bp_xml_file);
+		Document xml_document = MetaXMLHelper.openXMLFile(bp_xml_file);
 		if (xml_document != null) {
 			xml_document.normalizeDocument();
 			NodeList bodypart_nodes = xml_document.getElementsByTagName("bodypart");
@@ -116,11 +116,11 @@ public class RaceBodypart {
 		}
 		if (bodypart_node == null) return;
 
-		derive_from = MetaXMLLoader.getNodeAttribute(bodypart_node, "derive_from");
+		derive_from = MetaXMLHelper.getNodeAttribute(bodypart_node, "derive_from");
 		if (derive_from != null) {
 			String derived_xml = getDerivedBasePath(derive_from, bp_xml_file) + ".meta.xml";
 			if (derived_xml != null) {
-				Document derived_xml_document = MetaXMLLoader.openXMLFile(derived_xml);
+				Document derived_xml_document = MetaXMLHelper.openXMLFile(derived_xml);
 				Node derived_bodypart_node = null;
 				if (derived_xml_document != null) {
 					derived_xml_document.normalizeDocument();
@@ -130,68 +130,68 @@ public class RaceBodypart {
 					}
 				}
 				if (derived_bodypart_node != null) {
-					MetaXMLLoader.mergeNodes(bodypart_node, derived_bodypart_node);
+					MetaXMLHelper.mergeNodes(bodypart_node, derived_bodypart_node);
 				}
 			} else {
 				throw new NullPointerException("Can't derive xml data "+bodypart_code+" -> "+derive_from+"!");
 			}
 		}
 
-		is_hidden = MetaXMLLoader.getBoolParam(bodypart_node, "hidden");
-		is_fallback = MetaXMLLoader.getBoolParam(bodypart_node, "fallback");
-		no_patterns = MetaXMLLoader.getBoolParam(bodypart_node, "no_patterns");
-		no_coverings = MetaXMLLoader.getBoolParam(bodypart_node, "no_coverings");
-		no_transitions = MetaXMLLoader.getBoolParam(bodypart_node, "no_transitions");
-		no_scale_by_parent = MetaXMLLoader.getBoolParam(bodypart_node, "no_scale_by_parent");
-		skip_colorization = MetaXMLLoader.getBoolParam(bodypart_node, "skip_colorization");
+		is_hidden = MetaXMLHelper.getBoolParam(bodypart_node, "hidden");
+		is_fallback = MetaXMLHelper.getBoolParam(bodypart_node, "fallback");
+		no_patterns = MetaXMLHelper.getBoolParam(bodypart_node, "no_patterns");
+		no_coverings = MetaXMLHelper.getBoolParam(bodypart_node, "no_coverings");
+		no_transitions = MetaXMLHelper.getBoolParam(bodypart_node, "no_transitions");
+		no_scale_by_parent = MetaXMLHelper.getBoolParam(bodypart_node, "no_scale_by_parent");
+		skip_colorization = MetaXMLHelper.getBoolParam(bodypart_node, "skip_colorization");
 
-		derive_color_from_bodypart = MetaXMLLoader.getStringParam(bodypart_node, "derive_color_from_bodypart");
-		mask_calculation_mode = MetaXMLLoader.getStringParam(bodypart_node, "mask_calculation_mode");
+		derive_color_from_bodypart = MetaXMLHelper.getStringParam(bodypart_node, "derive_color_from_bodypart");
+		mask_calculation_mode = MetaXMLHelper.getStringParam(bodypart_node, "mask_calculation_mode");
 
-		scale = MetaXMLLoader.getDoubleParam(bodypart_node, "scale", scale);
-		scale_x = MetaXMLLoader.getDoubleParam(bodypart_node, "scale_x", scale_x);
-		scale_y = MetaXMLLoader.getDoubleParam(bodypart_node, "scale_y", scale_y);
-		min_scale = MetaXMLLoader.getDoubleParam(bodypart_node, "min_scale", min_scale);
-		max_scale = MetaXMLLoader.getDoubleParam(bodypart_node, "max_scale", max_scale);
-		pattern_scale = MetaXMLLoader.getDoubleParam(bodypart_node, "pattern_scale", pattern_scale);
-		priority = MetaXMLLoader.getDoubleParam(bodypart_node, "priority", priority);
-		pick_priority = MetaXMLLoader.getDoubleParam(bodypart_node, "pick_priority", pick_priority);
-		priority_offset = MetaXMLLoader.getDoubleParam(bodypart_node, "priority_offset", priority_offset);
+		scale = MetaXMLHelper.getDoubleParam(bodypart_node, "scale", scale);
+		scale_x = MetaXMLHelper.getDoubleParam(bodypart_node, "scale_x", scale_x);
+		scale_y = MetaXMLHelper.getDoubleParam(bodypart_node, "scale_y", scale_y);
+		min_scale = MetaXMLHelper.getDoubleParam(bodypart_node, "min_scale", min_scale);
+		max_scale = MetaXMLHelper.getDoubleParam(bodypart_node, "max_scale", max_scale);
+		pattern_scale = MetaXMLHelper.getDoubleParam(bodypart_node, "pattern_scale", pattern_scale);
+		priority = MetaXMLHelper.getDoubleParam(bodypart_node, "priority", priority);
+		pick_priority = MetaXMLHelper.getDoubleParam(bodypart_node, "pick_priority", pick_priority);
+		priority_offset = MetaXMLHelper.getDoubleParam(bodypart_node, "priority_offset", priority_offset);
 
-		variant_index = MetaXMLLoader.getIntegerParam(bodypart_node, "variant_index", null);
-		max_count = MetaXMLLoader.getIntegerParam(bodypart_node, "max_count", null);
+		variant_index = MetaXMLHelper.getIntegerParam(bodypart_node, "variant_index", null);
+		max_count = MetaXMLHelper.getIntegerParam(bodypart_node, "max_count", null);
 
-		Node color_mix_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "color_mix");
-		color_to_mix = MetaXMLLoader.getColorParam(color_mix_node, "color", null);
-		mix_type = MetaXMLLoader.getStringParam(color_mix_node, "type", null);
-		mix_param = MetaXMLLoader.getDoubleParam(color_mix_node, "value", 50);
+		Node color_mix_node = MetaXMLHelper.getChildFirstNodeOfType(bodypart_node, "color_mix");
+		color_to_mix = MetaXMLHelper.getColorParam(color_mix_node, "color", null);
+		mix_type = MetaXMLHelper.getStringParam(color_mix_node, "type", null);
+		mix_param = MetaXMLHelper.getDoubleParam(color_mix_node, "value", 50);
 
-		Node conditions_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "conditions");
-		conditions = MetaXMLLoader.getAllChildNodesMapList(conditions_node, "condition");
+		Node conditions_node = MetaXMLHelper.getChildFirstNodeOfType(bodypart_node, "conditions");
+		conditions = MetaXMLHelper.getAllChildNodesMapList(conditions_node, "condition");
 
-		Node modifiers_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "modifiers");
-		Map<String, String> str_modifiers = MetaXMLLoader.getAllChildNodesAsMap(modifiers_node);
+		Node modifiers_node = MetaXMLHelper.getChildFirstNodeOfType(bodypart_node, "modifiers");
+		Map<String, String> str_modifiers = MetaXMLHelper.getAllChildNodesAsMap(modifiers_node);
 		for(Map.Entry<String, String> entry: str_modifiers.entrySet()) {
 			Double mod_val = getModifierFromParamString(entry.getKey(), entry.getValue());
 			if (mod_val != null) modifiers.put(entry.getKey(), mod_val);
 		}
 
-		Node mod_conditions_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "mod_conditions");
-		mod_conditions = MetaXMLLoader.getAllChildNodesMapList(mod_conditions_node, "condition", ALL_MODIFIER_PARAMS);
+		Node mod_conditions_node = MetaXMLHelper.getChildFirstNodeOfType(bodypart_node, "mod_conditions");
+		mod_conditions = MetaXMLHelper.getAllChildNodesMapList(mod_conditions_node, "condition", ALL_MODIFIER_PARAMS);
 
-		Node parent_connections_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "connections_parent");
-		parent_connections = MetaXMLLoader.getAllChildNodesMapList(parent_connections_node, "connection");
+		Node parent_connections_node = MetaXMLHelper.getChildFirstNodeOfType(bodypart_node, "connections_parent");
+		parent_connections = MetaXMLHelper.getAllChildNodesMapList(parent_connections_node, "connection");
 
-		Node positions_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "positions");
-		positions = MetaXMLLoader.getAllChildNodesMapIDMap(positions_node, "position");
+		Node positions_node = MetaXMLHelper.getChildFirstNodeOfType(bodypart_node, "positions");
+		positions = MetaXMLHelper.getAllChildNodesMapIDMap(positions_node, "position");
 
-		Node scale_params_node = MetaXMLLoader.getChildFirstNodeOfType(bodypart_node, "scale_params");
-		scale_params = MetaXMLLoader.getAllChildNodesAsMap(scale_params_node);
+		Node scale_params_node = MetaXMLHelper.getChildFirstNodeOfType(bodypart_node, "scale_params");
+		scale_params = MetaXMLHelper.getAllChildNodesAsMap(scale_params_node);
 
-		String hides_bodyparts_type_str = MetaXMLLoader.getStringParam(bodypart_node, "hides_bodyparts_by_type", "");
+		String hides_bodyparts_type_str = MetaXMLHelper.getStringParam(bodypart_node, "hides_bodyparts_by_type", "");
 		hides_bodyparts_by_type = new HashSet<>(Arrays.asList(hides_bodyparts_type_str.split(";")));
 
-		String hides_bodyparts_id_str = MetaXMLLoader.getStringParam(bodypart_node, "hides_bodyparts_by_id", "");
+		String hides_bodyparts_id_str = MetaXMLHelper.getStringParam(bodypart_node, "hides_bodyparts_by_id", "");
 		hides_bodyparts_by_id = new HashSet<>(Arrays.asList(hides_bodyparts_id_str.split(";")));
 	}
 

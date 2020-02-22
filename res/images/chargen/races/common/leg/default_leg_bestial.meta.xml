@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <bodypart>
     <priority>135</priority>
+    <scale_y>0.85</scale_y>
     <conditions>
         <condition>
             <leg_is_bestial>1</leg_is_bestial>

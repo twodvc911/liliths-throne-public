@@ -2,6 +2,7 @@
 <bodypart>
     <priority>650</priority>
     <hides_bodyparts_by_type>horn</hides_bodyparts_by_type>
+    <hides_bodyparts_by_id>*.top_ears;*.top_ear_*</hides_bodyparts_by_id>
     <scale>1.5</scale>
     <conditions>
         <condition>

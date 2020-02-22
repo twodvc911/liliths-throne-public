@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <bodypart>
     <priority>152</priority>
-    <no_patterns>1</no_patterns>
-    <scale>0.85</scale>
+    <scale>0.88</scale>
     <connections_parent>
         <connection>
             <point>50%;76</point>

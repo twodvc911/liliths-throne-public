@@ -30,7 +30,7 @@ import org.xml.sax.SAXException;
  *
  * @author twovgSP
  */
-public class MetaXMLLoader {
+public class MetaXMLHelper {
 
 	private static final List<String> DEFAULT_ATTRIBUTES_TO_GET = Arrays.asList(new String[]{"id"});
 
@@ -64,10 +64,50 @@ public class MetaXMLLoader {
 		}
 		NodeList childs_2 = node_2.getChildNodes();
 		for (int i=0; i<childs_2.getLength(); i++) {
-			if (!node_names.contains(childs_2.item(i).getNodeName())) {
-				Node imp = to_node.getOwnerDocument().importNode(childs_2.item(i), true);
+			Node sub_node = childs_2.item(i);
+			String node_name = sub_node.getNodeName();
+			if (!node_names.contains(node_name)) {
+				Node imp = to_node.getOwnerDocument().importNode(sub_node, true);
+				to_node.appendChild(imp);
+			} else {
+				Node to_sub_node = getChildFirstNodeOfType(to_node, node_name);
+				String derive_type = getNodeAttribute(to_sub_node, "derive_type");
+				if (derive_type != null) {
+					switch(derive_type) {
+						case "merge_by_id":
+							mergeNodesById(to_sub_node, sub_node);
+							break;
+						case "append":
+							mergeNodesBySimpleAppending(to_sub_node, sub_node);
+							break;
+					}
+				}
+			}
+		}
+	}
+
+	private static void mergeNodesById(Node to_node, Node node_2) {
+		Set<String> node_ids = new HashSet<>();
+		NodeList childs = to_node.getChildNodes();
+		for (int i=0; i<childs.getLength(); i++) {
+			String node_id = getNodeAttribute(childs.item(i), "id");
+			if (node_id != null) node_ids.add(node_id);
+		}
+		NodeList childs_2 = node_2.getChildNodes();
+		for (int i=0; i<childs_2.getLength(); i++) {
+			Node sub_node = childs_2.item(i);
+			String node_id = getNodeAttribute(sub_node, "id");
+			if (!node_ids.contains(node_id)) {
+				Node imp = to_node.getOwnerDocument().importNode(sub_node, true);
 				to_node.appendChild(imp);
 			}
+		}
+	}
+	private static void mergeNodesBySimpleAppending(Node to_node, Node node_2) {
+		NodeList childs_2 = node_2.getChildNodes();
+		for (int i=0; i<childs_2.getLength(); i++) {
+			Node imp = to_node.getOwnerDocument().importNode(childs_2.item(i), true);
+			to_node.appendChild(imp);
 		}
 	}
 
@@ -75,27 +115,27 @@ public class MetaXMLLoader {
 		return getStringParam(parent_node, param_name, null);
 	}
 	public static String getStringParam(Node parent_node, String param_name, String default_value) {
-		Node c_node = MetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
+		Node c_node = MetaXMLHelper.getChildFirstNodeOfType(parent_node, param_name);
 		return c_node != null ? c_node.getTextContent() : default_value;
 	}
 	public static boolean getBoolParam(Node parent_node, String param_name) {
-		Node c_node = MetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
+		Node c_node = MetaXMLHelper.getChildFirstNodeOfType(parent_node, param_name);
 		return c_node != null && "1".equals(c_node.getTextContent());
 	}
 	public static double getDoubleParam(Node parent_node, String param_name, double default_value) {
-		Node c_node = MetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
+		Node c_node = MetaXMLHelper.getChildFirstNodeOfType(parent_node, param_name);
 		return c_node != null ? Double.parseDouble(c_node.getTextContent()) : default_value;
 	}
 	public static int getIntParam(Node parent_node, String param_name, int default_value) {
-		Node c_node = MetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
+		Node c_node = MetaXMLHelper.getChildFirstNodeOfType(parent_node, param_name);
 		return c_node != null ? Integer.valueOf(c_node.getTextContent()) : default_value;
 	}
 	public static Integer getIntegerParam(Node parent_node, String param_name, Integer default_value) {
-		Node c_node = MetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
+		Node c_node = MetaXMLHelper.getChildFirstNodeOfType(parent_node, param_name);
 		return c_node != null ? Integer.valueOf(c_node.getTextContent()) : default_value;
 	}
 	public static Color getColorParam(Node parent_node, String param_name, Color default_value) {
-		Node c_node = MetaXMLLoader.getChildFirstNodeOfType(parent_node, param_name);
+		Node c_node = MetaXMLHelper.getChildFirstNodeOfType(parent_node, param_name);
 		return c_node != null ? Color.valueOf(c_node.getTextContent()) : default_value;
 	}
 	public static Node getChildFirstNodeOfType(Node parent_node, String type_name) {
@@ -132,7 +172,7 @@ public class MetaXMLLoader {
 		return node_list;
 	}
 	public static Map<String, String> getAllChildNodesAsMap(Node parent_node) {
-		return MetaXMLLoader.getAllChildNodesAsMap(parent_node, DEFAULT_ATTRIBUTES_TO_GET);
+		return MetaXMLHelper.getAllChildNodesAsMap(parent_node, DEFAULT_ATTRIBUTES_TO_GET);
 	}
 	public static Map<String, String> getAllChildNodesAsMap(Node parent_node, List<String> attributes_to_map) {
 		Map<String, String> result = new HashMap<>();
@@ -167,27 +207,27 @@ public class MetaXMLLoader {
 	}
 	public static List<Map<String, String>> getAllChildNodesMapList(Node parent_node, String node_type) {
 		List<Map<String, String>> result = new ArrayList<>();
-		List<Node> child_nodes = MetaXMLLoader.getAllChildNodesOfType(parent_node, node_type);
+		List<Node> child_nodes = MetaXMLHelper.getAllChildNodesOfType(parent_node, node_type);
 		for(Node child_node: child_nodes)  {
-			Map<String, String> child_map = MetaXMLLoader.getAllChildNodesAsMap(child_node);
+			Map<String, String> child_map = MetaXMLHelper.getAllChildNodesAsMap(child_node);
 			result.add(child_map);
 		}
 		return result;
 	}
 	public static List<Map<String, String>> getAllChildNodesMapList(Node parent_node, String node_type, List<String> attributes_to_map) {
 		List<Map<String, String>> result = new ArrayList<>();
-		List<Node> child_nodes = MetaXMLLoader.getAllChildNodesOfType(parent_node, node_type);
+		List<Node> child_nodes = MetaXMLHelper.getAllChildNodesOfType(parent_node, node_type);
 		for(Node child_node: child_nodes)  {
-			Map<String, String> child_map = MetaXMLLoader.getAllChildNodesAsMap(child_node, attributes_to_map);
+			Map<String, String> child_map = MetaXMLHelper.getAllChildNodesAsMap(child_node, attributes_to_map);
 			result.add(child_map);
 		}
 		return result;
 	}
 	public static Map<String, Map<String, String>> getAllChildNodesMapIDMap(Node parent_node, String node_type) {
 		Map<String, Map<String, String>> result = new HashMap<>();
-		List<Node> child_nodes = MetaXMLLoader.getAllChildNodesOfType(parent_node, node_type);
+		List<Node> child_nodes = MetaXMLHelper.getAllChildNodesOfType(parent_node, node_type);
 		for(Node child_node: child_nodes)  {
-			Map<String, String> child_map = MetaXMLLoader.getAllChildNodesAsMap(child_node);
+			Map<String, String> child_map = MetaXMLHelper.getAllChildNodesAsMap(child_node);
 			if (child_map.containsKey("id")) {
 				result.put(child_map.get("id"), child_map);
 			}
