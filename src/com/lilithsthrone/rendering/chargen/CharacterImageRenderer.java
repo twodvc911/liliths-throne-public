@@ -43,6 +43,11 @@ public class CharacterImageRenderer {
 	private final int max_image_width = 600;
 	private final int max_image_height = 600;
 
+	private final boolean do_post_pixelization = false;
+	private final int pixel_size = 12;
+	private final int pixelated_image_width = 250;
+	private final int pixelated_image_height = 250;
+
 	private final boolean debug_mode = false;
 	private final boolean reveal_everybody = false;
 	private final boolean save_characters = false;
@@ -72,10 +77,10 @@ public class CharacterImageRenderer {
 			ColorPattern.loadPatterns(covering_types, covering_types_dir);
 			ColorPattern.loadPatterns(patterns, pattern_dir);
 			ColorPattern.loadPatterns(materials, material_dir);
-			initialized = true;
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
+		initialized = true;
 	}
 
 	private void initBodyparts() {
@@ -371,7 +376,12 @@ public class CharacterImageRenderer {
 				);
 			}
 			if (save_characters) image.save(results_dir + "/"+character.getName()+"_" + String.format("%.2f", root_scale) +".png");
-			image.scaleDown(max_image_width, max_image_height);
+			if (do_post_pixelization) {
+				image.pixelate(pixel_size);
+				image.scaleDown(pixelated_image_width, pixelated_image_height);
+			} else {
+				image.scaleDown(max_image_width, max_image_height);
+			}
 			if (!is_revealed) image.colorOverlay(Color.GREY);
 			image.updateImageString();
 

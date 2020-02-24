@@ -105,6 +105,62 @@ public class ImageUtils {
 		buff_image.setRGB(0, 0, w, h, rgbaArray, 0, w);
 	}
 
+	public static BufferedImage pixelate(BufferedImage imageToPixelate, int pixelSize) {
+		BufferedImage pixelateImage = getNewEmptyBufferedImage(imageToPixelate.getWidth(), imageToPixelate.getHeight());
+		for (int y = 0; y < imageToPixelate.getHeight(); y += pixelSize) {
+			for (int x = 0; x < imageToPixelate.getWidth(); x += pixelSize) {
+				BufferedImage croppedImage = getCroppedImage(imageToPixelate, x, y, pixelSize, pixelSize);
+				int dominantColor = getDominantColor(croppedImage);
+				for (int yd = y; (yd < y + pixelSize) && (yd < pixelateImage.getHeight()); yd++) {
+					for (int xd = x; (xd < x + pixelSize) && (xd < pixelateImage.getWidth()); xd++) {
+						pixelateImage.setRGB(xd, yd, dominantColor);
+					}
+				}
+			}
+		}
+		return pixelateImage;
+	}
+	private static BufferedImage getCroppedImage(BufferedImage image, int startx, int starty, int width, int height) {
+	    if (startx < 0) startx = 0;
+	    if (starty < 0) starty = 0;
+	    if (startx > image.getWidth()) startx = image.getWidth();
+	    if (starty > image.getHeight()) starty = image.getHeight();
+	    if (startx + width > image.getWidth()) width = image.getWidth() - startx;
+	    if (starty + height > image.getHeight()) height = image.getHeight() - starty;
+	    return image.getSubimage(startx, starty, width, height);
+	}
+	public static int getDominantColor(BufferedImage bitmap) {
+		if (null == bitmap) return 0;
+		int redBucket = 0;
+		int greenBucket = 0;
+		int blueBucket = 0;
+		int alphaBucket = 0;
+		int w = bitmap.getWidth();
+		int h = bitmap.getHeight();
+		int pixelCount = w * h;
+		int[] pixels = new int[pixelCount];
+		bitmap.getRGB(0, 0, w, h, pixels, 0, w);
+		for (int y = 0; y < h; y++) {
+			for (int x = 0; x < w; x++) {
+				int color = pixels[x + y * w];
+				redBucket += (color >> 16) & 0xFF;
+				greenBucket += (color >> 8) & 0xFF;
+				blueBucket += (color & 0xFF);
+				alphaBucket += (color >>> 24);
+			}
+		}
+		return intColor(
+			alphaBucket / pixelCount,
+			redBucket / pixelCount,
+			greenBucket / pixelCount,
+			blueBucket / pixelCount
+		);
+	}
+
+	public static int intColor(int a, int r, int g, int b) {
+		return (a<<24) | (r<<16) | (g<<8) | b;
+	}
+
 	public static BufferedImage getColorizedImage(BufferedImage buff_image, int image_new_width, int image_new_height, BodyPartColoringInfo coloring, Color primary_tmpl, Color secondary_tmpl) {
 		BufferedImage new_image = ImageUtils.getResizedImage(buff_image, image_new_width, image_new_height, true);
 		

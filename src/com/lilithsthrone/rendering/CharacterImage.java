@@ -129,6 +129,16 @@ public class CharacterImage extends CachedImage {
 		height = buff_image.getHeight();
 		super.updatePercentageWidth(buff_image);
 	}
+	public void scale(int to_width, int to_height) {
+		int[] targetSize = getAdjustedSize(to_width, to_height);
+		buff_image = ImageUtils.getResizedImage(buff_image, targetSize[0], targetSize[1], true);
+		width = buff_image.getWidth();
+		height = buff_image.getHeight();
+		super.updatePercentageWidth(buff_image);
+	}
+	public void pixelate(int pixel_size) {
+		buff_image = ImageUtils.pixelate(buff_image, pixel_size);
+	}
 
 	public void flipImage(boolean flip_x, boolean flip_y) {
 		AffineTransform tx = null;
