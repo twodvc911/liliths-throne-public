@@ -7,7 +7,7 @@ import com.lilithsthrone.game.character.effects.StatusEffect;
 import com.lilithsthrone.game.inventory.InventorySlot;
 import com.lilithsthrone.game.inventory.clothing.AbstractClothing;
 import com.lilithsthrone.main.Main;
-import com.lilithsthrone.utils.Colour;
+import com.lilithsthrone.utils.colours.PresetColour;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -310,7 +310,7 @@ public class RaceBodypart {
 				case "arm_is_bestial":
 					return String.valueOf(character.getArmRace().isAffectedByFurryPreference() ? 1 : 0);
 				case "is_hand_nails_polished":
-					return String.valueOf((character.getHandNailPolish() != null && character.getHandNailPolish().getPrimaryColour() != Colour.COVERING_NONE) ? 1 : 0);
+					return String.valueOf((character.getHandNailPolish() != null && character.getHandNailPolish().getPrimaryColour() != PresetColour.COVERING_NONE) ? 1 : 0);
 
 				// legs
 				case "leg_is_bestial":
@@ -320,7 +320,7 @@ public class RaceBodypart {
 				case "foot_structure":
 					return character.getFootStructure().getName().toLowerCase();
 				case "is_foot_nails_polished":
-					return String.valueOf((character.getFootNailPolish() != null && character.getFootNailPolish().getPrimaryColour() != Colour.COVERING_NONE) ? 1 : 0);
+					return String.valueOf((character.getFootNailPolish() != null && character.getFootNailPolish().getPrimaryColour() != PresetColour.COVERING_NONE) ? 1 : 0);
 
 				// breast
 				case "breast_size":

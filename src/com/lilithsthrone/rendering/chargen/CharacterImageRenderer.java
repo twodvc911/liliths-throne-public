@@ -36,7 +36,7 @@ public class CharacterImageRenderer {
 	private final String[] root_bodyparts = new String[]{"body_taur", "body"};
 
 	private final boolean skip_unknown_races = true;
-	private final boolean show_clothes = true;
+	private final boolean show_clothes = false;
 
 	private final boolean do_pre_scale = true;
 	private final double base_image_scale = 1.0;

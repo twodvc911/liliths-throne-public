@@ -4,9 +4,8 @@ import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.race.Race;
 import com.lilithsthrone.game.inventory.InventorySlot;
 import com.lilithsthrone.game.inventory.clothing.AbstractClothing;
-import com.lilithsthrone.utils.Colour;
+import com.lilithsthrone.utils.colours.PresetColour;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -97,13 +96,13 @@ public class BodyPartRacesMap {
 		real_parts_races.add_race_for_bodypart("leg", leg_race, true);
 		real_parts_races.add_race_for_bodypart("foot", leg_race, true);
 
-		if (character.getBlusher() != null && character.getBlusher().getPrimaryColour()!=Colour.COVERING_NONE) {
+		if (character.getBlusher() != null && character.getBlusher().getPrimaryColour()!=PresetColour.COVERING_NONE) {
 			real_parts_races.add_race_for_bodypart("blusher", head_race, true);
 		}
-		if (character.getEyeShadow() != null && character.getEyeShadow().getPrimaryColour()!=Colour.COVERING_NONE) {
+		if (character.getEyeShadow() != null && character.getEyeShadow().getPrimaryColour()!=PresetColour.COVERING_NONE) {
 			real_parts_races.add_race_for_bodypart("eye_shadow", head_race, true);
 		}
-		if (character.getEyeLiner() != null && character.getEyeLiner().getPrimaryColour()!=Colour.COVERING_NONE) {
+		if (character.getEyeLiner() != null && character.getEyeLiner().getPrimaryColour()!=PresetColour.COVERING_NONE) {
 			real_parts_races.add_race_for_bodypart("eye_liner", head_race, true);
 		}
 

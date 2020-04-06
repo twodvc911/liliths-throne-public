@@ -6,7 +6,8 @@ import com.lilithsthrone.game.character.body.Covering;
 import com.lilithsthrone.game.character.body.types.BodyCoveringType;
 import com.lilithsthrone.game.character.body.valueEnums.CoveringPattern;
 import com.lilithsthrone.game.inventory.clothing.AbstractClothing;
-import com.lilithsthrone.utils.Colour;
+import com.lilithsthrone.utils.colours.Colour;
+import com.lilithsthrone.utils.colours.PresetColour;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -126,7 +127,7 @@ public class BodyPartColorsMap {
 		}
 	}
 	public void add_body_color(String bodypart_code, Covering ch_bt_covering, GameCharacter character) {
-		if (ch_bt_covering != null && ch_bt_covering.getPrimaryColour() != Colour.COVERING_NONE) {
+		if (ch_bt_covering != null && ch_bt_covering.getPrimaryColour() != PresetColour.COVERING_NONE) {
 			BodyPartColoringInfo new_info = new BodyPartColoringInfo();
 			new_info.primary_color = convertColourToColor(ch_bt_covering.getPrimaryColour());
 			new_info.primary_glowing = ch_bt_covering.isPrimaryGlowing();
@@ -147,8 +148,8 @@ public class BodyPartColorsMap {
 	}
 
 	public Color convertColourToColor(Colour col) {
-		//System.out.println(col.getName() + " " + col.toString());
-		switch(col.toString()) {
+		//System.out.println(col.getName() + " " + col.getId());
+		switch(col.getId()) {
 			case "EYE_PITCH_BLACK":
 				return Color.web("#111");
 			case "COVERING_BLACK":
