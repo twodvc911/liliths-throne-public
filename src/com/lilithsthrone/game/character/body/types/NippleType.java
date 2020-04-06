@@ -14,7 +14,7 @@ import com.lilithsthrone.utils.Util;
 
 /**
  * @since 0.1.83
- * @version 0.3.1
+ * @version 0.3.7
  * @author Innoxia
  */
 public enum NippleType implements BodyPartTypeInterface {

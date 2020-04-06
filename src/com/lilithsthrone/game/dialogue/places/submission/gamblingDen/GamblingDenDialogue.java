@@ -11,7 +11,7 @@ import com.lilithsthrone.game.character.GameCharacter;
 import com.lilithsthrone.game.character.body.CoverableArea;
 import com.lilithsthrone.game.character.body.valueEnums.CumProduction;
 import com.lilithsthrone.game.character.body.valueEnums.PenetrationGirth;
-import com.lilithsthrone.game.character.body.valueEnums.PenisSize;
+import com.lilithsthrone.game.character.body.valueEnums.PenisLength;
 import com.lilithsthrone.game.character.body.valueEnums.TesticleSize;
 import com.lilithsthrone.game.character.npc.NPC;
 import com.lilithsthrone.game.character.npc.submission.Axel;
@@ -56,9 +56,10 @@ import com.lilithsthrone.game.sex.sexActions.baseActions.PenisMouth;
 import com.lilithsthrone.game.sex.sexActions.baseActions.TongueAnus;
 import com.lilithsthrone.game.sex.sexActions.baseActions.TongueVagina;
 import com.lilithsthrone.main.Main;
-import com.lilithsthrone.utils.Colour;
 import com.lilithsthrone.utils.Util;
 import com.lilithsthrone.utils.Util.Value;
+import com.lilithsthrone.utils.colours.Colour;
+import com.lilithsthrone.utils.colours.PresetColour;
 import com.lilithsthrone.world.WorldType;
 import com.lilithsthrone.world.places.PlaceType;
 
@@ -556,7 +557,7 @@ public class GamblingDenDialogue {
 					@Override
 					public void effects() {
 						Main.game.getTextStartStringBuilder().append(UtilText.parseFromXMLFile("places/submission/gamblingDen/main", "OFFICE_WITH_LEXA_FEMINISE_APPLY_ZERO"));
-						((Axel)Main.game.getNpc(Axel.class)).applyFeminisation(PenetrationGirth.ONE_SLENDER, PenisSize.ZERO_MICROSCOPIC, TesticleSize.ZERO_VESTIGIAL, CumProduction.ONE_TRICKLE);
+						((Axel)Main.game.getNpc(Axel.class)).applyFeminisation(PenetrationGirth.ONE_SLENDER, PenisLength.ZERO_MICROSCOPIC, TesticleSize.ZERO_VESTIGIAL, CumProduction.ONE_TRICKLE);
 						Main.game.getDialogueFlags().setFlag(DialogueFlagValue.axelFeminised, true);
 					}
 				};
@@ -568,7 +569,7 @@ public class GamblingDenDialogue {
 					@Override
 					public void effects() {
 						Main.game.getTextStartStringBuilder().append(UtilText.parseFromXMLFile("places/submission/gamblingDen/main", "OFFICE_WITH_LEXA_FEMINISE_APPLY_HALF"));
-						((Axel)Main.game.getNpc(Axel.class)).applyFeminisation(PenetrationGirth.TWO_AVERAGE, PenisSize.TWO_AVERAGE, TesticleSize.TWO_AVERAGE, CumProduction.ONE_TRICKLE);
+						((Axel)Main.game.getNpc(Axel.class)).applyFeminisation(PenetrationGirth.TWO_AVERAGE, PenisLength.TWO_AVERAGE, TesticleSize.TWO_AVERAGE, CumProduction.ONE_TRICKLE);
 						Main.game.getDialogueFlags().setFlag(DialogueFlagValue.axelFeminised, true);
 					}
 				};
@@ -580,7 +581,7 @@ public class GamblingDenDialogue {
 					@Override
 					public void effects() {
 						Main.game.getTextStartStringBuilder().append(UtilText.parseFromXMLFile("places/submission/gamblingDen/main", "OFFICE_WITH_LEXA_FEMINISE_APPLY_FULL"));
-						((Axel)Main.game.getNpc(Axel.class)).applyFeminisation(PenetrationGirth.FOUR_FAT, PenisSize.FOUR_HUGE, TesticleSize.FOUR_HUGE, CumProduction.FOUR_LARGE);
+						((Axel)Main.game.getNpc(Axel.class)).applyFeminisation(PenetrationGirth.FOUR_FAT, PenisLength.FOUR_HUGE, TesticleSize.FOUR_HUGE, CumProduction.FOUR_LARGE);
 						Main.game.getDialogueFlags().setFlag(DialogueFlagValue.axelFeminised, true);
 					}
 				};
@@ -826,7 +827,7 @@ public class GamblingDenDialogue {
 								AXEL_VENGAR) {
 							@Override
 							public Colour getHighlightColour() {
-								return Colour.QUEST_SIDE;
+								return PresetColour.QUEST_SIDE;
 							}
 							@Override
 							public void effects() {
@@ -851,7 +852,7 @@ public class GamblingDenDialogue {
 						return new Response("Visit Vengar", "Tell [axel.name] that you're ready to go with [axel.herHim] to visit Vengar now.", AXEL_VENGAR_VISIT) {
 							@Override
 							public Colour getHighlightColour() {
-								return Colour.QUEST_SIDE;
+								return PresetColour.QUEST_SIDE;
 							}
 							@Override
 							public void effects() {
@@ -957,7 +958,7 @@ public class GamblingDenDialogue {
 				return new Response("Visit Vengar", "Tell [axel.name] that you're ready to go with [axel.herHim] to visit Vengar now.", AXEL_VENGAR_VISIT) {
 					@Override
 					public Colour getHighlightColour() {
-						return Colour.QUEST_SIDE;
+						return PresetColour.QUEST_SIDE;
 					}
 					@Override
 					public void effects() {
@@ -1028,7 +1029,7 @@ public class GamblingDenDialogue {
 						AXEL_VENGAR_VISIT_SISSIFIED) {
 					@Override
 					public Colour getHighlightColour() {
-						return Colour.ANDROGYNOUS;
+						return PresetColour.ANDROGYNOUS;
 					}
 					@Override
 					public void effects() {
@@ -1352,7 +1353,7 @@ public class GamblingDenDialogue {
 								
 								for(Subspecies r : results) {
 									Main.game.getTextEndStringBuilder().append(
-											"<div class='modifier-icon' style='width:31.3%; margin:0 1%; border:3px solid "+(winner?Colour.GENERIC_EXCELLENT.toWebHexString():"")+"; display:inline-block;'>"
+											"<div class='modifier-icon' style='width:31.3%; margin:0 1%; border:3px solid "+(winner?PresetColour.GENERIC_EXCELLENT.toWebHexString():"")+"; display:inline-block;'>"
 													+"<div class='modifier-icon-content'>"+r.getSVGString(null)+"</div>"
 											+ "</div>");
 								}

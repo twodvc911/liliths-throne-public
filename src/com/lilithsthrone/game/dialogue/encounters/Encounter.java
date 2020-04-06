@@ -36,7 +36,6 @@ import com.lilithsthrone.game.combat.Spell;
 import com.lilithsthrone.game.dialogue.DialogueFlagValue;
 import com.lilithsthrone.game.dialogue.DialogueNode;
 import com.lilithsthrone.game.dialogue.companions.SlaveDialogue;
-import com.lilithsthrone.game.dialogue.npcDialogue.submission.TunnelImpsDialogue;
 import com.lilithsthrone.game.dialogue.places.submission.ratWarrens.VengarCaptiveDialogue;
 import com.lilithsthrone.game.inventory.ItemTag;
 import com.lilithsthrone.game.inventory.Rarity;
@@ -694,7 +693,6 @@ public enum Encounter {
 					} catch (Exception e) {
 					}
 					
-					TunnelImpsDialogue.setImpGroup(impGroup);
 					return ((NPC) impGroup.get(0)).getEncounterDialogue();
 					
 				} else if(Main.game.getPlayer().getLocationPlace().getPlaceType().equals(PlaceType.SUBMISSION_IMP_TUNNELS_DEMON)
@@ -744,7 +742,6 @@ public enum Encounter {
 					} catch (Exception e) {
 					}
 					
-					TunnelImpsDialogue.setImpGroup(impGroup);
 					return ((NPC) impGroup.get(0)).getEncounterDialogue();
 					
 				} else if(Main.game.getPlayer().getLocationPlace().getPlaceType().equals(PlaceType.SUBMISSION_IMP_TUNNELS_FEMALES)
@@ -790,7 +787,6 @@ public enum Encounter {
 					} catch (Exception e) {
 					}
 					
-					TunnelImpsDialogue.setImpGroup(impGroup);
 					return ((NPC) impGroup.get(0)).getEncounterDialogue();
 					
 				} else if(Main.game.getPlayer().getLocationPlace().getPlaceType().equals(PlaceType.SUBMISSION_IMP_TUNNELS_MALES)
@@ -841,7 +837,6 @@ public enum Encounter {
 					} catch (Exception e) {
 					}
 					
-					TunnelImpsDialogue.setImpGroup(impGroup);
 					return ((NPC) impGroup.get(0)).getEncounterDialogue();
 					
 				}
@@ -969,7 +964,7 @@ public enum Encounter {
 			if(!Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.vengarCaptiveVengarSatisfied)) {
 				map.put(EncounterType.VENGAR_CAPTIVE_VENGAR_FUCK, 10f);
 			}
-			if(!Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.vengarCaptiveGangBanged)) {
+			if(!Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.vengarCaptiveGangBanged)) { //TODO this is not set anywhere?
 				map.put(EncounterType.VENGAR_CAPTIVE_GROUP_SEX, 2f);
 			}
 			
