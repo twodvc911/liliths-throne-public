@@ -1468,6 +1468,7 @@ public enum TFModifier {
 		clothingAttributeList.add(TFModifier.CRITICAL_DAMAGE);
 		
 
+		tattooPrimaryList.add(TFModifier.CLOTHING_MAJOR_ATTRIBUTE);
 		tattooPrimaryList.add(TFModifier.CLOTHING_ATTRIBUTE);
 		tattooPrimaryList.add(TFModifier.TF_MOD_FETISH_BODY_PART);
 		tattooPrimaryList.add(TFModifier.TF_MOD_FETISH_BEHAVIOUR);
@@ -1564,7 +1565,7 @@ public enum TFModifier {
 	
 	private TFModifier(Fetish f) {
 		this.name = f.getName(null);
-		this.description = "Applies an effect related to the "+name+" fetish. ("+f.getShortDescriptor(null)+")";
+		this.description = "Applies an effect related to the "+name+" fetish. ("+Util.capitaliseSentence(f.getShortDescriptor(null))+".)";
 		this.descriptor = name;
 		this.rarity = Rarity.EPIC;
 		this.colour = PresetColour.FETISH;

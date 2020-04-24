@@ -169,12 +169,15 @@ public enum DialogueFlagValue {
 	helenaShopScarlettTalkedTo(true),
 	helenaShopScarlettCounterOral(true),
 	helenaShopScarlettCafe(true),
+	helenaShopScarlettCafeRevealed,
 	helenaShopScarlettExtraTransformationDiscussed,
 	helenaShopScarlettExtraTransformationApplied,
 	helenaShopScarlettExtraTransformationHelenaReacted,
-
+	
+	helenaDateApartmentSeen,
 	helenaDateFirstDateComplete,
 	helenaDateRomanticSetup,
+	helenaDateRomanticSetupEatenOut(true),
 	helenaGift,
 	helenaDateSexLifeTalk,
 	helenaDateVirginityTalk,

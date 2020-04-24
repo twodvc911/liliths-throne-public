@@ -2238,6 +2238,7 @@ public class MainControllerInitMethod {
 			
 			if(Main.game.isStarted()
 					&& (Main.game.getCurrentDialogueNode().equals(CharacterCreation.CHOOSE_APPEARANCE)
+							|| Main.game.getCurrentDialogueNode().equals(CharacterCreation.CHOOSE_SEX_EXPERIENCE)
 							|| Main.game.getCurrentDialogueNode().equals(ScarlettsShop.HELENAS_SHOP_CUSTOM_SLAVE_PERSONALITY)
 							|| Main.game.getCurrentDialogueNode().equals(ScarlettsShop.HELENAS_SHOP_CUSTOM_SLAVE_FINISH))) {
 				for(Month month : Month.values()) {
@@ -3373,6 +3374,13 @@ public class MainControllerInitMethod {
 							}
 							Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()));
 						}, false);
+
+						MainController.addEventListener(MainController.document, id, "mousemove", MainController.moveTooltipListener, false);
+						MainController.addEventListener(MainController.document, id, "mouseleave", MainController.hideTooltipListener, false);
+						TooltipInformationEventListener el =  new TooltipInformationEventListener().setInformation(
+								Util.capitaliseSentence(orificeMod.getName()),
+								(orificeMod.isSpecialEffects()?"[style.boldGood(Special Effect:)] ":"")+orificeMod.getDescription());
+						MainController.addEventListener(MainController.document, id, "mouseenter", el, false);
 					}
 				}
 				
@@ -3455,6 +3463,13 @@ public class MainControllerInitMethod {
 							}
 							Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()));
 						}, false);
+
+						MainController.addEventListener(MainController.document, id, "mousemove", MainController.moveTooltipListener, false);
+						MainController.addEventListener(MainController.document, id, "mouseleave", MainController.hideTooltipListener, false);
+						TooltipInformationEventListener el =  new TooltipInformationEventListener().setInformation(
+								Util.capitaliseSentence(orificeMod.getName()),
+								(orificeMod.isSpecialEffects()?"[style.boldGood(Special Effect:)] ":"")+orificeMod.getDescription());
+						MainController.addEventListener(MainController.document, id, "mouseenter", el, false);
 					}
 				}
 				
@@ -3690,6 +3705,13 @@ public class MainControllerInitMethod {
 							}
 							Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()));
 						}, false);
+
+						MainController.addEventListener(MainController.document, id, "mousemove", MainController.moveTooltipListener, false);
+						MainController.addEventListener(MainController.document, id, "mouseleave", MainController.hideTooltipListener, false);
+						TooltipInformationEventListener el =  new TooltipInformationEventListener().setInformation(
+								Util.capitaliseSentence(orificeMod.getName()),
+								(orificeMod.isSpecialEffects()?"[style.boldGood(Special Effect:)] ":"")+orificeMod.getDescription());
+						MainController.addEventListener(MainController.document, id, "mouseenter", el, false);
 					}
 					id = "CHANGE_NIPPLE_CROTCH_MOD_"+orificeMod;
 					if (((EventTarget) MainController.document.getElementById(id)) != null) {
@@ -3701,6 +3723,13 @@ public class MainControllerInitMethod {
 							}
 							Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()));
 						}, false);
+
+						MainController.addEventListener(MainController.document, id, "mousemove", MainController.moveTooltipListener, false);
+						MainController.addEventListener(MainController.document, id, "mouseleave", MainController.hideTooltipListener, false);
+						TooltipInformationEventListener el =  new TooltipInformationEventListener().setInformation(
+								Util.capitaliseSentence(orificeMod.getName()),
+								(orificeMod.isSpecialEffects()?"[style.boldGood(Special Effect:)] ":"")+orificeMod.getDescription());
+						MainController.addEventListener(MainController.document, id, "mouseenter", el, false);
 					}
 				}
 				
@@ -4018,6 +4047,13 @@ public class MainControllerInitMethod {
 							}
 							Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()));
 						}, false);
+
+						MainController.addEventListener(MainController.document, id, "mousemove", MainController.moveTooltipListener, false);
+						MainController.addEventListener(MainController.document, id, "mouseleave", MainController.hideTooltipListener, false);
+						TooltipInformationEventListener el =  new TooltipInformationEventListener().setInformation(
+								Util.capitaliseSentence(orificeMod.getName()),
+								(orificeMod.isSpecialEffects()?"[style.boldGood(Special Effect:)] ":"")+orificeMod.getDescription());
+						MainController.addEventListener(MainController.document, id, "mouseenter", el, false);
 					}
 				}
 				
@@ -4073,6 +4109,13 @@ public class MainControllerInitMethod {
 							}
 							Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()));
 						}, false);
+
+						MainController.addEventListener(MainController.document, id, "mousemove", MainController.moveTooltipListener, false);
+						MainController.addEventListener(MainController.document, id, "mouseleave", MainController.hideTooltipListener, false);
+						TooltipInformationEventListener el =  new TooltipInformationEventListener().setInformation(
+								Util.capitaliseSentence(orificeMod.getName()),
+								(orificeMod.isSpecialEffects()?"[style.boldGood(Special Effect:)] ":"")+orificeMod.getDescription());
+						MainController.addEventListener(MainController.document, id, "mouseenter", el, false);
 					}
 				}
 				
@@ -4340,6 +4383,13 @@ public class MainControllerInitMethod {
 							}
 							Main.game.setContent(new Response("", "", Main.game.getCurrentDialogueNode()));
 						}, false);
+
+						MainController.addEventListener(MainController.document, id, "mousemove", MainController.moveTooltipListener, false);
+						MainController.addEventListener(MainController.document, id, "mouseleave", MainController.hideTooltipListener, false);
+						TooltipInformationEventListener el =  new TooltipInformationEventListener().setInformation(
+								Util.capitaliseSentence(orificeMod.getName()),
+								(orificeMod.isSpecialEffects()?"[style.boldGood(Special Effect:)] ":"")+orificeMod.getDescription());
+						MainController.addEventListener(MainController.document, id, "mouseenter", el, false);
 					}
 				}
 				

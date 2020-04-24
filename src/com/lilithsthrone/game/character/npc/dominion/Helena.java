@@ -143,6 +143,10 @@ public class Helena extends NPC {
 			this.setFetishDesire(Fetish.FETISH_KINK_RECEIVING, FetishDesire.THREE_LIKE);
 			this.setHomeLocation(WorldType.HELENAS_APARTMENT, PlaceType.HELENA_APARTMENT_HELENA_BEDROOM);
 		}
+		if(Main.isVersionOlderThan(Game.loadingVersion, "0.3.7.1")) {
+			this.setDescription("Helena is an extremely powerful harpy matriarch, and is in control of one of the largest harpy flocks in Dominion."
+						+ " Her beauty rivals that of even the most gorgeous of succubi, which, combined with her sharp mind and regal personality, makes her somewhat of an idol in harpy society.");
+		}
 	}
 
 	@Override
@@ -286,6 +290,11 @@ public class Helena extends NPC {
 	}
 	
 	@Override
+	public boolean isAbleToBeImpregnated() {
+		return true;
+	}
+	
+	@Override
 	public String getSpeechColour() {
 		if(Main.getProperties().hasValue(PropertyValue.lightTheme)) {
 			return "#59005C";
@@ -339,7 +348,8 @@ public class Helena extends NPC {
 	@Override
 	public void turnUpdate() {
 		if(!Main.game.getCharactersPresent().contains(this)) {
-			boolean nestHours = Main.game.isDayTime() || (Main.game.getHourOfDay()>8 && Main.game.getHourOfDay()<21);
+			boolean nestHours = (Main.game.isDayTime() && Main.game.getDateNow().getDayOfWeek()!=DayOfWeek.FRIDAY) // If Friday, don't set Helena to her nest after work
+					|| (Main.game.getHourOfDay()>8 && Main.game.getHourOfDay()<21);
 			
 			if(!Main.game.getPlayer().isQuestProgressGreaterThan(QuestLine.MAIN, Quest.MAIN_1_E_REPORT_TO_HELENA) || Main.game.getPlayer().isQuestFailed(QuestLine.ROMANCE_HELENA)) {
 				if(nestHours) {
@@ -389,28 +399,28 @@ public class Helena extends NPC {
 		if(gift instanceof AbstractItem) {
 			AbstractItemType type = ((AbstractItem)gift).getItemType();
 			if(type.equals(ItemType.GIFT_CHOCOLATES)) {
-				text =  UtilText.parseFromXMLFile("characters/dominion/helena", "GIFT_CHOCOLATES")
+				text = UtilText.parseFromXMLFile("characters/dominion/helena", "GIFT_CHOCOLATES")
 						+(applyEffects
-								?Main.game.getNpc(Nyan.class).incrementAffection(Main.game.getPlayer(), 5)
+								?this.incrementAffection(Main.game.getPlayer(), 5)
 								:"");
 				
 			} else if(type.equals(ItemType.GIFT_PERFUME)) {
-				text =  UtilText.parseFromXMLFile("characters/dominion/helena", "GIFT_PERFUME")
-					+(applyEffects
-							?Main.game.getNpc(Nyan.class).incrementAffection(Main.game.getPlayer(), 5)
-							:"");
+				text = UtilText.parseFromXMLFile("characters/dominion/helena", "GIFT_PERFUME")
+						+(applyEffects
+								?this.incrementAffection(Main.game.getPlayer(), 5)
+								:"");
 				
 			} else if(type.equals(ItemType.GIFT_ROSE_BOUQUET)) {
-				text =  UtilText.parseFromXMLFile("characters/dominion/helena", "GIFT_ROSES")
-					+(applyEffects
-							?Main.game.getNpc(Nyan.class).incrementAffection(Main.game.getPlayer(), 10)
-							:"");
+				text = UtilText.parseFromXMLFile("characters/dominion/helena", "GIFT_ROSES")
+						+(applyEffects
+								?this.incrementAffection(Main.game.getPlayer(), 10)
+								:"");
 				
 			} else if(type.equals(ItemType.GIFT_TEDDY_BEAR)) {
-				text =  UtilText.parseFromXMLFile("characters/dominion/helena", "GIFT_TEDDY_BEAR")
-					+(applyEffects
-							?Main.game.getNpc(Nyan.class).incrementAffection(Main.game.getPlayer(), -5)
-							:"");
+				text = UtilText.parseFromXMLFile("characters/dominion/helena", "GIFT_TEDDY_BEAR")
+						+(applyEffects
+								?this.incrementAffection(Main.game.getPlayer(), -5)
+								:"");
 			}
 			
 		} else if(gift instanceof AbstractClothing) {
@@ -418,7 +428,7 @@ public class Helena extends NPC {
 			if(type.equals(ClothingType.getClothingTypeFromId("innoxia_hair_rose"))) {
 				text = UtilText.parseFromXMLFile("characters/dominion/helena", "GIFT_SINGLE_ROSE")
 						+(applyEffects
-								?Main.game.getNpc(Nyan.class).incrementAffection(Main.game.getPlayer(), 5)
+								?this.incrementAffection(Main.game.getPlayer(), 5)
 								:"");
 					
 			}
@@ -442,7 +452,7 @@ public class Helena extends NPC {
 	}
 	
 	public boolean isSlutty() {
-		return !this.isVaginaVirgin() || this.hasFetish(Fetish.FETISH_LUSTY_MAIDEN);
+		return !this.isVaginaVirgin() || !this.isAssVirgin();
 	}
 	
 	public void applySlut() {
@@ -508,7 +518,11 @@ public class Helena extends NPC {
 			this.setPiercedEar(true);
 			this.setPiercedNavel(false);
 			this.setPiercedNose(false);
-			this.equipClothingFromNowhere(AbstractClothingType.generateClothing("innoxia_piercing_ear_pearl_studs", PresetColour.CLOTHING_WHITE, PresetColour.CLOTHING_SILVER, null, false), true, this);
+			if(Main.game.getDialogueFlags().hasFlag(DialogueFlagValue.helenaBedroomFromNest)) {
+				this.equipClothingFromNowhere(AbstractClothingType.generateClothing("innoxia_piercing_ear_chain_dangle", PresetColour.CLOTHING_ROSE_GOLD, false), true, this);
+			} else {
+				this.equipClothingFromNowhere(AbstractClothingType.generateClothing("innoxia_piercing_ear_pearl_studs", PresetColour.CLOTHING_WHITE, PresetColour.CLOTHING_SILVER, null, false), true, this);
+			}
 
 			this.equipClothingFromNowhere(AbstractClothingType.generateClothing("innoxia_groin_lacy_thong", PresetColour.CLOTHING_WHITE, false), true, this);
 			this.equipClothingFromNowhere(AbstractClothingType.generateClothing(ClothingType.CHEST_LACY_PLUNGE_BRA, PresetColour.CLOTHING_WHITE, false), true, this);
@@ -521,8 +535,5 @@ public class Helena extends NPC {
 		this.equipClothingFromNowhere(AbstractClothingType.generateClothing(ClothingType.GROIN_SHIMAPAN, PresetColour.CLOTHING_PINK_HOT, PresetColour.CLOTHING_WHITE, null, false), true, this);
 		this.equipClothingFromNowhere(AbstractClothingType.generateClothing(ClothingType.CHEST_CHEMISE, PresetColour.CLOTHING_BLACK, false), true, this);
 	}
-	
-	
-	
 
 }
